@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useContext, useRef, useState } from "react";
 import CommonLayout from "../../../components/shop/common-layout";
 import { Container, Row, Form, Label, Input, Col } from "reactstrap";
+import UserContext from "../../../helpers/user/UserContext";
 
 const Login = () => {
+  const userContext = useContext(UserContext);
+
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+    userContext.login({ email, password });
+
+    //limpiar campos luego del login
+    emailRef.current.value = "";
+    passwordRef.current.value = "";
+  };
+
   return (
     <CommonLayout parent="home" title="login">
       <section className="login-page section-b-space">
@@ -11,22 +29,22 @@ const Login = () => {
             <Col lg="6">
               <h3>Login</h3>
               <div className="theme-card">
-                <Form className="theme-form">
+                <Form onSubmit={handleLogin} className="theme-form">
                   <div className="form-group">
                     <Label className="form-label" for="email">
                       Email
                     </Label>
-                    <Input type="email" className="form-control" id="email" placeholder="Email" required="" />
+                    <Input innerRef={emailRef} type="email" className="form-control" id="email" placeholder="Email" required="" />
                   </div>
                   <div className="form-group">
                     <Label className="form-label" for="review">
                       Password
                     </Label>
-                    <Input type="password" className="form-control" id="review" placeholder="Enter your password" required="" />
+                    <Input innerRef={passwordRef} type="password" className="form-control" id="review" placeholder="Enter your password" required="" />
                   </div>
-                  <a href="#" className="btn btn-solid">
+                  <button type="submit" href="#" className="btn btn-solid">
                     Login
-                  </a>
+                  </button>
                 </Form>
               </div>
             </Col>

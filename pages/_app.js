@@ -13,6 +13,7 @@ import { CurrencyContextProvider } from "../helpers/Currency/CurrencyContext";
 import Helmet from "react-helmet";
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "../helpers/apollo";
+import UserProvider from "../helpers/user/UserProvider";
 
 export default function MyApp({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -51,6 +52,7 @@ export default function MyApp({ Component, pageProps }) {
               <title>AINHOA</title>
             </Helmet>
             <div>
+              <UserProvider>
               <SettingProvider>
                 <CompareContextProvider>
                   <CurrencyContextProvider>
@@ -65,6 +67,7 @@ export default function MyApp({ Component, pageProps }) {
                   <ThemeSettings />
                 </CompareContextProvider>
               </SettingProvider>
+              </UserProvider>
               <ToastContainer />
               <TapTop />
             </div>

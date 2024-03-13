@@ -248,7 +248,7 @@ export const MENUITEMS = [
       //     { path: "/page/compare-2", title: "compare-2", type: "link", tag: "new" },
       //   ],
       // },
-      // { path: "/page/collection", title: "collection", type: "link" },
+      { path: "/page/collection", title: "collection", type: "link" },
       // { path: "/page/lookbook", title: "lookbook", type: "link" },
       // { path: "/page/site-map", title: "site-map", type: "link" },
       { path: "/page/404", title: "404", type: "link" },
