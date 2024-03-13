@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Row, Col } from "reactstrap";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import UserContext from "../../../helpers/user/UserContext";
 
 const TopBarDark = ({ topClass, fluid }) => {
-  const router = useRouter();
-  const Logout = () => {
-    localStorage.setItem("user", false);
-    router.push("/page/account/login-auth");
-  };
+  // const router = useRouter();
+  // const Logout = () => {
+  //   localStorage.setItem("user", false);
+  //   router.push("/page/account/login-auth");
+  // };
+  const userContext = useContext(UserContext);
+
   return (
     <div className={topClass}>
       <Container fluid={fluid}>
@@ -26,33 +29,42 @@ const TopBarDark = ({ topClass, fluid }) => {
           </Col>
           <Col lg="6" className="text-end">
             <ul className="header-dropdown">
+              {
+                  userContext.authenticated &&
               <li className="mobile-wishlist">
                 <Link href="/page/account/wishlist">
                   {/* <a> */}
-                  <i className="fa fa-heart" aria-hidden="true"></i> wishlist
+                  <i className="fa fa-heart" aria-hidden="true"></i> Favs
                   {/* </a> */}
                 </Link>
               </li>
+              }
               <li className="onhover-dropdown mobile-account">
-                <i className="fa fa-user" aria-hidden="true"></i> My Account
+                <i className="fa fa-user" aria-hidden="true"></i>{userContext.authenticated ? userContext.user.name: "Mi Cuenta"}
                 <ul className="onhover-show-div">
+                  {
+                    !userContext.authenticated &&
                   <li>
                     <Link href={`/page/account/login`}>
-                      {/* <a> */}
-                      Login
-                      {/* </a> */}
+                     
+                      Iniciar Sesión
+                  
                     </Link>
                   </li>
+                  }
                   <li>
                     <Link href={`/page/account/register`}>
                       {/* <a> */}
-                      Register
+                      Registrarse
                       {/* </a> */}
                     </Link>
                   </li>
-                  <li onClick={() => Logout()}>
-                    <a>Logout</a>
+                  {
+                    userContext.authenticated &&
+                  <li onClick={() => userContext.logout()}>
+                    <a>Cerrar Sesión</a>
                   </li>
+                  }
                 </ul>
               </li>
             </ul>

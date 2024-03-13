@@ -34,15 +34,15 @@ const Login = () => {
                     <Label className="form-label" for="email">
                       Email
                     </Label>
-                    <Input innerRef={emailRef} type="email" className="form-control" id="email" placeholder="Email" required="" />
+                    <Input maxLength={35} required innerRef={emailRef} type="email" className="form-control" id="email" placeholder="Email" />
                   </div>
                   <div className="form-group">
                     <Label className="form-label" for="review">
                       Password
                     </Label>
-                    <Input innerRef={passwordRef} type="password" className="form-control" id="review" placeholder="Enter your password" required="" />
+                    <Input maxLength={30} required innerRef={passwordRef} type="password" className="form-control" id="review" placeholder="Enter your password" />
                   </div>
-                  <button type="submit" href="#" className="btn btn-solid">
+                  <button disabled={userContext.botonState} type="submit" href="#" className="btn btn-solid">
                     Login
                   </button>
                 </Form>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import NavBar from "./common/navbar";
 import SideBar from "./common/sidebar";
 import Cart from "../containers/Cart";
@@ -12,6 +12,7 @@ import cart from "../../public/assets/images/icon/cart.png";
 import Currency from "./common/currency";
 import { useRouter } from "next/router";
 import SearchOverlay from "./common/search-overlay";
+import UserContext from "../../helpers/user/UserContext";
 
 const HeaderOne = ({
   logoName,
@@ -21,6 +22,7 @@ const HeaderOne = ({
   direction,
 }) => {
   const router = useRouter();
+  const userContext = useContext(UserContext);
 
   /*=====================
      Pre loader
@@ -101,7 +103,7 @@ const HeaderOne = ({
                 </div>
                 <div className="menu-right pull-right">
                   {/*Top Navigation Bar Component*/}
-                   <NavBar />
+                  <NavBar />
 
                   <div>
                     <div className="icon-nav">
@@ -121,14 +123,17 @@ const HeaderOne = ({
                           </div>
                         </li>
                         <Currency icon={settings.src} />
-                        {/*Header Cart Component */}
-                        {direction === undefined ? (
-                          // <></>
+
+                        {userContext.authenticated &&
+                        direction === undefined ? (
                           <CartContainer layout={direction} icon={cart.src} />
-                        ) : (
-                          
+                        ) : userContext.authenticated &&
+                          direction != undefined ? (
                           <Cart layout={direction} icon={cart.src} />
+                        ) : (
+                          <></>
                         )}
+                        
                       </ul>
                     </div>
                   </div>
