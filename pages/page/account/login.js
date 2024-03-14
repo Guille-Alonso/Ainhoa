@@ -1,24 +1,19 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext } from "react";
 import CommonLayout from "../../../components/shop/common-layout";
-import { Container, Row, Form, Label, Input, Col } from "reactstrap";
+import { Container, Row, Label, Col } from "reactstrap";
 import UserContext from "../../../helpers/user/UserContext";
+import {useForm} from "react-hook-form";
 
 const Login = () => {
   const userContext = useContext(UserContext);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-    userContext.login({ email, password });
-
-    //limpiar campos luego del login
-    emailRef.current.value = "";
-    passwordRef.current.value = "";
+  const handleLogin = (data) => {
+    userContext.login(data);
   };
 
   return (
@@ -29,30 +24,107 @@ const Login = () => {
             <Col lg="6">
               <h3>Login</h3>
               <div className="theme-card">
-                <Form onSubmit={handleLogin} className="theme-form">
+                <form
+                  onSubmit={handleSubmit(handleLogin)}
+                  className="theme-form"
+                >
                   <div className="form-group">
                     <Label className="form-label" for="email">
                       Email
                     </Label>
-                    <Input maxLength={35} required innerRef={emailRef} type="email" className="form-control" id="email" placeholder="Email" />
+                    <input
+                      {...register("email", {
+                        required: {
+                          value: true,
+                          message: "El correo es obligatorio",
+                        },
+                        pattern: {
+                          value:
+                            /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                          message: "El correo ingresado no es válido",
+                        },
+                        maxLength: {
+                          value: 35,
+                          message:
+                            "El correo no puede tener mas de 35 caracteres",
+                        },
+                        minLength: {
+                          value: 7,
+                          message:
+                            "El correo no puede tener menos de 7 caracteres",
+                        },
+                      })}
+                      required
+                      type="email"
+                      className="form-control"
+                      id="email"
+                      placeholder="Email"
+                      maxlength={35}
+                    />
+                    {errors.email && (
+                      <div className="mb-3">
+                        <span className="text-danger">
+                          {errors.email.message}
+                        </span>
+                      </div>
+                    )}
                   </div>
                   <div className="form-group">
                     <Label className="form-label" for="review">
                       Password
                     </Label>
-                    <Input maxLength={30} required innerRef={passwordRef} type="password" className="form-control" id="review" placeholder="Enter your password" />
+                    <input
+                      {...register("password", {
+                        required: {
+                          value: true,
+                          message: "La contraseña es obligatoria",
+                        },
+                        maxLength: {
+                          value: 35,
+                          message:
+                            "La contraseña no puede tener mas de 35 caracteres",
+                        },
+                        minLength: {
+                          value: 5,
+                          message:
+                            "La contraseña no puede tener menos de 5 caracteres",
+                        },
+                      })}
+                      required
+                      type="password"
+                      className="form-control"
+                      id="review"
+                      placeholder="Enter your password"
+                      maxlength={35}
+                    />
+                    {errors.password && (
+                      <div className="mb-3">
+                        <span className="text-danger">
+                          {errors.password.message}
+                        </span>
+                      </div>
+                    )}
                   </div>
-                  <button disabled={userContext.botonState} type="submit" href="#" className="btn btn-solid">
+                  <button
+                    disabled={userContext.botonState}
+                    type="submit"
+                    href="#"
+                    className="btn btn-solid"
+                  >
                     Login
                   </button>
-                </Form>
+                </form>
               </div>
             </Col>
             <Col lg="6" className="right-login">
               <h3>New Customer</h3>
               <div className="theme-card authentication-right">
                 <h6 className="title-font">Create A Account</h6>
-                <p>Sign up for a free account at our store. Registration is quick and easy. It allows you to be able to order from our shop. To start shopping click register.</p>
+                <p>
+                  Sign up for a free account at our store. Registration is quick
+                  and easy. It allows you to be able to order from our shop. To
+                  start shopping click register.
+                </p>
                 <a href="#" className="btn btn-solid">
                   Create an Account
                 </a>

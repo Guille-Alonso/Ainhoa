@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import UserContext from "./UserContext";
 import axios from "../../config/axios";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 const UserProvider = (props) => {
     const [user, setUser] = useState(null);
@@ -22,10 +23,10 @@ const UserProvider = (props) => {
         axios.defaults.headers.common["Authorization"] = data.access_token;
         localStorage.setItem("token", data.access_token);
         localStorage.setItem("user", JSON.stringify(data.user));
-
         router.push("/")
+
       } catch (error) {
-        // toast.error(error.response?.data.message || error.message);
+        toast.error(error.response?.data.message || error.message);
         console.log(error.response.status);
       }
       setBotonState(false);
@@ -57,20 +58,15 @@ const UserProvider = (props) => {
     }
 
     const register = async (values) =>{
+      console.log(values);
       setBotonState(true);
       try {
-        console.log(values);
-        // const { data } = await axios.post("/api/customers/register", values);
-        // console.log(data);
-        // setAuthenticated(!!data.user);
-        // setUser(data.user);
-        // axios.defaults.headers.common["Authorization"] = data.access_token;
-        // localStorage.setItem("token", data.access_token);
-        // localStorage.setItem("user", JSON.stringify(data.user));
-
-        // router.push("/")
+        const { data } = await axios.post("/api/customers/register", values);
+        console.log(data);
+        toast.success("Usuario registrado !")
+        router.push("/page/account/login")
       } catch (error) {
-        // toast.error(error.response?.data.message || error.message);
+        toast.error(error.response?.data.message || error.message);
         console.log(error.response.status);
       }
       setBotonState(false);

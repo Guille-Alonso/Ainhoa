@@ -7,11 +7,11 @@ import PrivateRoute from '../../../routes/PrivateRoute';
 const Wishliat = () => {
     
     return (
-      <CommonLayout parent="home" title="cart">
-        <PrivateRoute>
+      <PrivateRoute>
+        <CommonLayout parent="home" title="cart">
           <CartPage />
-        </PrivateRoute>
-      </CommonLayout>
+        </CommonLayout>
+      </PrivateRoute>
     );
 }
 

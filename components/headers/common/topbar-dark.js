@@ -52,6 +52,8 @@ const TopBarDark = ({ topClass, fluid }) => {
                     </Link>
                   </li>
                   }
+                  {
+                    !userContext.authenticated &&
                   <li>
                     <Link href={`/page/account/register`}>
                       {/* <a> */}
@@ -59,6 +61,7 @@ const TopBarDark = ({ topClass, fluid }) => {
                       {/* </a> */}
                     </Link>
                   </li>
+                  }
                   {
                     userContext.authenticated &&
                   <li onClick={() => userContext.logout()}>

@@ -1,41 +1,27 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext } from 'react';
 import CommonLayout from '../../../components/shop/common-layout';
-import { Input, Container, Row, Form, Label ,Col} from 'reactstrap';
+import { Container, Row, Label ,Col} from 'reactstrap';
 import UserContext from '../../../helpers/user/UserContext';
-import { toast } from 'react-toastify';
+import {useForm} from "react-hook-form";
 
 const Register = () => {
 
     const userContext = useContext(UserContext);
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+      } = useForm();
 
-    const firstNameRef = useRef(null);
-    const lastNameRef = useRef(null);
-    const emailRef = useRef(null);
-    const passwordRef = useRef(null);
-    const repeatPasswordRef = useRef(null);
-    const phoneRef = useRef(null);
+    const handleRegister = (data) => {
+    
+    userContext.register(data);
 
-    const handleRegister = (e) => {
-      e.preventDefault();
-
-      const email = emailRef.current.value;
-      const password = passwordRef.current.value;
-      const name = firstNameRef.current.value;
-      const last_name = lastNameRef.current.value;
-      const phone = phoneRef.current.value;
-      const password_confirmation = repeatPasswordRef.current.value;
-
-      if(password == password_confirmation){
-
-          userContext.register({ email, password, password_confirmation, name, last_name, phone });
-      }else{
-        toast.error("Las contraseñas no coinciden")
-      }
-
-    //   //limpiar campos luego del login
-    //   emailRef.current.value = "";
-    //   passwordRef.current.value = "";
     };
+
+    const password = watch("password", ""); 
+    const passwordConfirmation = watch("password_confirmation", ""); 
 
     return (
       <CommonLayout parent="home" title="register">
@@ -45,33 +31,80 @@ const Register = () => {
               <Col lg="12">
                 <h3>create account</h3>
                 <div className="theme-card">
-                  <Form onSubmit={handleRegister} className="theme-form">
+                  <form
+                    onSubmit={handleSubmit(handleRegister)}
+                    className="theme-form"
+                  >
                     <Row>
                       <Col md="6">
                         <Label className="form-label" for="email">
-                          Nombres
+                          Nombre
                         </Label>
-                        <Input
+                        <input
+                          {...register("name", {
+                            required: {
+                              value: true,
+                              message: "El nombre es obligatorio",
+                            },
+                            maxLength: {
+                              value: 35,
+                              message:
+                                "El nombre no puede tener mas de 35 caracteres",
+                            },
+                            minLength: {
+                              value: 3,
+                              message:
+                                "El nombre no puede tener menos de 3 caracteres",
+                            },
+                          })}
                           maxLength={35}
                           required
-                          innerRef={firstNameRef}
                           type="text"
                           className="form-control"
                           id="fname"
                         />
+                        {errors.name && (
+                          <div className="mb-3">
+                            <span className="text-danger">
+                              {errors.name.message}
+                            </span>
+                          </div>
+                        )}
                       </Col>
                       <Col md="6">
                         <Label className="form-label" for="review">
-                          Apellidos
+                          Apellido
                         </Label>
-                        <Input
+                        <input
+                          {...register("last_name", {
+                            required: {
+                              value: true,
+                              message: "El apellido es obligatorio",
+                            },
+                            maxLength: {
+                              value: 35,
+                              message:
+                                "El apellido no puede tener mas de 35 caracteres",
+                            },
+                            minLength: {
+                              value: 3,
+                              message:
+                                "El apellido no puede tener menos de 3 caracteres",
+                            },
+                          })}
                           maxLength={35}
                           required
-                          innerRef={lastNameRef}
                           type="text"
                           className="form-control"
                           id="lname"
                         />
+                        {errors.last_name && (
+                          <div className="mb-3">
+                            <span className="text-danger">
+                              {errors.last_name.message}
+                            </span>
+                          </div>
+                        )}
                       </Col>
                     </Row>
                     <Row>
@@ -79,27 +112,81 @@ const Register = () => {
                         <Label className="form-label" for="email">
                           Email
                         </Label>
-                        <Input
+                        <input
+                         {...register("email", {
+                            required: {
+                              value: true,
+                              message: "El correo es obligatorio",
+                            },
+                            pattern: {
+                                value:
+                                  /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                message: "El correo ingresado no es válido",
+                              },
+                            maxLength: {
+                              value: 35,
+                              message:
+                                "El correo no puede tener mas de 35 caracteres",
+                            },
+                            minLength: {
+                              value: 7,
+                              message:
+                                "El correo no puede tener menos de 7 caracteres",
+                            },
+                          })}
                           maxLength={35}
                           required
-                          innerRef={emailRef}
                           type="email"
                           className="form-control"
                           id="email"
                         />
+                           {errors.email && (
+                          <div className="mb-3">
+                            <span className="text-danger">
+                              {errors.email.message}
+                            </span>
+                          </div>
+                        )}
                       </Col>
                       <Col md="6">
                         <Label className="form-label" for="review">
                           Teléfono
                         </Label>
-                        <Input
-                          maxLength={35}
+                        <input
+                          {...register("phone", {
+                            required: {
+                              value: true,
+                              message: "El teléfono es obligatorio",
+                            },
+                            pattern: {
+                                value:
+                                /^\d{0,20}$/,
+                                message: "El teléfono ingresado no es válido",
+                              },
+                            maxLength: {
+                              value: 20,
+                              message:
+                                "El teléfono no puede tener mas de 20 caracteres",
+                            },
+                            minLength: {
+                              value: 7,
+                              message:
+                                "El teléfono no puede tener menos de 7 caracteres",
+                            },
+                           
+                          })}
                           required
-                          innerRef={phoneRef}
-                          type="text"
+                          type="number"
                           className="form-control"
                           id="phone"
                         />
+                           {errors.phone && (
+                          <div className="mb-3">
+                            <span className="text-danger">
+                              {errors.phone.message}
+                            </span>
+                          </div>
+                        )}
                       </Col>
                     </Row>
                     <Row>
@@ -107,29 +194,74 @@ const Register = () => {
                         <Label className="form-label" for="email">
                           Contraseña
                         </Label>
-                        <Input
-                          maxLength={35}
-                          required
-                          innerRef={passwordRef}
-                          type="password"
-                          className="form-control"
-                          id="email"
-                          placeholder="Ingrese su contraseña"
-                        />
+                        <input
+                      {...register("password", {
+                        required: {
+                          value: true,
+                          message: "La contraseña es obligatoria",
+                        },
+                        maxLength: {
+                          value: 35,
+                          message:
+                            "La contraseña no puede tener mas de 35 caracteres",
+                        },
+                        minLength: {
+                          value: 5,
+                          message:
+                            "La contraseña no puede tener menos de 5 caracteres",
+                        },
+                      })}
+                      required
+                      type="password"
+                      className="form-control"
+                      id="review"
+                      maxlength={35}
+                    />
+                    {errors.password && (
+                      <div className="mb-3">
+                        <span className="text-danger">
+                          {errors.password.message}
+                        </span>
+                      </div>
+                    )}
                       </Col>
                       <Col md="6">
                         <Label className="form-label" for="review">
                           Repetir Contraseña
                         </Label>
-                        <Input
-                          maxLength={35}
-                          required
-                          innerRef={repeatPasswordRef}
-                          type="password"
-                          className="form-control"
-                          id="review"
-                          placeholder="Repita su contraseña"
-                        />
+                        <input
+                      {...register("password_confirmation", {
+                        required: {
+                          value: true,
+                          message: "La contraseña es obligatoria",
+                        },
+                        maxLength: {
+                          value: 35,
+                          message:
+                            "La contraseña no puede tener mas de 35 caracteres",
+                        },
+                        minLength: {
+                          value: 5,
+                          message:
+                            "La contraseña no puede tener menos de 5 caracteres",
+                        },
+                        validate: (value) =>
+                        value === password || "Las contraseñas no coinciden", // Validación personalizada para verificar que las contraseñas coincidan
+                    
+                      })}
+                      required
+                      type="password"
+                      className="form-control"
+                      id="review"
+                      maxlength={35}
+                    />
+                    {errors.password_confirmation && (
+                      <div className="mb-3">
+                        <span className="text-danger">
+                          {errors.password_confirmation.message}
+                        </span>
+                      </div>
+                    )}
                       </Col>
                       <Col md="12">
                         <button
@@ -142,7 +274,7 @@ const Register = () => {
                         </button>
                       </Col>
                     </Row>
-                  </Form>
+                  </form>
                 </div>
               </Col>
             </Row>
