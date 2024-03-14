@@ -1,11 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import CommonLayout from "../../../components/shop/common-layout";
 import { Container, Row, Label, Col } from "reactstrap";
 import UserContext from "../../../helpers/user/UserContext";
 import {useForm} from "react-hook-form";
+import { useRouter } from "next/router";
+import LoggedRoute from "../../../routes/LoggedRoute";
 
 const Login = () => {
   const userContext = useContext(UserContext);
+
   const {
     register,
     handleSubmit,
@@ -17,6 +20,7 @@ const Login = () => {
   };
 
   return (
+    <LoggedRoute>
     <CommonLayout parent="home" title="login">
       <section className="login-page section-b-space">
         <Container>
@@ -134,6 +138,7 @@ const Login = () => {
         </Container>
       </section>
     </CommonLayout>
+    </LoggedRoute>
   );
 };
 

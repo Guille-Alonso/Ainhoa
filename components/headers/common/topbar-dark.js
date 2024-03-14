@@ -13,7 +13,10 @@ const TopBarDark = ({ topClass, fluid }) => {
   const userContext = useContext(UserContext);
 
   useEffect(() => {
-  userContext.getAuth()
+    if(localStorage.getItem("token")){
+
+      userContext.getAuth()
+    }
   }, [])
 
   return (

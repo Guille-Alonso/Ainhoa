@@ -3,6 +3,7 @@ import CommonLayout from '../../../components/shop/common-layout';
 import { Container, Row, Label ,Col} from 'reactstrap';
 import UserContext from '../../../helpers/user/UserContext';
 import {useForm} from "react-hook-form";
+import LoggedRoute from '../../../routes/LoggedRoute';
 
 const Register = () => {
 
@@ -24,6 +25,7 @@ const Register = () => {
     const passwordConfirmation = watch("password_confirmation", ""); 
 
     return (
+        <LoggedRoute>
       <CommonLayout parent="home" title="register">
         <section className="register-page section-b-space">
           <Container>
@@ -281,6 +283,7 @@ const Register = () => {
           </Container>
         </section>
       </CommonLayout>
+      </LoggedRoute>
     );
 }
 

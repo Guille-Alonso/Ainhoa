@@ -37,6 +37,7 @@ const UserProvider = (props) => {
         const token = localStorage.getItem("token");
         if (!token) {
           setLoading(false);
+          router.push("/page/account/login")
           return setAuthenticated(false);
         }
         axios.defaults.headers.common["Authorization"] = token;
@@ -45,6 +46,7 @@ const UserProvider = (props) => {
         setAuthenticated(true);
       } catch (error) {
         setAuthenticated(false);
+        router.push("/page/account/login")
         // toast.error("Error de autenticación. Ingrese nuevamente");
         console.log(error);
       }

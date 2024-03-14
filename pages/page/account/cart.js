@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import CommonLayout from '../../../components/shop/common-layout';
 import CartPage from './common/cart-page';
 import PrivateRoute from '../../../routes/PrivateRoute';
+import UserContext from '../../../helpers/user/UserContext';
 
 
 const Wishliat = () => {
