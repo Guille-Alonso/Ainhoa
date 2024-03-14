@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -11,6 +11,10 @@ const TopBarDark = ({ topClass, fluid }) => {
   //   router.push("/page/account/login-auth");
   // };
   const userContext = useContext(UserContext);
+
+  useEffect(() => {
+  userContext.getAuth()
+  }, [])
 
   return (
     <div className={topClass}>
