@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserContext from "./UserContext";
 import axios from "../../config/axios";
 import { useRouter } from "next/router";
@@ -20,7 +20,7 @@ const UserProvider = (props) => {
         console.log(data);
         setAuthenticated(!!data.user);
         setUser(data.user);
-        axios.defaults.headers.common["Authorization"] = data.access_token;
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token;
         localStorage.setItem("token", data.access_token);
         localStorage.setItem("user", JSON.stringify(data.user));
         router.push("/")
@@ -40,7 +40,7 @@ const UserProvider = (props) => {
           router.push("/page/account/login")
           return setAuthenticated(false);
         }
-        axios.defaults.headers.common["Authorization"] = token;
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
         // const { data } = await axios.get("/users/authStatus");
         setUser(JSON.parse(localStorage.getItem("user")));
         setAuthenticated(true);
@@ -63,7 +63,7 @@ const UserProvider = (props) => {
       console.log(values);
       setBotonState(true);
       try {
-        const { data } = await axios.post("/api/customers/register", values);
+        const { data } = await axios.post("/api/bff-store/customers/register", values);
         console.log(data);
         toast.success("Usuario registrado !")
         router.push("/page/account/login")
@@ -73,6 +73,23 @@ const UserProvider = (props) => {
       }
       setBotonState(false);
     }
+
+    
+  const getProducts = async ()=>{
+    try {
+      const { data } = await axios.get("/api/products?page=1&size=10");
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    if(authenticated){
+      getProducts();
+    }
+  }, [authenticated])
+  
 
   return (
     <UserContext.Provider

@@ -8,6 +8,7 @@ import LoggedRoute from "../../../routes/LoggedRoute";
 
 const Login = () => {
   const userContext = useContext(UserContext);
+  const router = useRouter();
 
   const {
     register,
@@ -62,7 +63,7 @@ const Login = () => {
                       type="email"
                       className="form-control"
                       id="email"
-                      placeholder="Email"
+                      // placeholder="Email"
                       maxlength={35}
                     />
                     {errors.email && (
@@ -75,7 +76,7 @@ const Login = () => {
                   </div>
                   <div className="form-group">
                     <Label className="form-label" for="review">
-                      Password
+                      Contraseña
                     </Label>
                     <input
                       {...register("password", {
@@ -98,7 +99,7 @@ const Login = () => {
                       type="password"
                       className="form-control"
                       id="review"
-                      placeholder="Enter your password"
+                      // placeholder="Ingrese su contraseña"
                       maxlength={35}
                     />
                     {errors.password && (
@@ -129,9 +130,9 @@ const Login = () => {
                   and easy. It allows you to be able to order from our shop. To
                   start shopping click register.
                 </p>
-                <a href="#" className="btn btn-solid">
-                  Create an Account
-                </a>
+                <button onClick={()=>router.push("/page/account/register")} href="#" className="btn btn-solid">
+                  Registrarse
+                </button>
               </div>
             </Col>
           </Row>

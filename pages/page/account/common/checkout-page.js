@@ -55,97 +55,214 @@ const CheckoutPage = () => {
               <Row>
                 <Col lg="6" sm="12" xs="12">
                   <div className="checkout-title">
-                    <h3>Billing Details</h3>
+                    <h3>Detalles de Facturación</h3>
                   </div>
                   <div className="row check-out">
                     <div className="form-group col-md-6 col-sm-6 col-xs-12">
-                      <div className="field-label">First Name</div>
-                      <input type="text" className={`${errors.firstName ? "error_border" : ""}`} name="first_name" {...register("first_name", { required: true })} />
-                      <span className="error-message">{errors.firstName && "First name is required"}</span>
+                      <div className="field-label">Nombre</div>
+                      <input
+                        type="text"
+                        className={`${errors.firstName ? "error_border" : ""}`}
+                        name="first_name"
+                        {...register("first_name", { required: true })}
+                      />
+                      <span className="error-message">
+                        {errors.firstName && "El nombre es obligatorio"}
+                      </span>
                     </div>
                     <div className="form-group col-md-6 col-sm-6 col-xs-12">
-                      <div className="field-label">Last Name</div>
-                      <input type="text" className={`${errors.last_name ? "error_border" : ""}`} name="last_name" {...register("last_name", { required: true })} />
-                      <span className="error-message">{errors.last_name && "Last name is required"}</span>
+                      <div className="field-label">Apellido</div>
+                      <input
+                        type="text"
+                        className={`${errors.last_name ? "error_border" : ""}`}
+                        name="last_name"
+                        {...register("last_name", { required: true })}
+                      />
+                      <span className="error-message">
+                        {errors.last_name && "El apellido es obligatorio"}
+                      </span>
                     </div>
                     <div className="form-group col-md-6 col-sm-6 col-xs-12">
-                      <div className="field-label">Phone</div>
-                      <input type="text" name="phone" className={`${errors.phone ? "error_border" : ""}`} {...register("phone", { pattern: /\d+/ })} />
-                      <span className="error-message">{errors.phone && "Please enter number for phone."}</span>
+                      <div className="field-label">Teléfono</div>
+                      <input
+                        type="text"
+                        name="phone"
+                        className={`${errors.phone ? "error_border" : ""}`}
+                        {...register("phone", { pattern: /\d+/ })}
+                      />
+                      <span className="error-message">
+                        {errors.phone && "Ingrese números para el teléfono"}
+                      </span>
                     </div>
                     <div className="form-group col-md-6 col-sm-6 col-xs-12">
-                      <div className="field-label">Email Address</div>
+                      <div className="field-label">Email</div>
                       <input
                         //className="form-control"
                         className={`${errors.email ? "error_border" : ""}`}
                         type="text"
                         name="email"
                         {...register("email", {
-                          required: true,
-                          pattern: /^\S+@\S+$/i,
+                          required: {
+                            value: true,
+                            message: "El correo es obligatorio",
+                          },
+                          pattern: {
+                            value:
+                              /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                            message: "El correo ingresado no es válido",
+                          },
                         })}
                       />
-                      <span className="error-message">{errors.email && "Please enter proper email address ."}</span>
+                      <span className="error-message">
+                        {errors.email && errors.email.message}
+                      </span>
                     </div>
                     <div className="form-group col-md-12 col-sm-12 col-xs-12">
-                      <div className="field-label">Country</div>
-                      <select name="country" {...register("country", { required: true })}>
+                      <div className="field-label">País</div>
+                      <select
+                        name="country"
+                        {...register("country", { required: true })}
+                      >
+                        <option>Argentina</option>
                         <option>India</option>
                         <option>South Africa</option>
                         <option>United State</option>
                         <option>Australia</option>
                       </select>
                     </div>
+                    <div className="form-group col-md-12 col-sm-6 col-xs-12">
+                      <div className="field-label">Provincia</div>
+                      <input
+                        //className="form-control"
+                        type="text"
+                        maxLength={35}
+                        className={`${errors.state ? "error_border" : ""}`}
+                        name="state"
+                        {...register("state", {
+                          required: {
+                            value: true,
+                            message: "La provincia es obligatoria",
+                          },
+                          maxLength: {
+                            value: 35,
+                            message:
+                              "La provincia no puede tener mas de 35 caracteres",
+                          },
+                          minLength: {
+                            value: 4,
+                            message:
+                              "La provincia no puede tener menos de 4 caracteres",
+                          },
+                        })}
+                        // onChange={setStateFromInput}
+                      />
+                      <span className="error-message">
+                        {errors.state && errors.state.message}
+                      </span>
+                    </div>
                     <div className="form-group col-md-12 col-sm-12 col-xs-12">
-                      <div className="field-label">Address</div>
+                      <div className="field-label">Ciudad</div>
+                      <input
+                        //className="form-control"
+                        className={`${errors.city ? "error_border" : ""}`}
+                        type="text"
+                        maxLength={35}
+                        name="city"
+                        {...register("city", {
+                          required: {
+                            value: true,
+                            message: "La ciudad es obligatoria",
+                          },
+                          maxLength: {
+                            value: 35,
+                            message:
+                              "La ciudad no puede tener mas de 35 caracteres",
+                          },
+                          minLength: {
+                            value: 4,
+                            message:
+                              "La ciudad no puede tener menos de 4 caracteres",
+                          },
+                        })}
+                        // onChange={setStateFromInput}
+                      />
+                      <span className="error-message">
+                        {errors.city && errors.city.message}
+                      </span>
+                    </div>
+                    <div className="form-group col-md-12 col-sm-12 col-xs-12">
+                      <div className="field-label">Dirección</div>
                       <input
                         //className="form-control"
                         className={`${errors.address ? "error_border" : ""}`}
                         type="text"
+                        maxLength={35}
                         name="address"
-                        {...register("address", { required: true, min: 20, max: 120 })}
+                        {...register("address", {
+                          required: {
+                            value: true,
+                            message: "La dirección es obligatoria",
+                          },
+                          maxLength: {
+                            value: 35,
+                            message:
+                              "La dirección no puede tener mas de 35 caracteres",
+                          },
+                          minLength: {
+                            value: 7,
+                            message:
+                              "La dirección no puede tener menos de 7 caracteres",
+                          },
+                        })}
                         placeholder="Street address"
                       />
-                      <span className="error-message">{errors.address && "Please right your address ."}</span>
+                      <span className="error-message">
+                        {errors.address && errors.address.message}
+                      </span>
                     </div>
-                    <div className="form-group col-md-12 col-sm-12 col-xs-12">
-                      <div className="field-label">Town/City</div>
-                      <input
-                        //className="form-control"
-                        type="text"
-                        className={`${errors.city ? "error_border" : ""}`}
-                        name="city"
-                        {...register("city", { required: true })}
-                        onChange={setStateFromInput}
-                      />
-                      <span className="error-message">{errors.city && "select one city"}</span>
-                    </div>
+
                     <div className="form-group col-md-12 col-sm-6 col-xs-12">
-                      <div className="field-label">State / County</div>
+                      <div className="field-label">Código postal</div>
                       <input
                         //className="form-control"
                         type="text"
-                        className={`${errors.state ? "error_border" : ""}`}
-                        name="state"
-                        {...register("state", { required: true })}
-                        onChange={setStateFromInput}
-                      />
-                      <span className="error-message">{errors.state && "select one state"}</span>
-                    </div>
-                    <div className="form-group col-md-12 col-sm-6 col-xs-12">
-                      <div className="field-label">Postal Code</div>
-                      <input
-                        //className="form-control"
-                        type="text"
+                        maxLength={8}
                         name="pincode"
                         className={`${errors.pincode ? "error_border" : ""}`}
-                        {...register("pincode", { pattern: /\d+/ })}
+                        {...register("pincode", {
+                          required: {
+                            value: true,
+                            message: "El código postal es obligatorio",
+                          },
+                          pattern: {
+                            value: /\d+/,
+                            message:
+                              "El código postal no cumple con el formato solicitado",
+                          },
+                          maxLength: {
+                            value: 8,
+                            message:
+                              "El código postal no puede tener mas de 8 caracteres",
+                          },
+                          minLength: {
+                            value: 3,
+                            message:
+                              "El código postal no puede tener menos de 3 caracteres",
+                          },
+                        })}
                       />
-                      <span className="error-message">{errors.pincode && "Required integer"}</span>
+                      <span className="error-message">
+                        {errors.pincode && errors.pincode.message}
+                      </span>
                     </div>
                     <div className="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <input type="checkbox" name="create_account" id="account-option" />
-                      &ensp; <label htmlFor="account-option">Create An Account?</label>
+                      <input
+                        type="checkbox"
+                        name="create_account"
+                        id="account-option"
+                      />
+                      &ensp;{" "}
+                      <label htmlFor="account-option">Create An Account?</label>
                     </div>
                   </div>
                 </Col>
@@ -181,13 +298,37 @@ const CheckoutPage = () => {
                             Shipping
                             <div className="shipping">
                               <div className="shopping-option">
-                                <input type="checkbox" name="free-shipping" id="free-shipping" />
-                                <label htmlFor="free-shipping">Free Shipping</label>
+                                <input
+                                  value="shipping"
+                                  type="radio"
+                                  name="shipment"
+                                  id="free-shipping"
+                                  required
+                                  {...register("shipment", { required: true })}
+                                />
+                                <label htmlFor="free-shipping">
+                                  Free Shipping
+                                </label>
                               </div>
+
                               <div className="shopping-option">
-                                <input type="checkbox" name="local-pickup" id="local-pickup" />
-                                <label htmlFor="local-pickup">Local Pickup</label>
+                                <input
+                                  value="pickup"
+                                  type="radio"
+                                  name="shipment"
+                                  id="local-pickup"
+                                  required
+                                  {...register("shipment", { required: true })}
+                                />
+                                <label htmlFor="local-pickup">
+                                  Local Pickup
+                                </label>
                               </div>
+                              {errors.shipment && (
+                                <small className="text-danger">
+                                  * método de entrega
+                                </small>
+                              )}
                             </div>
                           </li>
                         </ul>
@@ -207,13 +348,24 @@ const CheckoutPage = () => {
                             <ul>
                               <li>
                                 <div className="radio-option stripe">
-                                  <input type="radio" name="payment-group" id="payment-2" defaultChecked={true} onClick={() => checkhandle("cod")} />
+                                  <input
+                                    type="radio"
+                                    name="payment-group"
+                                    id="payment-2"
+                                    defaultChecked={true}
+                                    onClick={() => checkhandle("cod")}
+                                  />
                                   <label htmlFor="payment-2">COD</label>
                                 </div>
                               </li>
                               <li>
                                 <div className="radio-option paypal">
-                                  <input type="radio" name="payment-group" id="payment-1" onClick={() => checkhandle("paypal")} />
+                                  <input
+                                    type="radio"
+                                    name="payment-group"
+                                    id="payment-1"
+                                    onClick={() => checkhandle("paypal")}
+                                  />
                                   <label htmlFor="payment-1">
                                     PayPal
                                     <span className="image">
@@ -232,7 +384,9 @@ const CheckoutPage = () => {
                                 Place Order
                               </button>
                             ) : (
-                              <PayPalScriptProvider options={{ clientId: "test" }}>
+                              <PayPalScriptProvider
+                                options={{ clientId: "test" }}
+                              >
                                 <PayPalButtons
                                   createOrder={(data, actions) => {
                                     return actions.order.create({
@@ -246,10 +400,15 @@ const CheckoutPage = () => {
                                     });
                                   }}
                                   onApprove={(data, actions) => {
-                                    return actions.order.capture().then((details) => {
-                                      const name = details.payer.name.given_name;
-                                      alert(`Transaction completed by ${name}`);
-                                    });
+                                    return actions.order
+                                      .capture()
+                                      .then((details) => {
+                                        const name =
+                                          details.payer.name.given_name;
+                                        alert(
+                                          `Transaction completed by ${name}`
+                                        );
+                                      });
                                   }}
                                 />
                               </PayPalScriptProvider>

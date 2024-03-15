@@ -64,7 +64,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
         <div className="front" onClick={clickProductDetail}>
           <Media src={`${image ? image : product.images[0].src}`} className="img-fluid" alt="" />
         </div>
-        {backImage ? (
+        {/* {backImage ? (
           product.images[1] === "undefined" ? (
             "false"
           ) : (
@@ -74,7 +74,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
           )
         ) : (
           ""
-        )}
+        )} */}
 
         <div className={cartClass}>
           {
@@ -122,7 +122,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
             {product.images.map((img, i) => (
               <li className={`grid_thumb_img ${img.src === image ? "active" : ""}`} key={i}>
                 <a href={null} title="Add to Wishlist">
-                  <Media src={`${img.src}`} alt="wishlist" onClick={() => onClickHandle(img.src)} />
+                  {/* <Media src={`${img.src}`} alt="wishlist" onClick={() => onClickHandle(img.src)} /> */}
                 </a>
               </li>
             ))}

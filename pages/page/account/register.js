@@ -31,7 +31,7 @@ const Register = () => {
           <Container>
             <Row>
               <Col lg="12">
-                <h3>create account</h3>
+                <h3>Nueva cuenta</h3>
                 <div className="theme-card">
                   <form
                     onSubmit={handleSubmit(handleRegister)}
@@ -272,7 +272,7 @@ const Register = () => {
                           href="#"
                           className="btn btn-solid w-auto"
                         >
-                          Registrarte
+                          Registrarse
                         </button>
                       </Col>
                     </Row>
