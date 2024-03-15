@@ -1,7 +1,7 @@
 import axiosOriginal from "axios";
 
 const axios = axiosOriginal.create({
-   baseURL: "https://ainhoa-desa.developia.com.ar",
+   baseURL: process.env.NEXT_PUBLIC_URL_BACK
 });
 
 

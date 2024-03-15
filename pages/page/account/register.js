@@ -216,7 +216,7 @@ const Register = () => {
                       required
                       type="password"
                       className="form-control"
-                      id="review"
+                      id="password"
                       maxlength={35}
                     />
                     {errors.password && (
@@ -254,7 +254,7 @@ const Register = () => {
                       required
                       type="password"
                       className="form-control"
-                      id="review"
+                      id="password_confirmation"
                       maxlength={35}
                     />
                     {errors.password_confirmation && (

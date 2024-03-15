@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Row, Col, Media, Modal, ModalBody, ModalHeader } from "reactstrap";
 import CartContext from "../../../helpers/cart";
 import { CurrencyContext } from "../../../helpers/Currency/CurrencyContext";
 import MasterProductDetail from "./MasterProductDetail";
+import UserContext from "../../../helpers/user/UserContext";
 
 const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass, productDetail, addCompare, title }) => {
   // eslint-disable-next-line
@@ -44,6 +45,15 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
       }
     });
   };
+
+  const userContext = useContext(UserContext);
+  useEffect(() => {
+    if(localStorage.getItem("token")){
+
+      userContext.getAuth()
+    }
+  }, [])
+
   return (
     <div className="product-box product-wrap">
       <div className="img-wrapper">
@@ -67,9 +77,12 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
         )}
 
         <div className={cartClass}>
+          {
+            userContext.authenticated &&
           <button title="Add to cart" onClick={addCart}>
             <i className="fa fa-shopping-cart" aria-hidden="true"></i>
           </button>
+          }
           <a href={null} title="Add to Wishlist" onClick={addWishlist}>
             <i className="fa fa-heart" aria-hidden="true"></i>
           </a>
