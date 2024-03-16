@@ -22,7 +22,7 @@ const Login = () => {
 
   return (
     <LoggedRoute>
-    <CommonLayout parent="home" title="login">
+    {/* <CommonLayout parent="home" title="login"> */}
       <section className="login-page section-b-space">
         <Container>
           <Row>
@@ -138,7 +138,7 @@ const Login = () => {
           </Row>
         </Container>
       </section>
-    </CommonLayout>
+    {/* </CommonLayout> */}
     </LoggedRoute>
   );
 };

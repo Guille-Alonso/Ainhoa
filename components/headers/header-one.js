@@ -74,6 +74,13 @@ const HeaderOne = ({
     });
   };
 
+  useEffect(() => {
+    // if(localStorage.getItem("token")){
+
+      userContext.getAuth()
+    // }
+  }, [])
+
   return (
     <div>
       <header id="sticky" className={`sticky ${headerClass}`}>

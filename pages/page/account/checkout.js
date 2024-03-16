@@ -20,11 +20,13 @@ const Checkout = () => {
       //         <Login />
       //     }
       // </>
-      <PrivateRoute>
-        <CommonLayout parent="home" title="checkout">
+     
+        // <CommonLayout parent="home" title="checkout">
+        <PrivateRoute>
+
           <CheckoutPage />
-        </CommonLayout>
-      </PrivateRoute>
+        </PrivateRoute>
+        // </CommonLayout>
     );
 }
 

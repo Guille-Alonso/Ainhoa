@@ -11,12 +11,12 @@ const TopBarDark = ({ topClass, fluid }) => {
   //   router.push("/page/account/login-auth");
   // };
   const userContext = useContext(UserContext);
-  useEffect(() => {
-    if(localStorage.getItem("token")){
+  // useEffect(() => {
+  //   if(localStorage.getItem("token")){
 
-      userContext.getAuth()
-    }
-  }, [])
+  //     userContext.getAuth()
+  //   }
+  // }, [])
   return (
     <div className={topClass}>
       <Container fluid={fluid}>

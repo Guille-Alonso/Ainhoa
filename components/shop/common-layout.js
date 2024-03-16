@@ -14,8 +14,8 @@ const CommonLayout = ({ children, title, parent, subTitle }) => {
         <link rel="icon" type="image/x-icon" href={favicon ? favicon : ""} />
       </Helmet> */}
       <HeaderOne topClass="top-header" logoName="logo.png" />
-      <Breadcrubs title={title} parent={parent} subTitle={subTitle} />
-      <>{children}</>
+      {/* <Breadcrubs title={title} parent={parent} subTitle={subTitle} /> */}
+      {children}
       <MasterFooter
         footerClass={`footer-light `}
         footerLayOut={"light-layout upper-footer"}

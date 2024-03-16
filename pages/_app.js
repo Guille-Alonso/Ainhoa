@@ -14,6 +14,7 @@ import Helmet from "react-helmet";
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "../helpers/apollo";
 import UserProvider from "../helpers/user/UserProvider";
+import CommonLayout from "../components/shop/common-layout";
 
 export default function MyApp({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -59,7 +60,7 @@ export default function MyApp({ Component, pageProps }) {
                     <CartContextProvider>
                       <WishlistContextProvider>
                         <FilterProvider>
-                          <Component {...pageProps} />
+                         <CommonLayout><Component {...pageProps} /></CommonLayout> 
                         </FilterProvider>
                       </WishlistContextProvider>
                     </CartContextProvider>

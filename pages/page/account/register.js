@@ -26,7 +26,7 @@ const Register = () => {
 
     return (
         <LoggedRoute>
-      <CommonLayout parent="home" title="register">
+      {/* <CommonLayout parent="home" title="register"> */}
         <section className="register-page section-b-space">
           <Container>
             <Row>
@@ -282,7 +282,7 @@ const Register = () => {
             </Row>
           </Container>
         </section>
-      </CommonLayout>
+      {/* </CommonLayout> */}
       </LoggedRoute>
     );
 }

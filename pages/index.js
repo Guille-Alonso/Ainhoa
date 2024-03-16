@@ -23,7 +23,7 @@ const Fashion = () => {
         <link rel="icon" type="image/x-icon" href={"/assets/images/favicon/1.png"} />
       </Helmet>
       {/* <ModalComponent /> */}
-      <HeaderOne logoName={"logo.png"} topClass="top-header" />
+      {/* <HeaderOne logoName={"logo.png"} topClass="top-header" /> */}
       {/* <Banner /> */}
       {/* <CollectionBanner /> */}
       <Paragraph title="title1 section-t-space" inner="title-inner1" hrClass={false} />
@@ -36,7 +36,7 @@ const Fashion = () => {
       {/* <div className="section-b-space">
         <LogoBlock />
       </div> */}
-      <MasterFooter footerClass={`footer-light`} footerLayOut={"light-layout upper-footer"} footerSection={"small-section border-section border-top-0"} belowSection={"section-b-space light-layout"} newLatter={true} logoName={"logo.png"} />
+      {/* <MasterFooter footerClass={`footer-light`} footerLayOut={"light-layout upper-footer"} footerSection={"small-section border-section border-top-0"} belowSection={"section-b-space light-layout"} newLatter={true} logoName={"logo.png"} /> */}
     </>
   );
 };
