@@ -82,23 +82,6 @@ const UserProvider = (props) => {
       setBotonState(false);
     }
 
-    
-  // const getProducts = async ()=>{
-  //   try {
-  //     const { data } = await axios.get("/api/products?page=1&size=10");
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   if(authenticated){
-  //     getProducts();
-  //   }
-  // }, [authenticated])
-  
-
   return (
     <UserContext.Provider
       value={{
