@@ -13,6 +13,7 @@ import Currency from "./common/currency";
 import { useRouter } from "next/router";
 import SearchOverlay from "./common/search-overlay";
 import UserContext from "../../helpers/user/UserContext";
+import PrivateRoute from "../../routes/PrivateRoute";
 
 const HeaderOne = ({
   logoName,
@@ -78,7 +79,7 @@ const HeaderOne = ({
       <header id="sticky" className={`sticky ${headerClass}`}>
         <div className="mobile-fix-option"></div>
         {/*Top Header Component*/}
-        {noTopBar ? "" : <TopBarDark topClass={topClass} />}
+        {noTopBar ? "" :<TopBarDark topClass={topClass} />}
 
         <Container>
           <Row>

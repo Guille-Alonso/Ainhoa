@@ -1,11 +1,14 @@
 import { useContext, useEffect } from "react";
 import UserContext from "../helpers/user/UserContext";
+import { useRouter } from "next/router";
 
 const PrivateRoute = ({ children }) => {
   const userContext = useContext(UserContext);
   
   useEffect(() => {
-    userContext.getAuth()
+
+      userContext.getAuth()
+  
   }, [])
 
   return userContext.loading ? (

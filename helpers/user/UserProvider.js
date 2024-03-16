@@ -16,13 +16,13 @@ const UserProvider = (props) => {
       setBotonState(true);
       try {
         console.log(values);
-        const { data } = await axios.post("/api/login", values);
+        const { data } = await axios.post("/api/bff-store/auth/login", values);
         console.log(data);
         setAuthenticated(!!data.user);
         setUser(data.user);
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token;
         localStorage.setItem("token", data.access_token);
-        localStorage.setItem("user", JSON.stringify(data.user));
+        // localStorage.setItem("user", JSON.stringify(data.user));
         router.push("/")
 
       } catch (error) {
@@ -32,8 +32,9 @@ const UserProvider = (props) => {
       setBotonState(false);
     };
 
-    const getAuth = () => {
+    const getAuth = async () => {
       try {
+        console.log("hola");
         const token = localStorage.getItem("token");
         if (!token) {
           setLoading(false);
@@ -41,8 +42,9 @@ const UserProvider = (props) => {
           return setAuthenticated(false);
         }
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-        // const { data } = await axios.get("/users/authStatus");
-        setUser(JSON.parse(localStorage.getItem("user")));
+        const { data } = await axios.get("/api/bff-store/private/auth/user");
+        console.log(data);
+        setUser(data.user);
         setAuthenticated(true);
       } catch (error) {
         setAuthenticated(false);
@@ -53,10 +55,16 @@ const UserProvider = (props) => {
       setLoading(false);
     };
 
-    const logout = () =>{
+    const logout = async () =>{
       setAuthenticated(false);
       localStorage.clear();
       router.push("/page/account/login");
+      try {
+        const {data} = await axios.post("/api/bff-store/private/auth/logout")
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     const register = async (values) =>{
@@ -75,20 +83,20 @@ const UserProvider = (props) => {
     }
 
     
-  const getProducts = async ()=>{
-    try {
-      const { data } = await axios.get("/api/products?page=1&size=10");
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // const getProducts = async ()=>{
+  //   try {
+  //     const { data } = await axios.get("/api/products?page=1&size=10");
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
-  useEffect(() => {
-    if(authenticated){
-      getProducts();
-    }
-  }, [authenticated])
+  // useEffect(() => {
+  //   if(authenticated){
+  //     getProducts();
+  //   }
+  // }, [authenticated])
   
 
   return (

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Row, Col, Media, Modal, ModalBody, ModalHeader } from "reactstrap";
@@ -47,12 +47,6 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
   };
 
   const userContext = useContext(UserContext);
-  useEffect(() => {
-    if(localStorage.getItem("token")){
-
-      userContext.getAuth()
-    }
-  }, [])
 
   return (
     <div className="product-box product-wrap">

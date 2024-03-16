@@ -9,6 +9,6 @@ const nextConfig = {
   // env: {
   //   API_URL: "http://localhost:4000/graphql",
   // },
-  reactStrictMode: true,
+  reactStrictMode: false,
 };
 module.exports = nextConfig;
