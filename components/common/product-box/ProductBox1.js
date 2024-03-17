@@ -48,6 +48,11 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
 
   const userContext = useContext(UserContext);
 
+  const imageSize = {
+    width: '80%', // Tamaño fijo en píxeles
+    height: '50vh' // Tamaño fijo en píxeles
+  };
+
   return (
     <div className="product-box product-wrap">
       <div className="img-wrapper">
@@ -56,7 +61,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
           {product.sale === true ? <span className="lable4">on sale</span> : ""}
         </div>
         <div className="front" onClick={clickProductDetail}>
-          <Media src={`${image ? image : product.images[0].src}`} className="img-fluid" alt="" />
+          <Media src={`${image ? image : product.images[0].main}`} className="img-fluid" alt="" style={imageSize}/>
         </div>
         {/* {backImage ? (
           product.images[1] === "undefined" ? (

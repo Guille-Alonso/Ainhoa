@@ -16,24 +16,10 @@ import Helmet from "react-helmet";
 import MasterFooter from "../components/footers/common/MasterFooter";
 import axios from "../config/axios";
 import PostLoader from "../components/common/PostLoader";
+import useGet from "../utils/useGet";
 
 const Fashion = () => {
-
-  const [products, setProducts] = useState([])
-
-  const getProducts = async ()=>{
-    try {
-      const { data } = await axios.get("/api/bff-store/products?page=1");
-      console.log(data);
-      setProducts(data)
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    getProducts();
-  }, [])
+  const [products,loading] = useGet("/api/bff-store/products?page=1",axios)
   
   return (
     <>
@@ -55,14 +41,14 @@ const Fashion = () => {
         hrClass={false}
       />
 
-      {products.length > 0 ? (
+      {!loading > 0 ? (
         <TopCollection
           noTitle="null"
           backImage={true}
           type="fashion"
           title="top collection"
           subtitle="special offer"
-          productSlider={Product4}
+          // productSlider={Product4}
           designClass="section-b-space p-t-0 ratio_asos px-2"
           noSlider="false"
           cartClass="cart-info cart-wrap"
