@@ -67,20 +67,20 @@ const CartPage = () => {
                       <tbody key={index}>
                         <tr>
                           <td>
-                            <Link href={`/left-sidebar/product/` + item.id}>
+                            <Link href={`/left-sidebar/product/` + item.code}>
                               <Media
                                 src={
                                   item.images
-                                    ? item.images[0].src
-                                    : item.images[0].src
+                                    ? item.images[0].main
+                                    : item.images[0].main
                                 }
                                 alt=""
                               />
                             </Link>
                           </td>
                           <td>
-                            <Link href={`/left-sidebar/product/` + item.id}>
-                              {item.title}
+                            <Link href={`/left-sidebar/product/` + item.code}>
+                              {item.name}
                             </Link>
                             <div className="mobile-cart-content row">
                               <div className="col-xs-3">
@@ -123,7 +123,8 @@ const CartPage = () => {
                           <td>
                             <h2>
                               {symbol}
-                              {item.price - (item.price * item.discount) / 100}
+                              {/* {item.price - (item.price * item.discount) / 100} */}
+                              {item.price}
                             </h2>
                           </td>
                           <td>
@@ -153,7 +154,7 @@ const CartPage = () => {
                           <td>
                             <h2 className="td-color">
                               {symbol}
-                              {item.total}
+                              {item.price}
                             </h2>
                           </td>
                         </tr>

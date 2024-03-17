@@ -9,12 +9,12 @@ const LeftSidebar = () => {
   
   const router = useRouter();
   const id = router.query.id;
-  
+ 
   return (
-    <CommonLayout parent="Home" title="Product">
-        <LeftSidebarPage pathId={id} />
+    <>
+      <LeftSidebarPage pathId={id} />
       <ProductSection />
-    </CommonLayout>
+    </>
   );
 }
 

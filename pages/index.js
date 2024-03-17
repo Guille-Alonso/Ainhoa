@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Banner from "./layouts/Fashion/Components/Banner";
 import CollectionBanner from "./layouts/Fashion/Components/Collection-Banner";
 import TopCollection from "../components/common/Collections/Collection3";
@@ -17,9 +17,10 @@ import MasterFooter from "../components/footers/common/MasterFooter";
 import axios from "../config/axios";
 import PostLoader from "../components/common/PostLoader";
 import useGet from "../utils/useGet";
+import UserContext from "../helpers/user/UserContext";
 
 const Fashion = () => {
-  const [products,loading] = useGet("/api/bff-store/products?page=1",axios)
+  const userContext = useContext(UserContext);
   
   return (
     <>
@@ -41,18 +42,18 @@ const Fashion = () => {
         hrClass={false}
       />
 
-      {!loading > 0 ? (
+      {userContext.products.length > 0 ? (
         <TopCollection
           noTitle="null"
           backImage={true}
           type="fashion"
           title="top collection"
           subtitle="special offer"
-          // productSlider={Product4}
+          productSlider={Product4}
           designClass="section-b-space p-t-0 ratio_asos px-2"
           noSlider="false"
           cartClass="cart-info cart-wrap"
-          products={products}
+          products={userContext.products}
         />
       ) : (
         <div className="row margin-default">

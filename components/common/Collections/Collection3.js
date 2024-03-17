@@ -70,42 +70,6 @@ const TopCollection = ({ type, title, subtitle, designClass, noSlider, cartClass
     }, 1);
   }, [delayProduct]);
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    // slidesToScroll: 1
-    // slidesToShow: 4,
-    slidesToScroll: 3,
-    autoplay: true,
-    arrows: false,
-    autoplaySpeed: 3000,
-    responsive: [
-      {
-        breakpoint: 1366,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 4,
-        },
-      },
-      {
-        breakpoint: 1200,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-        },
-      },
-      {
-        breakpoint: 991,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-        },
-      },
-    ],
-  };
-
   return (
     <>
       <section className={designClass}>
@@ -145,7 +109,7 @@ const TopCollection = ({ type, title, subtitle, designClass, noSlider, cartClass
                     </div>
                   </div>
                 ) : (
-                  <Slider {...settings} className="product-m no-arrow">
+                  <Slider {...productSlider} className="product-m no-arrow">
                     {products &&
                       products.map((product, i) => (
                         <div key={i}>

@@ -3,12 +3,15 @@ import UserContext from "./UserContext";
 import axios from "../../config/axios";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import useGet from "../../utils/useGet";
 
 const UserProvider = (props) => {
     const [user, setUser] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const [botonState, setBotonState] = useState(false);
+
+    const [products] = useGet("/api/bff-store/products?page=1",axios)
 
     const router = useRouter();
 
@@ -97,7 +100,8 @@ const UserProvider = (props) => {
         login,
         getAuth,
         logout,
-        register
+        register,
+        products
       }}
     >
       {props.children}

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Row, Col, Media, Modal, ModalBody, ModalHeader } from "reactstrap";
@@ -6,6 +6,7 @@ import CartContext from "../../../helpers/cart";
 import { CurrencyContext } from "../../../helpers/Currency/CurrencyContext";
 import MasterProductDetail from "./MasterProductDetail";
 import UserContext from "../../../helpers/user/UserContext";
+import { useImageSize } from "../../../utils/useImageSize";
 
 const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass, productDetail, addCompare, title }) => {
   // eslint-disable-next-line
@@ -34,8 +35,9 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
   };
 
   const clickProductDetail = () => {
-    const titleProps = product.title.split(" ").join("");
-    router.push(`/product-details/${product.id}` + "-" + `${titleProps}`);
+    // const titleProps = product.title.split(" ").join("");
+    // router.push(`/product-details/${product.id}` + "-" + `${titleProps}`);
+    router.push(`/product-details/${product.code}`);
   };
 
   const variantChangeByColor = (imgId, product_images) => {
@@ -47,11 +49,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
   };
 
   const userContext = useContext(UserContext);
-
-  const imageSize = {
-    width: '80%', // Tamaño fijo en píxeles
-    height: '50vh' // Tamaño fijo en píxeles
-  };
+  const imageSize = useImageSize();  
 
   return (
     <div className="product-box product-wrap">
