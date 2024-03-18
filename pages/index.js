@@ -53,7 +53,8 @@ const Fashion = () => {
           designClass="section-b-space p-t-0 ratio_asos px-2"
           noSlider="false"
           cartClass="cart-info cart-wrap"
-          products={userContext.products}
+          // products={userContext.products}
+          products={userContext.products.filter(producto => !userContext.cart?.products.includes(producto))}
         />
       ) : (
         <div className="row margin-default">

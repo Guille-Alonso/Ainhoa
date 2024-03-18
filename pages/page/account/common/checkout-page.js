@@ -8,6 +8,7 @@ import { PayPalScriptProvider, BraintreePayPalButtons, PayPalButtons } from "@pa
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { CurrencyContext } from "../../../../helpers/Currency/CurrencyContext";
+import UserContext from "../../../../helpers/user/UserContext";
 
 const CheckoutPage = () => {
   const cartContext = useContext(CartContext);
@@ -45,6 +46,7 @@ const CheckoutPage = () => {
     setObj(obj);
   };
 
+  const userContext = useContext(UserContext);
   console.log("cartItems", cartItems);
   return (
     <section className="section-b-space">
@@ -267,7 +269,7 @@ const CheckoutPage = () => {
                   </div>
                 </Col>
                 <Col lg="6" sm="12" xs="12">
-                  {cartItems && cartItems.length > 0 > 0 ? (
+                  {userContext.cart.products.length > 0 ? (
                     <div className="checkout-details">
                       <div className="order-box">
                         <div className="title-box">
@@ -377,6 +379,7 @@ const CheckoutPage = () => {
                             </ul>
                           </div>
                         </div>
+                        {/* REEMPLAZAR POR EL TOTAL DE MI CARRITO */}
                         {cartTotal !== 0 ? (
                           <div className="text-end">
                             {payment === "cod" ? (

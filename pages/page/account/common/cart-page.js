@@ -4,17 +4,20 @@ import CartContext from "../../../../helpers/cart";
 import { Container, Row, Col, Media, Input } from "reactstrap";
 import { CurrencyContext } from "../../../../helpers/Currency/CurrencyContext";
 import cart from "../../../../public/assets/images/icon-empty-cart.png";
+import UserContext from "../../../../helpers/user/UserContext";
 
 const CartPage = () => {
-  const context = useContext(CartContext);
-  const cartItems = context.state;
-  const curContext = useContext(CurrencyContext);
-  const symbol = curContext.state.symbol;
-  const total = context.cartTotal;
-  const removeFromCart = context.removeFromCart;
+  // const context = useContext(CartContext);
+  // const cartItems = context.state;
+  // const curContext = useContext(CurrencyContext);
+  // const symbol = curContext.state.symbol;
+  // const total = context.cartTotal;
+  // const removeFromCart = context.removeFromCart;
   const [quantity, setQty] = useState(1);
   const [quantityError, setQuantityError] = useState(false);
-  const updateQty = context.updateQty;
+  // const updateQty = context.updateQty;
+
+  const userContext = useContext(UserContext);
 
   const handleQtyUpdate = (item, quantity) => {
     if (quantity >= 1) {
@@ -46,7 +49,7 @@ const CartPage = () => {
 
   return (
     <div>
-      {cartItems && cartItems.length > 0 ? (
+      {userContext.cart && userContext.cart.products.length > 0 ? (
         <section className="cart-section section-b-space">
           <Container>
             <Row>
@@ -62,7 +65,7 @@ const CartPage = () => {
                       <th scope="col">total</th>
                     </tr>
                   </thead>
-                  {cartItems.map((item, index) => {
+                  {userContext.cart.products.map((item, index) => {
                     return (
                       <tbody key={index}>
                         <tr>
@@ -104,7 +107,8 @@ const CartPage = () => {
                               </div>
                               <div className="col-xs-3">
                                 <h2 className="td-color">
-                                  {symbol}
+                                  {/* {symbol} */}
+                                  $
                                   {item.price -
                                     (item.price * item.discount) / 100}
                                 </h2>
@@ -114,7 +118,7 @@ const CartPage = () => {
                                   <a href="#" className="icon">
                                     <i
                                       className="fa fa-times"
-                                      onClick={() => removeFromCart(item)}></i>
+                                      onClick={() => userContext.removeProductFromCart(item.code)}></i>
                                   </a>
                                 </h2>
                               </div>
@@ -122,9 +126,10 @@ const CartPage = () => {
                           </td>
                           <td>
                             <h2>
-                              {symbol}
+                              {/* {symbol} */}
+                              ${item.price}
                               {/* {item.price - (item.price * item.discount) / 100} */}
-                              {item.price}
+                              
                             </h2>
                           </td>
                           <td>
@@ -144,16 +149,18 @@ const CartPage = () => {
                                 />
                               </div>
                             </div>
-                            {item.qty >= item.stock ? "out of Stock" : ""}
+                            {/* {item.qty >= item.stock ? "out of Stock" : ""} */}
+                            1
                           </td>
                           <td>
                             <i
                               className="fa fa-times"
-                              onClick={() => removeFromCart(item)}></i>
+                              onClick={() => userContext.removeProductFromCart(item.code)}></i>
                           </td>
                           <td>
                             <h2 className="td-color">
-                              {symbol}
+                              {/* {symbol} */}
+                              $
                               {item.price}
                             </h2>
                           </td>
@@ -168,7 +175,9 @@ const CartPage = () => {
                       <td>total price :</td>
                       <td>
                         <h2>
-                          {symbol} {total}{" "}
+                          {/* {symbol} */}
+                           {/* ${total}{" "} */}
+                           88
                         </h2>
                       </td>
                     </tr>

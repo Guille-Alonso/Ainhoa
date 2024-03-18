@@ -48,6 +48,7 @@ const LeftSidebarPage = ({ pathId }) => {
   // });
   const userContext = useContext(UserContext);
   const data = userContext.products.find(p=>p.code == pathId)
+  console.log(data);
   // const [state, setState] = useState({ nav1: null, nav2: null });
   // const slider1 = useRef();
   // const slider2 = useRef();

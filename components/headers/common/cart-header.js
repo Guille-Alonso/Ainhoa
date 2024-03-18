@@ -2,9 +2,11 @@ import React, { Fragment, useContext } from "react";
 import Link from "next/link";
 import CartContext from "../../../helpers/cart";
 import { Media } from "reactstrap";
+import UserContext from "../../../helpers/user/UserContext";
 
 const CartHeader = ({ item, symbol }) => {
-  const context = useContext(CartContext);
+  // const context = useContext(CartContext);
+  const userContext = useContext(UserContext);
   return (
     <Fragment>
       <li>
@@ -17,14 +19,15 @@ const CartHeader = ({ item, symbol }) => {
           <div className="media-body">
             <Link href={"/product-details/" + item.id}>
               {/* <a> */}
-              <h6>{item.title}</h6>
+              <h6>{item.name}</h6>
               {/* </a> */}
             </Link>
 
             <h4>
               <span>
-                {item.qty} x {symbol}
-                {(item.price - (item.price * item.discount) / 100).toFixed(2)}
+                {/* {item.qty} x {symbol}
+                {(item.price - (item.price * item.discount) / 100).toFixed(2)} */}
+                {item.price}
               </span>
             </h4>
           </div>
@@ -33,7 +36,7 @@ const CartHeader = ({ item, symbol }) => {
           <i
             className="fa fa-times"
             aria-hidden="true"
-            onClick={() => context.removeFromCart(item)}></i>
+            onClick={() => userContext.removeProductFromCart(item.code)}></i>
         </div>
       </li>
     </Fragment>

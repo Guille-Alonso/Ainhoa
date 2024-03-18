@@ -7,11 +7,12 @@ import useGet from "../../utils/useGet";
 
 const UserProvider = (props) => {
     const [user, setUser] = useState(null);
+    const [cart, setCart] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const [botonState, setBotonState] = useState(false);
 
-    const [products] = useGet("/api/bff-store/products?page=1",axios)
+    const [products,loadingProducts,getProducts] = useGet("/api/bff-store/products?page=1",axios)
 
     const router = useRouter();
 
@@ -23,6 +24,7 @@ const UserProvider = (props) => {
         console.log(data);
         setAuthenticated(!!data.user);
         setUser(data.user);
+        setCart(data.cart)
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token;
         localStorage.setItem("token", data.access_token);
         // localStorage.setItem("user", JSON.stringify(data.user));
@@ -49,6 +51,7 @@ const UserProvider = (props) => {
         console.log(data);
         setUser(data.user);
         setAuthenticated(true);
+        setCart(data.cart)
       } catch (error) {
         setAuthenticated(false);
         router.push("/page/account/login")
@@ -85,6 +88,37 @@ const UserProvider = (props) => {
       setBotonState(false);
     }
 
+    const addProductToCart = async (product,qty) => {
+      try {
+        const productToAdd = {"product": product.code,"qty":qty}
+        const {data} = await axios.post("/api/bff-store/private/carts/products",productToAdd)
+        console.log(data);
+        toast.success("Product Added Successfully !");
+        setCart((prevCart) => ({
+          ...prevCart,
+          products: [...prevCart.products, product]
+        }));
+        // getProducts();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const removeProductFromCart = async (code) => {
+      try {
+       const {data} = await axios.delete(`/api/bff-store/private/carts/products/${code}`)
+        console.log(data);
+        toast.error("Product Removed Successfully !");
+        setCart((prevCart) => ({
+          ...prevCart,
+          products: prevCart.products.filter(product => product.code !== code)
+        }));
+        getProducts();
+      } catch (error) {
+        
+      }
+    };
+
   return (
     <UserContext.Provider
       value={{
@@ -101,7 +135,10 @@ const UserProvider = (props) => {
         getAuth,
         logout,
         register,
-        products
+        products,
+        cart,
+        addProductToCart,
+        removeProductFromCart
       }}
     >
       {props.children}

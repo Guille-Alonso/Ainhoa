@@ -6,6 +6,7 @@ import { CurrencyContext } from "../../../helpers/Currency/CurrencyContext";
 import CartContext from "../../../helpers/cart";
 import CountdownComponent from "../../../components/common/widgets/countdownComponent";
 import MasterSocial from "./master_social";
+import UserContext from "../../../helpers/user/UserContext";
 
 const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
   const [modal, setModal] = useState(false);
@@ -24,6 +25,8 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
   const changeQty = (e) => {
     setQuantity(parseInt(e.target.value));
   };
+
+  const userContext = useContext(UserContext);
 
   return (
     <>
@@ -128,10 +131,10 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
           </div>
         </div>
         <div className="product-buttons">
-          <a href={null} className="btn btn-solid" onClick={() => context.addToCart(product, quantity)}>
+          <a href={null} className="btn btn-solid" onClick={() => userContext.addProductToCart(product, quantity)}>
             add to cart
           </a>
-          <Link href={`/page/account/checkout`} className="btn btn-solid" onClick={() => context.addToCart(product, quantity)}>
+          <Link href={`/page/account/checkout`} className="btn btn-solid" onClick={() => userContext.addProductToCart(product, quantity)}>
             buy now
           </Link>
         </div>

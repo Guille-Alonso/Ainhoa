@@ -9,6 +9,7 @@ import { WishlistContext } from "../../../helpers/wishlist/WishlistContext";
 import PostLoader from "../PostLoader";
 import { CompareContext } from "../../../helpers/Compare/CompareContext";
 import search from "../../../public/assets/images/empty-search.jpg";
+import UserContext from "../../../helpers/user/UserContext";
 
 const GET_PRODUCTS = gql`
   query products($type: _CategoryType!, $indexFrom: Int!, $limit: Int!) {
@@ -70,6 +71,41 @@ const TopCollection = ({ type, title, subtitle, designClass, noSlider, cartClass
     }, 1);
   }, [delayProduct]);
 
+  const userContext = useContext(UserContext);
+
+  const settings = {
+    infinite: true,
+    speed: 300,
+    slidesToShow: userContext.products.filter(producto => !userContext.cart?.products.includes(producto)).length >= 4? 4 : userContext.products.filter(producto => !userContext.cart?.products.includes(producto)).length,
+    slidesToScroll: userContext.products.filter(producto => !userContext.cart?.products.includes(producto)).length >= 4? 4 : userContext.products.filter(producto => !userContext.cart?.products.includes(producto)).length,
+    autoplay: true,
+    arrows: false,
+    autoplaySpeed: 3000,
+    responsive: [
+      {
+        breakpoint: 1366,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+        },
+      },
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <section className={designClass}>
@@ -109,11 +145,11 @@ const TopCollection = ({ type, title, subtitle, designClass, noSlider, cartClass
                     </div>
                   </div>
                 ) : (
-                  <Slider {...productSlider} className="product-m no-arrow">
+                  <Slider {...settings} className="product-m no-arrow">
                     {products &&
                       products.map((product, i) => (
                         <div key={i}>
-                          <ProductItems product={product} title={title} addWishlist={() => contextWishlist.addToWish(product)} addCart={() => context.addToCart(product, quantity)} addCompare={() => comapreList.addToCompare(product)} cartClass={cartClass} backImage={backImage} />
+                          <ProductItems product={product} title={title} addWishlist={() => contextWishlist.addToWish(product)} addCart={() => userContext.addProductToCart(product, quantity)} addCompare={() => comapreList.addToCompare(product)} cartClass={cartClass} backImage={backImage} />
                         </div>
                       ))}
                   </Slider>
@@ -154,7 +190,7 @@ const TopCollection = ({ type, title, subtitle, designClass, noSlider, cartClass
                   data.products.items.slice(0, 8).map((product, index) => (
                     <Col xl="3" sm="6" key={index}>
                       <div>
-                        <ProductItems product={product} backImage={backImage} addCompare={() => comapreList.addToCompare(product)} addWishlist={() => contextWishlist.addToWish(product)} title={title} cartClass={cartClass} addCart={() => context.addToCart(product, quantity)} key={index} />
+                        <ProductItems product={product} backImage={backImage} addCompare={() => comapreList.addToCompare(product)} addWishlist={() => contextWishlist.addToWish(product)} title={title} cartClass={cartClass} addCart={() => userContext.addProductToCart(product, quantity)} key={index} />
                       </div>
                     </Col>
                   ))

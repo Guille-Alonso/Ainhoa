@@ -5,9 +5,9 @@ import WishlistPage from './common/wishlist-page';
 
 const Wishliat = () => {
     return (
-        <CommonLayout parent="home" title="wishlist">
+        // <CommonLayout parent="home" title="wishlist">
             <WishlistPage />
-        </CommonLayout>
+        // {/* </CommonLayout> */}
     )
 }
 

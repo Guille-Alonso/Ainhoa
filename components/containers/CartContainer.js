@@ -4,6 +4,7 @@ import CartHeader from "../headers/common/cart-header";
 import CartContext from "../../helpers/cart";
 import { Media } from "reactstrap";
 import { CurrencyContext } from "../../helpers/Currency/CurrencyContext";
+import UserContext from "../../helpers/user/UserContext";
 
 const CartContainer = ({ icon }) => {
   const context = useContext(CartContext);
@@ -12,10 +13,12 @@ const CartContainer = ({ icon }) => {
   const cartList = context.state;
   const total = context.cartTotal;
 
+  const userContext = useContext(UserContext);
+
   return (
     <Fragment>
       <li className="onhover-div mobile-cart">
-        <div className="cart-qty-cls">{cartList.length}</div>
+        <div className="cart-qty-cls">{userContext.cart.products.length}</div>
         <Link href={`/page/account/cart`}>
           <div href={null}>
             <Media src={icon} className="img-fluid" alt="" />
@@ -23,10 +26,10 @@ const CartContainer = ({ icon }) => {
           </div>
         </Link>
         <ul className="show-div shopping-cart">
-          {cartList.map((item, index) => (
+          {userContext.cart.products.map((item, index) => (
             <CartHeader key={index} item={item} total={total} symbol={symbol} />
           ))}
-          {cartList.length > 0 ? (
+          {userContext.cart.products.length > 0 ? (
             <div>
               <li>
                 <div className="total">
@@ -34,7 +37,7 @@ const CartContainer = ({ icon }) => {
                     subtotal :{" "}
                     <span>
                       {symbol}
-                      {total}
+                      {/* {total} */}
                     </span>
                   </h5>
                 </div>
