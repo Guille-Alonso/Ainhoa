@@ -114,7 +114,7 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
             ""
           )}
           <span className="instock-cls">{stock}</span>
-          <h6 className="product-title">quantity</h6>
+          <h6 className="product-title">Cantidad</h6>
           <div className="qty-box">
             <div className="input-group">
               <span className="input-group-prepend">
@@ -133,18 +133,18 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
         </div>
         <div className="product-buttons">
           <a href={null} className="btn btn-solid" onClick={() => userContext.addProductToCart(product, quantity)}>
-            add to cart
+            Agregar al carrito
           </a>
           <Link href={`/page/account/checkout`} className="btn btn-solid" onClick={() => userContext.addProductToCart(product, quantity)}>
-            buy now
+            Comprar
           </Link>
         </div>
         <div className="border-product">
-          <h6 className="product-title">product details</h6>
+          <h6 className="product-title">Categoría: {product.category}</h6>
           <p>{product.description}</p>
         </div>
         <div className="border-product">
-          <h6 className="product-title">share it</h6>
+          <h6 className="product-title">Compartir con</h6>
           <div className="product-icon">
             <MasterSocial />
           </div>

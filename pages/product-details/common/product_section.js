@@ -84,12 +84,12 @@ const ProductSection = () => {
   return (
     <section className="section-b-space ratio_asos">
       <Container>
-        <Row>
+        {/* <Row>
           <Col className="product-related">
             <h2>related products</h2>
           </Col>
-        </Row>
-        <Row className="search-product">
+        </Row> */}
+        {/* <Row className="search-product">
           {!data ||
             !data.products ||
             data.products.items.length === 0 ||
@@ -181,7 +181,7 @@ const ProductSection = () => {
                 ))}
             </>
           )}
-        </Row>
+        </Row> */}
         {selectedProduct ? (
           <Modal
             isOpen={modal}

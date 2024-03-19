@@ -7,35 +7,53 @@ import Brand from './brand'
 import Color from './color'
 import Size from './size'
 import Price from './price';
+import { productAttributes } from '../../../utils/productAttributes';
 
-const FilterPage = ({sm,sidebarView,closeSidebar,categories}) => {
+const FilterPage = ({sm,sidebarView,closeSidebar,categories,attributes,products}) => {
+   
+    const attributesArray = productAttributes(products)
     return (
-        <>
-            <Col sm={sm} className="collection-filter" style={sidebarView ? {left:"0px"} : {}}>
-                {/* <!-- side-bar colleps block stat --> */}
-                <div className="collection-filter-block">
-                    {/* <!-- brand filter start --> */}
-                    <div className="collection-mobile-back" onClick={() => closeSidebar()}>
-                        <span className="filter-back">
-                            <i className="fa fa-angle-left" aria-hidden="true"></i> back
-                        </span>
-                    </div>
-                    <Category categories={categories}/>
-                    <Brand/>
-                    <Color/>
-                    <Size/>
-                    <Price />
-                </div>
-                {/* <!-- silde-bar colleps block end here -->*/}
-                <NewProduct />
-                {/* <!-- side-bar banner start here -->  */}
-                <div className="collection-sidebar-banner">
-                    <a href={null}><Media src={sideBanner.src} className="img-fluid blur-up lazyload" alt="" /></a>
-                </div>
-                {/* <!-- side-bar banner end here --> */}
-            </Col>
-        </>
-    )
+      <>
+        <Col
+          sm={sm}
+          className="collection-filter"
+          style={sidebarView ? { left: "0px" } : {}}
+        >
+      
+          <div className="collection-filter-block">
+       
+            <div
+              className="collection-mobile-back"
+              onClick={() => closeSidebar()}
+            >
+              <span className="filter-back">
+                <i className="fa fa-angle-left" aria-hidden="true"></i> back
+              </span>
+            </div>
+            <Category categories={categories} />
+            {attributesArray?.map((a) => (
+              <Brand name={a.name} values={a.values} />
+            ))}
+            {/* <Color />
+            <Size /> */}
+            <Price />
+          </div>
+         
+          {/* <NewProduct /> */}
+      
+          {/* <div className="collection-sidebar-banner">
+            <a href={null}>
+              <Media
+                src={sideBanner.src}
+                className="img-fluid blur-up lazyload"
+                alt=""
+              />
+            </a>
+          </div> */}
+        
+        </Col>
+      </>
+    );
 }
 
 export default FilterPage;

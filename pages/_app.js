@@ -15,7 +15,7 @@ import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "../helpers/apollo";
 import UserProvider from "../helpers/user/UserProvider";
 import CommonLayout from "../components/shop/common-layout";
-// import "../public/assets/products.css"
+import "../public/assets/products.css"
 
 export default function MyApp({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(true);

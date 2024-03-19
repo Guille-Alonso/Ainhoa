@@ -46,7 +46,7 @@ const CartContainer = ({ icon }) => {
                 <div className="buttons view-cart">
                   <Link href={`/page/account/cart`}>
                     {/* <a> */}
-                    view cart
+                    ver carrito
                     {/* </a> */}
                   </Link>
                   <Link href={`/page/account/checkout`} className="checkout">

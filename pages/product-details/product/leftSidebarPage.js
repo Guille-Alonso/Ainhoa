@@ -11,6 +11,9 @@ import Filter from "../common/filter";
 import { Container, Row, Col, Media } from "reactstrap";
 import UserContext from "../../../helpers/user/UserContext";
 import PostLoader from "../../../components/common/PostLoader";
+import axios from "../../../config/axios";
+import useGet from "../../../utils/useGet";
+import FilterPage from "../../shop/common/filter";
 
 const GET_SINGLE_PRODUCTS = gql`
   query product($id: Int!) {
@@ -41,17 +44,17 @@ const GET_SINGLE_PRODUCTS = gql`
   }
 `;
 
-const LeftSidebarPage = ({ pathId }) => {
+const LeftSidebarPage = ({ pathId,noSidebar }) => {
   // var { loading, data } = useQuery(GET_SINGLE_PRODUCTS, {
   //   variables: {
   //     id: parseInt(pathId),
   //   },
   // });
   const userContext = useContext(UserContext);
-  const newProductsArray = userContext.products.concat(userContext.cart.products);
-  const data = newProductsArray.find(p=>p.code == pathId)
-  console.log(userContext.cart.products);
-  console.log(userContext.products);
+  const newProductsArray = userContext.products.concat(userContext.cart?.products);
+  const data = newProductsArray.find(p=>p?.code == pathId)
+  // console.log(userContext.cart.products);
+  // console.log(userContext.products);
   // const [state, setState] = useState({ nav1: null, nav2: null });
   // const slider1 = useRef();
   // const slider2 = useRef();
@@ -91,7 +94,18 @@ const LeftSidebarPage = ({ pathId }) => {
     slider2.current?.slickGoTo(img_id);
   };
 
-  console.log("data.product.images", data?.product?.images?.length);
+  const [sidebarView,setSidebarView] = useState(false)
+
+  const openCloseSidebar = () => {
+    if(sidebarView){
+        setSidebarView(!sidebarView)
+    } else {
+        setSidebarView(!sidebarView)
+    }
+}
+
+  const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
+  const [attributes,loadingAttributes] = useGet("/api/bff-store/attributes",axios)
 
   return (
     <section className="">
@@ -99,18 +113,33 @@ const LeftSidebarPage = ({ pathId }) => {
         <Container>
           <Row>
             <Col sm="3" className="collection-filter" id="filter">
-              <Filter />
-              <Service />
-              {/* <!-- side-bar single product slider start --> */}
-              <NewProduct />
-              {/* <!-- side-bar single product slider end --> */}
+              <div className="container">
+                {/* <Filter /> */}
+                {!loadingCategories && !loadingAttributes ? (
+                  <FilterPage
+                    sidebarView={sidebarView}
+                    closeSidebar={() => openCloseSidebar(sidebarView)}
+                    categories={categories}
+                    attributes={attributes}
+                    products={userContext.products}
+                  />
+                ) : (
+                  <PostLoader />
+                )}
+              </div>
+              {/* <Service /> */}
+
+              {/* <NewProduct /> */}
             </Col>
             <Col lg="9" sm="12" xs="12">
               <Container fluid={true}>
                 <Row>
                   <Col xl="12" className="filter-col">
                     <div className="filter-main-btn mb-2">
-                      <span onClick={filterClick} className="filter-btn">
+                      <span
+                        onClick={() => openCloseSidebar(sidebarView)}
+                        className="filter-btn"
+                      >
                         <i className="fa fa-filter" aria-hidden="true"></i>{" "}
                         filter
                       </span>
@@ -159,7 +188,7 @@ const LeftSidebarPage = ({ pathId }) => {
                   </Row>
                 )}
               </Container>
-              <ProductTab />
+              {/* <ProductTab /> */}
             </Col>
           </Row>
         </Container>

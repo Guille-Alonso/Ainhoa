@@ -10,6 +10,7 @@ import PostLoader from "../PostLoader";
 import { CompareContext } from "../../../helpers/Compare/CompareContext";
 import { CurrencyContext } from "../../../helpers/Currency/CurrencyContext";
 import emptySearch from "../../../public/assets/images/empty-search.jpg";
+import UserContext from "../../../helpers/user/UserContext";
 
 const GET_PRODUCTS = gql`
   query products($type: _CategoryType!, $indexFrom: Int!, $limit: Int!) {
@@ -51,6 +52,7 @@ const TabContent = ({
   endIndex,
   cartClass,
   backImage,
+  products
 }) => {
   const context = useContext(CartContext);
   const wishListContext = useContext(WishlistContext);
@@ -58,6 +60,8 @@ const TabContent = ({
   const curContext = useContext(CurrencyContext);
   const currency = curContext.state;
   const quantity = context.quantity;
+
+  const userContext = useContext(UserContext);
 
   return (
     <Row className="no-slider">
@@ -102,16 +106,15 @@ const TabContent = ({
           </div>
         )
       ) : (
-        data &&
-        data.products.items
-          .slice(startIndex, endIndex)
+        products &&
+       products
           .map((product, i) => (
             <ProductItem
               key={i}
               product={product}
               symbol={currency.symbol}
               addCompare={() => compareContext.addToCompare(product)}
-              addCart={() => context.addToCart(product, quantity)}
+              addCart={() => userContext.addProductToCart(product, quantity)}
               addWishlist={() => wishListContext.addToWish(product)}
               cartClass={cartClass}
               backImage={backImage}
@@ -134,6 +137,7 @@ const SpecialProducts = ({
   line,
   hrClass,
   backImage,
+  products
 }) => {
   const [activeTab, setActiveTab] = useState(type);
   const context = useContext(CartContext);
@@ -159,8 +163,8 @@ const SpecialProducts = ({
             ""
           ) : (
             <div className={title}>
-              <h4>exclusive products</h4>
-              <h2 className={inner}>special products</h2>
+              <h4>Productos exclusivos</h4>
+              <h2 className={inner}>Productos Exclusivos</h2>
               {line ? (
                 <div className="line"></div>
               ) : hrClass ? (
@@ -201,6 +205,7 @@ const SpecialProducts = ({
                 endIndex={8}
                 cartClass={cartClass}
                 backImage={backImage}
+                products={products}
               />
             </TabPanel>
             <TabPanel>

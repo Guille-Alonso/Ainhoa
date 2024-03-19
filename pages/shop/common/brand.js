@@ -12,7 +12,7 @@ const GET_BRAND = gql`
   }
 `;
 
-const Brand = () => {
+const Brand = ({name,values}) => {
   const context = useContext(FilterContext);
   const isChecked = context.isChecked;
   const filterChecked = context.filterChecked;
@@ -28,15 +28,15 @@ const Brand = () => {
   return (
     <div className="collection-collapse-block open">
       <h3 className="collapse-block-title" onClick={toggleBrand}>
-        brand
+        {name}
       </h3>
       <Collapse isOpen={isOpen}>
         <div className="collection-collapse-block-content">
           <div className="collection-brand-filter">
             {!data || !data.getBrands || data.getBrands.length === 0 || loading
               ? "loading"
-              : data &&
-                data.getBrands.brand.map((brand, index) => (
+              : values &&
+              values.map((brand, index) => (
                   <div
                     className="form-check custom-checkbox collection-filter-checkbox"
                     key={index}

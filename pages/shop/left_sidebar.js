@@ -14,6 +14,7 @@ const LeftSidebar = () => {
     const [sidebarView,setSidebarView] = useState(false)
     const userContext = useContext(UserContext);
     const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
+    const [attributes,loadingAttributes] = useGet("/api/bff-store/attributes",axios)
 
     const openCloseSidebar = () => {
         if(sidebarView){
@@ -28,12 +29,14 @@ const LeftSidebar = () => {
         <div className="collection-wrapper">
           <Container>
             <Row>
-              {!loadingCategories ? (
+              {!loadingCategories && !loadingAttributes? (
                 <FilterPage
                   sm="3"
                   sidebarView={sidebarView}
                   closeSidebar={() => openCloseSidebar(sidebarView)}
                   categories={categories}
+                  attributes={attributes}
+                  products={userContext.products}
                 />
               ):<PostLoader/>
               }

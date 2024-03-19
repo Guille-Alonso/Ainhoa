@@ -1,5 +1,14 @@
-.img-responsive {
-    max-width: 100% !important;
-    height: auto !important;
+
+@media screen and (max-width: 767px) {
+  .logoAinhoa {
+    height: 5vh !important;
   }
+}
+
+/* Media query para dispositivos grandes */
+@media screen and (min-width: 768px) {
+  .logoAinhoa {
+    height: 10vh  !important;
+  }
+}
   

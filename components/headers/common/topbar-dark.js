@@ -3,6 +3,8 @@ import { Container, Row, Col } from "reactstrap";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import UserContext from "../../../helpers/user/UserContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 const TopBarDark = ({ topClass, fluid }) => {
   // const router = useRouter();
@@ -24,55 +26,51 @@ const TopBarDark = ({ topClass, fluid }) => {
           <Col lg="6">
             <div className="header-contact">
               <ul>
-                <li>Welcome to Our store Multikart</li>
+                {/* <li>Teléfono: </li> */}
                 <li>
-                  <i className="fa fa-phone text-white" aria-hidden="true"></i>
-                  Call Us: 123 - 456 - 7890
+                  {/* <i className="fa fa-phone text-white" aria-hidden="true"></i> */}
+                  <FontAwesomeIcon className="me-2" icon={faInstagram} />
+                  ainhoa_vintage
                 </li>
               </ul>
             </div>
           </Col>
           <Col lg="6" className="text-end">
             <ul className="header-dropdown">
-              {
-                  userContext.authenticated &&
-              <li className="mobile-wishlist">
-                <Link href="/page/account/wishlist">
-                  {/* <a> */}
-                  <i className="fa fa-heart" aria-hidden="true"></i> Favs
-                  {/* </a> */}
-                </Link>
-              </li>
-              }
+              {userContext.authenticated && (
+                <li className="mobile-wishlist">
+                  <Link href="/page/account/wishlist">
+                    {/* <a> */}
+                    {/* <i className="fa fa-heart" aria-hidden="true"></i> Favs */}
+                    {/* </a> */}
+                  </Link>
+                </li>
+              )}
               <li className="onhover-dropdown mobile-account">
-                <i className="fa fa-user" aria-hidden="true"></i>{userContext.authenticated ? userContext.user.name: "Mi Cuenta"}
+                <i className="fa fa-user" aria-hidden="true"></i>
+                {userContext.authenticated
+                  ? userContext.user.name
+                  : "Mi Cuenta"}
                 <ul className="onhover-show-div">
-                  {
-                    !userContext.authenticated &&
-                  <li>
-                    <Link href={`/page/account/login`}>
-                     
-                      Iniciar Sesión
-                  
-                    </Link>
-                  </li>
-                  }
-                  {
-                    !userContext.authenticated &&
-                  <li>
-                    <Link href={`/page/account/register`}>
-                      {/* <a> */}
-                      Registrarse
-                      {/* </a> */}
-                    </Link>
-                  </li>
-                  }
-                  {
-                    userContext.authenticated &&
-                  <li onClick={() => userContext.logout()}>
-                    <a>Cerrar Sesión</a>
-                  </li>
-                  }
+                  {!userContext.authenticated && (
+                    <li>
+                      <Link href={`/page/account/login`}>Iniciar Sesión</Link>
+                    </li>
+                  )}
+                  {!userContext.authenticated && (
+                    <li>
+                      <Link href={`/page/account/register`}>
+                        {/* <a> */}
+                        Registrarse
+                        {/* </a> */}
+                      </Link>
+                    </li>
+                  )}
+                  {userContext.authenticated && (
+                    <li onClick={() => userContext.logout()}>
+                      <a>Cerrar Sesión</a>
+                    </li>
+                  )}
                 </ul>
               </li>
             </ul>

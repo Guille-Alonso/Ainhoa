@@ -251,7 +251,8 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
                 ) : (
                   ""
                 )}
-                <Row>
+
+                {/* <Row>
                   <Col>
                     <div className="product-filter-content">
                       <div className="search-count">
@@ -348,7 +349,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
                       </div>
                     </div>
                   </Col>
-                </Row>
+                </Row> */}
               </div>
               <div className={`product-wrapper-grid ${layout}`}>
                 <Row>

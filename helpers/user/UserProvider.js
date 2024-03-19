@@ -12,7 +12,7 @@ const UserProvider = (props) => {
     const [loading, setLoading] = useState(true);
     const [botonState, setBotonState] = useState(false);
 
-    const [products,loadingProducts,getProducts] = useGet("/api/bff-store/products?page=1",axios)
+    const [products,loadingProducts,getProducts,setProducts] = useGet("/api/bff-store/products?page=1",axios)
 
     const router = useRouter();
 
@@ -96,7 +96,7 @@ const UserProvider = (props) => {
           const productToAdd = {"product": product.code,"qty":qty}
           const {data} = await axios.post("/api/bff-store/private/carts/products",productToAdd)
           console.log(data);
-          toast.success("Product Added Successfully !");
+          toast.success("Producto agregado con éxito !");
           setCart((prevCart) => ({
             ...prevCart,
             products: [...prevCart.products, product]
@@ -112,7 +112,7 @@ const UserProvider = (props) => {
       try {
        const {data} = await axios.delete(`/api/bff-store/private/carts/products/${code}`)
         console.log(data);
-        toast.error("Product Removed Successfully !");
+        toast.error("Producto quitado con éxito !");
         setCart((prevCart) => ({
           ...prevCart,
           products: prevCart.products.filter(product => product.code !== code)
@@ -140,6 +140,7 @@ const UserProvider = (props) => {
         logout,
         register,
         products,
+        setProducts,
         cart,
         addProductToCart,
         removeProductFromCart

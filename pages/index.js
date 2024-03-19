@@ -74,7 +74,9 @@ const Fashion = () => {
       )}
 
       <Parallax />
-      <SpecialProducts
+      {
+        userContext.products.length > 0 ?
+        <SpecialProducts
         type="fashion"
         backImage={true}
         productSlider={Product4}
@@ -84,7 +86,24 @@ const Fashion = () => {
         designClass="section-b-space p-t-0 ratio_asos"
         noSlider="true"
         cartClass="cart-info cart-wrap"
+        products={userContext.products}
       />
+    :
+    <div className="row margin-default">
+    <div className="col-xl-3 col-lg-4 col-6">
+      <PostLoader />
+    </div>
+    <div className="col-xl-3 col-lg-4 col-6">
+      <PostLoader />
+    </div>
+    <div className="col-xl-3 col-lg-4 col-6">
+      <PostLoader />
+    </div>
+    <div className="col-xl-3 col-lg-4 col-6">
+      <PostLoader />
+    </div>
+  </div>
+    }
       {/* <ServiceLayout sectionClass="border-section small-section" /> */}
       {/* <Blog type="fashion" title="title1" inner="title-inner1" /> */}
       {/* <Instagram type="fashion" /> */}
