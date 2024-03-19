@@ -90,15 +90,19 @@ const UserProvider = (props) => {
 
     const addProductToCart = async (product,qty) => {
       try {
-        const productToAdd = {"product": product.code,"qty":qty}
-        const {data} = await axios.post("/api/bff-store/private/carts/products",productToAdd)
-        console.log(data);
-        toast.success("Product Added Successfully !");
-        setCart((prevCart) => ({
-          ...prevCart,
-          products: [...prevCart.products, product]
-        }));
-        // getProducts();
+        if(cart.products.find(p=>p.code ==product.code)){
+          toast.error("El producto ya fue agregado al carrito");
+        }else{
+          const productToAdd = {"product": product.code,"qty":qty}
+          const {data} = await axios.post("/api/bff-store/private/carts/products",productToAdd)
+          console.log(data);
+          toast.success("Product Added Successfully !");
+          setCart((prevCart) => ({
+            ...prevCart,
+            products: [...prevCart.products, product]
+          }));
+        }
+        getProducts();
       } catch (error) {
         console.log(error);
       }

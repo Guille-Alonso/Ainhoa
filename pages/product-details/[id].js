@@ -9,7 +9,6 @@ const LeftSidebar = () => {
   
   const router = useRouter();
   const id = router.query.id;
- 
   return (
     <>
       <LeftSidebarPage pathId={id} />

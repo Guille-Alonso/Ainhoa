@@ -5,6 +5,7 @@ import { Container, Row, Col, Media, Input } from "reactstrap";
 import { CurrencyContext } from "../../../../helpers/Currency/CurrencyContext";
 import cart from "../../../../public/assets/images/icon-empty-cart.png";
 import UserContext from "../../../../helpers/user/UserContext";
+import { calculateTotal } from "../../../../utils/calculateTotal";
 
 const CartPage = () => {
   // const context = useContext(CartContext);
@@ -134,7 +135,7 @@ const CartPage = () => {
                           </td>
                           <td>
                             <div className="qty-box">
-                              <div className="input-group">
+                              {/* <div className="input-group">
                                 <input
                                   type="number"
                                   name="quantity"
@@ -147,7 +148,7 @@ const CartPage = () => {
                                     borderColor: quantityError && "red",
                                   }}
                                 />
-                              </div>
+                              </div> */}
                             </div>
                             {/* {item.qty >= item.stock ? "out of Stock" : ""} */}
                             1
@@ -177,7 +178,7 @@ const CartPage = () => {
                         <h2>
                           {/* {symbol} */}
                            {/* ${total}{" "} */}
-                           88
+                          $ {calculateTotal(userContext.cart.products)}
                         </h2>
                       </td>
                     </tr>

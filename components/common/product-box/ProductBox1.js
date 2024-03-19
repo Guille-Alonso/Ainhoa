@@ -59,7 +59,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
           {product.sale === true ? <span className="lable4">on sale</span> : ""}
         </div>
         <div className="front" onClick={clickProductDetail}>
-          <Media src={`${image ? image : product.images[0].main}`} className="img-fluid" alt="" style={imageSize}/>
+          <Media src={`${product.images[0].main}`} className="img-fluid" alt="" style={imageSize}/>
         </div>
         {/* {backImage ? (
           product.images[1] === "undefined" ? (

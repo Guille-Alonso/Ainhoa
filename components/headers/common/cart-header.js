@@ -7,17 +7,18 @@ import UserContext from "../../../helpers/user/UserContext";
 const CartHeader = ({ item, symbol }) => {
   // const context = useContext(CartContext);
   const userContext = useContext(UserContext);
+  console.log(item);
   return (
     <Fragment>
       <li>
         <div className="media">
-          <Link href={"/product-details/" + item.id}>
+          <Link href={"/product-details/" + item.code}>
             {/* <a> */}
-            <Media alt="" className="me-3" src={`${item.images[0].src}`} />
+            <Media alt="" className="me-3" src={`${item.images[0].main}`} style={{width:"55px",height:"85px"}}/>
             {/* </a> */}
           </Link>
           <div className="media-body">
-            <Link href={"/product-details/" + item.id}>
+            <Link href={"/product-details/" + item.code}>
               {/* <a> */}
               <h6>{item.name}</h6>
               {/* </a> */}

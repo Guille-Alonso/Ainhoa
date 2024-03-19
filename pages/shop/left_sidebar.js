@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import CommonLayout from '../../components/shop/common-layout';
 // import { withApollo } from '../../helpers/apollo/apollo';
 import ProductList from './common/productList';
 import { Container, Row} from 'reactstrap';
 import FilterPage from './common/filter';
+import UserContext from '../../helpers/user/UserContext';
+import useGet from '../../utils/useGet';
+import axios from '../../config/axios';
+import PostLoader from '../../components/common/PostLoader';
 
 const LeftSidebar = () => {
 
     const [sidebarView,setSidebarView] = useState(false)
-    
+    const userContext = useContext(UserContext);
+    const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
+
     const openCloseSidebar = () => {
         if(sidebarView){
             setSidebarView(!sidebarView)
@@ -17,19 +23,32 @@ const LeftSidebar = () => {
         }
     }
     return (
-        <CommonLayout title="collection" parent="home" >
-            <section className="section-b-space ratio_asos">
-                <div className="collection-wrapper">
-                    <Container>
-                        <Row>
-                            <FilterPage sm="3" sidebarView={sidebarView} closeSidebar={() => openCloseSidebar(sidebarView)} />
-                            <ProductList colClass="col-xl-3 col-6 col-grid-box" layoutList=''  openSidebar={() => openCloseSidebar(sidebarView)}/>
-                        </Row>
-                    </Container>
-                </div>
-            </section>
-        </CommonLayout>
-    )
+      // <CommonLayout title="collection" parent="home" >
+      <section className="section-b-space ratio_asos">
+        <div className="collection-wrapper">
+          <Container>
+            <Row>
+              {!loadingCategories ? (
+                <FilterPage
+                  sm="3"
+                  sidebarView={sidebarView}
+                  closeSidebar={() => openCloseSidebar(sidebarView)}
+                  categories={categories}
+                />
+              ):<PostLoader/>
+              }
+              <ProductList
+                colClass="col-xl-3 col-6 col-grid-box"
+                layoutList=""
+                openSidebar={() => openCloseSidebar(sidebarView)}
+                products={userContext.products}
+              />
+            </Row>
+          </Container>
+        </div>
+      </section>
+      // </CommonLayout>
+    );
 }
 
 export default LeftSidebar;

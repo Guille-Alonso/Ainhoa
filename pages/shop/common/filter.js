@@ -8,7 +8,7 @@ import Color from './color'
 import Size from './size'
 import Price from './price';
 
-const FilterPage = ({sm,sidebarView,closeSidebar}) => {
+const FilterPage = ({sm,sidebarView,closeSidebar,categories}) => {
     return (
         <>
             <Col sm={sm} className="collection-filter" style={sidebarView ? {left:"0px"} : {}}>
@@ -20,7 +20,7 @@ const FilterPage = ({sm,sidebarView,closeSidebar}) => {
                             <i className="fa fa-angle-left" aria-hidden="true"></i> back
                         </span>
                     </div>
-                    <Category />
+                    <Category categories={categories}/>
                     <Brand/>
                     <Color/>
                     <Size/>

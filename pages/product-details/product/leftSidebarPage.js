@@ -10,6 +10,7 @@ import DetailsWithPrice from "../common/detail-price";
 import Filter from "../common/filter";
 import { Container, Row, Col, Media } from "reactstrap";
 import UserContext from "../../../helpers/user/UserContext";
+import PostLoader from "../../../components/common/PostLoader";
 
 const GET_SINGLE_PRODUCTS = gql`
   query product($id: Int!) {
@@ -47,8 +48,10 @@ const LeftSidebarPage = ({ pathId }) => {
   //   },
   // });
   const userContext = useContext(UserContext);
-  const data = userContext.products.find(p=>p.code == pathId)
-  console.log(data);
+  const newProductsArray = userContext.products.concat(userContext.cart.products);
+  const data = newProductsArray.find(p=>p.code == pathId)
+  console.log(userContext.cart.products);
+  console.log(userContext.products);
   // const [state, setState] = useState({ nav1: null, nav2: null });
   // const slider1 = useRef();
   // const slider2 = useRef();
@@ -108,7 +111,8 @@ const LeftSidebarPage = ({ pathId }) => {
                   <Col xl="12" className="filter-col">
                     <div className="filter-main-btn mb-2">
                       <span onClick={filterClick} className="filter-btn">
-                        <i className="fa fa-filter" aria-hidden="true"></i> filter
+                        <i className="fa fa-filter" aria-hidden="true"></i>{" "}
+                        filter
                       </span>
                     </div>
                   </Col>
@@ -118,13 +122,20 @@ const LeftSidebarPage = ({ pathId }) => {
                 ) : (
                   <Row>
                     <Col lg="6" className="product-thumbnail">
-                      <Slider {...products} asNavFor={nav2} ref={(slider) => setSlider1(slider)} className="product-slick">
-                        {data.images.map((vari, index) => (
-                          <div key={index}>
-                            <ImageZoom image={vari} />
-                          </div>
-                        ))}
-                      </Slider>
+                      {data && (
+                        <Slider
+                          {...products}
+                          asNavFor={nav2}
+                          ref={(slider) => setSlider1(slider)}
+                          className="product-slick"
+                        >
+                          {data.images.map((vari, index) => (
+                            <div key={index}>
+                              <ImageZoom image={vari} />
+                            </div>
+                          ))}
+                        </Slider>
+                      )}
                       {/* {data.product.variants.length > 1 && (
                         <Slider className="slider-nav" {...sliderNav} asNavFor={nav1} ref={(slider) => setSlider2(slider)}>
                           {data.product.images.map((item, i) => (
@@ -136,7 +147,14 @@ const LeftSidebarPage = ({ pathId }) => {
                       )} */}
                     </Col>
                     <Col lg="6" className="rtl-text product-ps">
-                      <DetailsWithPrice item={data} changeColorVar={changeColorVar} />
+                      {data ? (
+                        <DetailsWithPrice
+                          item={data}
+                          changeColorVar={changeColorVar}
+                        />
+                      ) : (
+                        <PostLoader />
+                      )}
                     </Col>
                   </Row>
                 )}

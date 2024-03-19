@@ -54,7 +54,7 @@ const Fashion = () => {
           noSlider="false"
           cartClass="cart-info cart-wrap"
           // products={userContext.products}
-          products={userContext.products.filter(producto => !userContext.cart?.products.includes(producto))}
+          products={userContext.products}
         />
       ) : (
         <div className="row margin-default">

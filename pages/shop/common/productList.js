@@ -11,6 +11,7 @@ import PostLoader from "../../../components/common/PostLoader";
 import CartContext from "../../../helpers/cart";
 import { WishlistContext } from "../../../helpers/wishlist/WishlistContext";
 import { CompareContext } from "../../../helpers/Compare/CompareContext";
+import UserContext from "../../../helpers/user/UserContext";
 
 const GET_PRODUCTS = gql`
   query products(
@@ -65,7 +66,7 @@ const GET_PRODUCTS = gql`
   }
 `;
 
-const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
+const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) => {
   const cartContext = useContext(CartContext);
   const quantity = cartContext.quantity;
   const wishlistContext = useContext(WishlistContext);
@@ -151,12 +152,14 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
     filterContext.setSelectedColor("");
   };
 
+  const userContext = useContext(UserContext);
+
   return (
     <Col className="collection-content">
       <div className="page-main-content">
         <Row>
           <Col sm="12">
-            <div className="top-banner-wrapper">
+            {/* <div className="top-banner-wrapper">
               <a href={null}>
                 <Media
                   src={Menu2.src}
@@ -183,7 +186,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
                   like Aldus PageMaker including versions of Lorem Ipsum.
                 </p>
               </div>
-            </div>
+            </div> */}
             <Row>
               <Col xs="12">
                 <ul className="product-filter-tags">
@@ -391,8 +394,8 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
                       </div>
                     )
                   ) : (
-                    data &&
-                    data.products.items.map((product, i) => (
+                    products &&
+                      products.map((product, i) => (
                       <div className={grid} key={i}>
                         <div className="product">
                           <div>
@@ -408,7 +411,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
                                 wishlistContext.addToWish(product)
                               }
                               addCart={() =>
-                                cartContext.addToCart(product, quantity)
+                                userContext.addProductToCart(product, quantity)
                               }
                             />
                           </div>

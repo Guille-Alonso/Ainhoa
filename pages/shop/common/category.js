@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Collapse } from "reactstrap";
 import FilterContext from "../../../helpers/filter/FilterContext";
 
-const Category = () => {
+const Category = ({categories}) => {
   const context = useContext(FilterContext);
   const [isCategoryOpen, setIsCategoryOpen] = useState(true);
   const toggleCategory = () => setIsCategoryOpen(!isCategoryOpen);
@@ -23,12 +23,15 @@ const Category = () => {
           <div className="collection-collapse-block-content">
             <div className="collection-brand-filter">
               <ul className="category-list">
-                <li>
-                  <a href={null} onClick={() => updateCategory("all")}>
-                    all products
-                  </a>
-                </li>
-                <li>
+                {categories.map((cat, index) => (
+                  <li key={index}>
+                    <a href={null}>
+                     {cat.name}
+                    </a>
+                  </li>
+                ))}
+
+                {/* <li>
                   <a href={null} onClick={() => updateCategory("fashion")}>
                     fashion
                   </a>
@@ -132,7 +135,7 @@ const Category = () => {
                   <a href={null} onClick={() => updateCategory("marijuana")}>
                     marijuana
                   </a>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

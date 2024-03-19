@@ -150,7 +150,6 @@ const SpecialProducts = ({
       limit: 8,
     },
   });
-console.log(data);
 
   return (
     <div>

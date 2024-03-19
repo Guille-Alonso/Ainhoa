@@ -5,6 +5,7 @@ import CartContext from "../../helpers/cart";
 import { Media } from "reactstrap";
 import { CurrencyContext } from "../../helpers/Currency/CurrencyContext";
 import UserContext from "../../helpers/user/UserContext";
+import { calculateTotal } from "../../utils/calculateTotal";
 
 const CartContainer = ({ icon }) => {
   const context = useContext(CartContext);
@@ -36,8 +37,7 @@ const CartContainer = ({ icon }) => {
                   <h5>
                     subtotal :{" "}
                     <span>
-                      {symbol}
-                      {/* {total} */}
+                       ${calculateTotal(userContext.cart.products)}
                     </span>
                   </h5>
                 </div>
