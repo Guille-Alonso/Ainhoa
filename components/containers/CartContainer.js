@@ -19,7 +19,7 @@ const CartContainer = ({ icon }) => {
   return (
     <Fragment>
       <li className="onhover-div mobile-cart">
-        <div className="cart-qty-cls">{userContext.cart?.products.length}</div>
+        <div className="cart-qty-cls">{userContext.cart? userContext.cart?.products.length : 0}</div>
         <Link href={`/page/account/cart`}>
           <div href={null}>
             <Media src={icon} className="img-fluid" alt="" />
@@ -27,7 +27,7 @@ const CartContainer = ({ icon }) => {
           </div>
         </Link>
         <ul className="show-div shopping-cart">
-          {userContext.cart.products.map((item, index) => (
+          {userContext.cart?.products.map((item, index) => (
             <CartHeader key={index} item={item} total={total} symbol={symbol} />
           ))}
           {userContext.cart?.products.length > 0 ? (

@@ -126,7 +126,7 @@ const Login = () => {
               <div className="theme-card authentication-right">
                 <h6 className="title-font">¿Todavía no te registraste?</h6>
                 <p>
-                  Para comprar en Ainhoa Vintage tenes que registrarte y luego iniciar sesión !
+                  Para comprar en Ainhoa Vintage tenes que registrarte y luego ingresar!
                 </p>
                 <button onClick={()=>router.push("/page/account/register")} href="#" className="btn btn-solid">
                   Registrarse

@@ -49,7 +49,11 @@ export default function MyApp({ Component, pageProps }) {
           /> */}
             <Helmet>
               <meta name="viewport" content="width=device-width, initial-scale=1" />
-             
+              <link
+          rel="icon"
+          type="image/x-icon"
+          href={"/assets/logo/A.png"}
+        />
               <title>AINHOA</title>
             </Helmet>
             <div>

@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 
 const NavBar = () => {
   const { t } = useTranslation();
-  const [navClose, setNavClose] = useState({ right: "0px" });
+  const [navClose, setNavClose] = useState({ right: "-410px" });
   const router = useRouter();
 
   useEffect(() => {
@@ -122,7 +122,7 @@ const NavBar = () => {
       });
       document
         .querySelector(".mega-menu-container")
-        .classList.remove("opensubmenu");
+        ?.classList.remove("opensubmenu");
       event.target.nextElementSibling.classList.add("opensubmenu");
     }
   };

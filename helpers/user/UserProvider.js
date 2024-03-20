@@ -53,16 +53,17 @@ const UserProvider = (props) => {
         setAuthenticated(true);
         setCart(data.cart)
       } catch (error) {
+        logout();
         setAuthenticated(false);
         router.push("/page/account/login")
-        // toast.error("Error de autenticación. Ingrese nuevamente");
+        toast.error("Error de autenticación. Ingrese nuevamente");
         console.log(error);
       }
       setLoading(false);
     };
 
     const logout = async () =>{
-      if(cart.products.length > 0){
+      if(cart?.products.length > 0){
         
        await removeProductsFromCart()
       }
@@ -74,6 +75,7 @@ const UserProvider = (props) => {
         const {data} = await axios.post("/api/bff-store/private/auth/logout")
        
       } catch (error) {
+        localStorage.clear();
         console.log(error);
       }
     }
@@ -95,16 +97,16 @@ const UserProvider = (props) => {
 
     const addProductToCart = async (product,qty) => {
       try {
-        if(cart.products.find(p=>p.code ==product.code)){
+        if(cart?.products.find(p=>p.code ==product.code)){
           toast.error("El producto ya fue agregado al carrito");
         }else{
           const productToAdd = {"product": product.code,"qty":qty}
           const {data} = await axios.post("/api/bff-store/private/carts/products",productToAdd)
           console.log(data);
-          toast.success("Producto agregado");
+          toast.success("Producto agregado al carrito");
           setCart((prevCart) => ({
             ...prevCart,
-            products: [...prevCart.products, product]
+            products: [...prevCart?.products, product]
           }));
         }
         getProducts();
@@ -165,9 +167,10 @@ const UserProvider = (props) => {
         }
         const { data } = await axios.post("/api/bff-store/private/carts/checkout", checkoutObj);
         console.log(data);
-        toast.success("Orden realizada con éxito")
+        toast.success("Gracias por su compra")
         router.push("/")
       } catch (error) {
+        logout();
         toast.error(error.response?.data.message || error.message);
         console.log(error.response.status);
       }

@@ -179,7 +179,7 @@ const CartPage = () => {
                       <td>
                         <h2>
                          
-                         $ {calculateTotal(userContext.cart?.products)}
+                         ${calculateTotal(userContext.cart?.products)}
                         </h2>
                       </td>
                     </tr>
@@ -190,7 +190,7 @@ const CartPage = () => {
             <Row className="cart-buttons">
               <Col xs="6">
                 <Link href={`/shop/left_sidebar`} className="btn btn-solid">
-                  Continuar comprando
+                  Seguir comprando
                 </Link>
               </Col>
               <Col xs="6">
