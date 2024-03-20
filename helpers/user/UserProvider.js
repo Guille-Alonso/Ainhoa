@@ -64,7 +64,7 @@ const UserProvider = (props) => {
     const logout = async () =>{
       if(cart.products.length > 0){
         
-        removeProductsFromCart()
+       await removeProductsFromCart()
       }
 
       setAuthenticated(false);
