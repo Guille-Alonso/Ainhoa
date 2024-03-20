@@ -58,12 +58,12 @@ const CartPage = () => {
                 <table className="table cart-table table-responsive-xs">
                   <thead>
                     <tr className="table-head">
-                      <th scope="col">image</th>
-                      <th scope="col">product name</th>
-                      <th scope="col">price</th>
-                      <th scope="col">quantity</th>
-                      <th scope="col">action</th>
-                      <th scope="col">total</th>
+                      <th scope="col">Imágen</th>
+                      <th scope="col">Producto</th>
+                      <th scope="col">Precio</th>
+                      <th scope="col">Cantidad</th>
+                      <th scope="col">Acciones</th>
+                      <th scope="col">Total</th>
                     </tr>
                   </thead>
                   {userContext.cart.products.map((item, index) => {
@@ -91,27 +91,28 @@ const CartPage = () => {
                                 <div className="qty-box">
                                   <div className="input-group">
                                     <input
+                                      disabled
                                       type="number"
                                       name="quantity"
                                       onChange={(e) =>
                                         handleQtyUpdate(item, e.target.value)
                                       }
                                       className="form-control input-number"
-                                      defaultValue={item.qty}
+                                      defaultValue="1"
                                       style={{
                                         borderColor: quantityError && "red",
                                       }}
                                     />
                                   </div>
                                 </div>
-                                {item.qty >= item.stock ? "out of Stock" : ""}
+                                {/* {item.qty >= item.stock ? "out of Stock" : ""} */}
+                                
                               </div>
                               <div className="col-xs-3">
                                 <h2 className="td-color">
                                   {/* {symbol} */}
                                   $
-                                  {item.price -
-                                    (item.price * item.discount) / 100}
+                                 {item.price}
                                 </h2>
                               </div>
                               <div className="col-xs-3">
@@ -135,7 +136,7 @@ const CartPage = () => {
                           </td>
                           <td>
                             <div className="qty-box">
-                              {/* <div className="input-group">
+                               {/* <div className="input-group">
                                 <input
                                   type="number"
                                   name="quantity"
@@ -148,7 +149,8 @@ const CartPage = () => {
                                     borderColor: quantityError && "red",
                                   }}
                                 />
-                              </div> */}
+                              </div>  */}
+                              
                             </div>
                             {/* {item.qty >= item.stock ? "out of Stock" : ""} */}
                             1
@@ -173,12 +175,11 @@ const CartPage = () => {
                 <table className="table cart-table table-responsive-md">
                   <tfoot>
                     <tr>
-                      <td>total price :</td>
+                      <td>Total:</td>
                       <td>
                         <h2>
-                          {/* {symbol} */}
-                           {/* ${total}{" "} */}
-                          $ {calculateTotal(userContext.cart?.products)}
+                         
+                         $ {calculateTotal(userContext.cart?.products)}
                         </h2>
                       </td>
                     </tr>
@@ -189,7 +190,7 @@ const CartPage = () => {
             <Row className="cart-buttons">
               <Col xs="6">
                 <Link href={`/shop/left_sidebar`} className="btn btn-solid">
-                  continue shopping
+                  Continuar comprando
                 </Link>
               </Col>
               <Col xs="6">
@@ -213,9 +214,9 @@ const CartPage = () => {
                       alt=""
                     />
                     <h3>
-                      <strong>Your Cart is Empty</strong>
+                      <strong>Su carrito está vacío</strong>
                     </h3>
-                    <h4>Explore more shortlist some items.</h4>
+                    {/* <h4>Vuelva a comprar</h4> */}
                   </div>
                 </div>
               </Col>

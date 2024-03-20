@@ -163,7 +163,7 @@ const MasterFooter = ({
                           setCollapse(2);
                         } else setIsOpen(true);
                       }}>
-                      my account
+                      Mi Cuenta
                       <span className="according-menu"></span>
                     </h4>
                   </div>
@@ -217,7 +217,7 @@ const MasterFooter = ({
                           setCollapse(3);
                         } else setIsOpen(true);
                       }}>
-                      why we choose
+                      Secciones
                       <span className="according-menu"></span>
                     </h4>
                   </div>
@@ -258,7 +258,7 @@ const MasterFooter = ({
                           setCollapse(4);
                         } else setIsOpen(true);
                       }}>
-                      store information
+                      Información
                       <span className="according-menu"></span>
                     </h4>
                   </div>
@@ -267,8 +267,7 @@ const MasterFooter = ({
                     <div className="footer-contant">
                       <ul className="contact-list">
                         <li>
-                          <i className="fa fa-map-marker"></i>Multikart Demo
-                          Store, Demo store India 345-659
+                          <i className="fa fa-map-marker"></i>San Miguel de Tucumán
                         </li>
                         <li>
                           <i className="fa fa-phone"></i>Call Us: 123-456-7898
@@ -289,10 +288,10 @@ const MasterFooter = ({
           </Container>
         </section>
 
-        {/* <CopyRight
+        <CopyRight
           layout={layoutClass}
           fluid={CopyRightFluid ? CopyRightFluid : ""}
-        /> */}
+        />
       </footer>
     </div>
   );

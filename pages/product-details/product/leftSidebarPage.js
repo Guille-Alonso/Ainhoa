@@ -136,13 +136,12 @@ const LeftSidebarPage = ({ pathId,noSidebar }) => {
                 <Row>
                   <Col xl="12" className="filter-col">
                     <div className="filter-main-btn mb-2">
-                      <span
-                        onClick={() => openCloseSidebar(sidebarView)}
-                        className="filter-btn"
-                      >
-                        <i className="fa fa-filter" aria-hidden="true"></i>{" "}
-                        filter
+                    
+                      <span onClick={() => openCloseSidebar(sidebarView)} className="filter-btn btn btn-theme">
+                          <i className="fa fa-filter" aria-hidden="true"></i>{" "}
+                          Filter
                       </span>
+                      
                     </div>
                   </Col>
                 </Row>

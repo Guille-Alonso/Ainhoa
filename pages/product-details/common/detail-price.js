@@ -113,18 +113,18 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
           ) : (
             ""
           )}
-          <span className="instock-cls">{stock}</span>
+          <span className="instock-cls">último disponible !</span>
           <h6 className="product-title">Cantidad</h6>
           <div className="qty-box">
             <div className="input-group">
               <span className="input-group-prepend">
-                <button type="button" className="btn quantity-left-minus" onClick={minusQty} data-type="minus" data-field="">
+                <button disabled type="button" className="btn quantity-left-minus" onClick={minusQty} data-type="minus" data-field="">
                   <i className="fa fa-angle-left"></i>
                 </button>
               </span>
-              <Input type="text" name="quantity" value={quantity} onChange={changeQty} className="form-control input-number" />
+              <Input disabled type="text" name="quantity" value={quantity} onChange={changeQty} className="form-control input-number" />
               <span className="input-group-prepend">
-                <button type="button" className="btn quantity-right-plus" onClick={() => plusQty(product)} data-type="plus" data-field="">
+                <button disabled type="button" className="btn quantity-right-plus" onClick={() => plusQty(product)} data-type="plus" data-field="">
                   <i className="fa fa-angle-right"></i>
                 </button>
               </span>
@@ -133,7 +133,7 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
         </div>
         <div className="product-buttons">
           <a href={null} className="btn btn-solid" onClick={() => userContext.addProductToCart(product, quantity)}>
-            Agregar al carrito
+            Agregar
           </a>
           <Link href={`/page/account/checkout`} className="btn btn-solid" onClick={() => userContext.addProductToCart(product, quantity)}>
             Comprar

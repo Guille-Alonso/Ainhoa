@@ -495,7 +495,7 @@ const ThemeSettings = () => {
         </div>
       </div> */}
       {userContext.cart?.products.length > 0 && (
-        <div className="addcart_btm_popup" id="fixed_cart_icon">
+        <div className="p-4 addcart_btm_popup" id="fixed_cart_icon">
           <Timer />
         </div>
       )}

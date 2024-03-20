@@ -27,7 +27,7 @@ const FilterPage = ({sm,sidebarView,closeSidebar,categories,attributes,products}
               onClick={() => closeSidebar()}
             >
               <span className="filter-back">
-                <i className="fa fa-angle-left" aria-hidden="true"></i> back
+                <i className="fa fa-angle-left" aria-hidden="true"></i> volver
               </span>
             </div>
             <Category categories={categories} />

@@ -11,7 +11,7 @@ const Timer = () => {
   
     return (
       <div>
-        <p className={seconds < 60 ? "text-danger" : ""}>{formatTime(seconds)}</p>
+        <p className={seconds < 60 ? "mt-3 text-danger" : "mt-3"}>{formatTime(seconds)}</p>
       </div>
     );
   };

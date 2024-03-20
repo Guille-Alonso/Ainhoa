@@ -4,7 +4,7 @@ import UserContext from "../user/UserContext";
 
 
 const TimerProvider = ({ children }) => {
-    const [seconds, setSeconds] = useState(500);
+    const [seconds, setSeconds] = useState(1000);
     const [flag, setFlag] = useState(true)
     const userContext = useContext(UserContext);
   
@@ -18,7 +18,7 @@ const TimerProvider = ({ children }) => {
             clearInterval(intervalId);
           };
         } else {
-          setSeconds(500); // Reiniciar el temporizador a 300 segundos
+          setSeconds(1000); // Reiniciar el temporizador a 300 segundos
         }
       }, [userContext.cart]);
       

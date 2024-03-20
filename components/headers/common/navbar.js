@@ -137,7 +137,7 @@ const NavBar = () => {
           <ul className="nav-menu" style={navClose}>
             <li className="back-btn" onClick={closeNav.bind(this)}>
               <div className="mobile-back text-end">
-                <span>Back navbar</span>
+                <span>Menu</span>
                 <i className="fa fa-angle-right ps-2" aria-hidden="true"></i>
               </div>
             </li>

@@ -62,12 +62,17 @@ const UserProvider = (props) => {
     };
 
     const logout = async () =>{
+      if(cart.products.length > 0){
+        
+        removeProductsFromCart()
+      }
+
       setAuthenticated(false);
       localStorage.clear();
       router.push("/page/account/login");
       try {
         const {data} = await axios.post("/api/bff-store/private/auth/logout")
-        console.log(data);
+       
       } catch (error) {
         console.log(error);
       }

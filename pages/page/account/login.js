@@ -122,13 +122,11 @@ const Login = () => {
               </div>
             </Col>
             <Col lg="6" className="right-login">
-              <h3>New Customer</h3>
+              <h3>Sumate !</h3>
               <div className="theme-card authentication-right">
-                <h6 className="title-font">Create A Account</h6>
+                <h6 className="title-font">¿Todavía no te registraste?</h6>
                 <p>
-                  Sign up for a free account at our store. Registration is quick
-                  and easy. It allows you to be able to order from our shop. To
-                  start shopping click register.
+                  Para comprar en Ainhoa Vintage tenes que registrarte y luego iniciar sesión !
                 </p>
                 <button onClick={()=>router.push("/page/account/register")} href="#" className="btn btn-solid">
                   Registrarse
