@@ -119,7 +119,7 @@ const UserProvider = (props) => {
       try {
        const {data} = await axios.delete(`/api/bff-store/private/carts/products/${code}`)
         console.log(data);
-        toast.error("Producto quitado");
+        toast.error("Producto quitado del carrito");
         setCart((prevCart) => ({
           ...prevCart,
           products: prevCart.products.filter(product => product.code !== code)
