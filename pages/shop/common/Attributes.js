@@ -12,7 +12,7 @@ const GET_BRAND = gql`
   }
 `;
 
-const Brand = ({name,values}) => {
+const Attributes = ({name,values}) => {
   const context = useContext(FilterContext);
   const isChecked = context.isChecked;
   const filterChecked = context.filterChecked;
@@ -62,4 +62,4 @@ const Brand = ({name,values}) => {
   );
 };
 
-export default Brand;
+export default Attributes;

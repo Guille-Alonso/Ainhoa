@@ -431,7 +431,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
                           {isLoading && (
                             <Spinner animation="border" variant="light" />
                           )}
-                          Load More
+                          ver mas
                         </Button>
                       )}
                     </Col>
