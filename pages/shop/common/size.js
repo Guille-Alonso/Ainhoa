@@ -39,7 +39,7 @@ const Size = () => {
                 data.getSize.size.map((size, index) => (
                   <div key={index}
                     className="form-check custom-checkbox collection-filter-checkbox"
-                    key={index}
+                  
                   >
                     <Input
                       checked={context.selectedSize.includes(size)}

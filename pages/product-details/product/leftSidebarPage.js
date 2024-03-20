@@ -115,7 +115,7 @@ const LeftSidebarPage = ({ pathId,noSidebar }) => {
             <Col sm="3" className="collection-filter" id="filter">
               <div className="container">
                 {/* <Filter /> */}
-                {!loadingCategories && !loadingAttributes ? (
+                { !loadingCategories && loadingAttributes ? (
                   <FilterPage
                     sidebarView={sidebarView}
                     closeSidebar={() => openCloseSidebar(sidebarView)}

@@ -39,16 +39,16 @@ const UserProvider = (props) => {
 
     const getAuth = async () => {
       try {
-        console.log("hola");
+       
         const token = localStorage.getItem("token");
         if (!token) {
           setLoading(false);
-          router.push("/page/account/login")
+          router.push("/")
           return setAuthenticated(false);
         }
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
         const { data } = await axios.get("/api/bff-store/private/auth/user");
-        console.log(data);
+       
         setUser(data.user);
         setAuthenticated(true);
         setCart(data.cart)

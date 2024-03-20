@@ -5,8 +5,8 @@ import { Container, Row, Col, Input } from 'reactstrap';
 
 const Search = () => {
     return (
-        <CommonLayout parent="home" title="search">
-            {/* <!--section start--> */}
+        // <CommonLayout parent="home" title="search">
+           
             <section className="authentication-page section-b-space">
                 <Container>
                     <section className="search-block">
@@ -16,8 +16,8 @@ const Search = () => {
                                     <form className="form-header">
                                         <div className="input-group">
                                             <Input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"
-                                                placeholder="Search Products......" />
-                                            <button className="btn btn-solid"><i className="fa fa-search"></i>Search</button>
+                                                placeholder="buscar productos......" />
+                                            <button className="btn btn-solid"><i className="fa fa-search"></i>buscar</button>
                                         </div>
                                     </form>
                                 </Col>
@@ -26,9 +26,9 @@ const Search = () => {
                     </section>
                 </Container>
             </section>
-            {/* <!-- section end --> */}
+      
 
-        </CommonLayout>
+        // </CommonLayout>
     )
 }
 

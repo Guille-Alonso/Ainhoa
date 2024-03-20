@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Collapse } from "reactstrap";
 import FilterContext from "../../../helpers/filter/FilterContext";
 
-const Category = ({categories}) => {
+const Category = ({categories,setCategory}) => {
   const context = useContext(FilterContext);
   const [isCategoryOpen, setIsCategoryOpen] = useState(true);
   const toggleCategory = () => setIsCategoryOpen(!isCategoryOpen);
@@ -13,10 +13,14 @@ const Category = ({categories}) => {
     setSelectedCategory(category);
   };
 
+  const resetCategories = ()=>{
+    setIsCategoryOpen(!isCategoryOpen);
+    setCategory(null)
+  }
   return (
     <>
       <div className="collection-collapse-block open">
-        <h3 className="collapse-block-title" onClick={toggleCategory}>
+        <h3 className="collapse-block-title" onClick={resetCategories}>
           Category
         </h3>
         <Collapse isOpen={isCategoryOpen}>
@@ -25,7 +29,7 @@ const Category = ({categories}) => {
               <ul className="category-list">
                 {categories.map((cat, index) => (
                   <li key={index}>
-                    <a href={null}>
+                    <a onClick={()=>setCategory(cat.id)}>
                      {cat.name}
                     </a>
                   </li>
