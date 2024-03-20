@@ -1,6 +1,6 @@
 export const MENUITEMS = [
   {
-    title: "Home",
+    title: "Inicio",
     type: "sub",
     children: [
       {
@@ -61,23 +61,23 @@ export const MENUITEMS = [
       { path: "/layouts/Flowers", title: "Flowers", type: "link" },
     ],
   },
+  // {
+  //   title: "Shop",
+  //   type: "sub",
+  //   children: [
+  //     { path: "/shop/left_sidebar", title: "Left Sidebar", type: "link" },
+  //     { path: "/shop/right_sidebar", title: "Right Sidebar", type: "link" },
+  //     { path: "/shop/no_sidebar", title: "No Sidebar", type: "link" },
+  //     { path: "/shop/sidebar_popup", title: "Sidebar Popup", type: "link" },
+  //     { path: "/shop/metro", title: "Metro", type: "link", tag: "new" },
+  //     { path: "/shop/full_width", title: "Full Width", type: "link", tag: "new" },
+  //     { path: "/shop/three_grid", title: "3 Grid", type: "link" },
+  //     { path: "/shop/six_grid", title: "6 Grid", type: "link" },
+  //     { path: "/shop/list_view", title: "List View", type: "link" },
+  //   ],
+  // },
   {
-    title: "Shop",
-    type: "sub",
-    children: [
-      { path: "/shop/left_sidebar", title: "Left Sidebar", type: "link" },
-      { path: "/shop/right_sidebar", title: "Right Sidebar", type: "link" },
-      { path: "/shop/no_sidebar", title: "No Sidebar", type: "link" },
-      { path: "/shop/sidebar_popup", title: "Sidebar Popup", type: "link" },
-      { path: "/shop/metro", title: "Metro", type: "link", tag: "new" },
-      { path: "/shop/full_width", title: "Full Width", type: "link", tag: "new" },
-      { path: "/shop/three_grid", title: "3 Grid", type: "link" },
-      { path: "/shop/six_grid", title: "6 Grid", type: "link" },
-      { path: "/shop/list_view", title: "List View", type: "link" },
-    ],
-  },
-  {
-    title: "Products",
+    title: "Productos",
     type: "sub",
     children: [
       {
@@ -206,7 +206,7 @@ export const MENUITEMS = [
   //   ],
   // },
   {
-    title: "Pages",
+    title: "Secciones",
     type: "sub",
     children: [
       {

@@ -29,12 +29,12 @@ const Fashion = () => {
         <link
           rel="icon"
           type="image/x-icon"
-          href={"/assets/images/favicon/1.png"}
+          href={"/assets/logo/A.png"}
         />
       </Helmet>
       {/* <ModalComponent /> */}
       {/* <HeaderOne logoName={"logo.png"} topClass="top-header" /> */}
-      {/* <Banner /> */}
+      <Banner />
       {/* <CollectionBanner /> */}
       <Paragraph
         title="title1 section-t-space"

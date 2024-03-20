@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { CurrencyContext } from "../../../../helpers/Currency/CurrencyContext";
 import UserContext from "../../../../helpers/user/UserContext";
+import { calculateTotal } from "../../../../utils/calculateTotal";
 
 const CheckoutPage = () => {
   const cartContext = useContext(CartContext);
@@ -41,19 +42,25 @@ const CheckoutPage = () => {
     }
   };
 
+  const handleCheckout = (data) => {
+    
+    userContext.checkout(data);
+
+    };
+
   const setStateFromInput = (event) => {
     obj[event.target.name] = event.target.value;
     setObj(obj);
   };
 
   const userContext = useContext(UserContext);
-  console.log("cartItems", cartItems);
+
   return (
     <section className="section-b-space">
       <Container>
         <div className="checkout-page">
           <div className="checkout-form">
-            <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form onSubmit={handleSubmit(handleCheckout)}>
               <Row>
                 <Col lg="6" sm="12" xs="12">
                   <div className="checkout-title">
@@ -66,11 +73,30 @@ const CheckoutPage = () => {
                         type="text"
                         className={`${errors.firstName ? "error_border" : ""}`}
                         name="first_name"
-                        {...register("first_name", { required: true })}
+                        {...register("first_name", {
+                          required: {
+                            value: true,
+                            message: "El nombre es obligatorio",
+                          },
+                          maxLength: {
+                            value: 35,
+                            message:
+                              "El nombre no puede tener mas de 35 caracteres",
+                          },
+                          minLength: {
+                            value: 3,
+                            message:
+                              "El nombre no puede tener menos de 3 caracteres",
+                          },
+                        })}
+                        maxLength={35}
+                        required
                       />
-                      <span className="error-message">
-                        {errors.firstName && "El nombre es obligatorio"}
-                      </span>
+                      {errors.name && (
+                        <span className="text-danger">
+                          {errors.first_name.message}
+                        </span>
+                      )}
                     </div>
                     <div className="form-group col-md-6 col-sm-6 col-xs-12">
                       <div className="field-label">Apellido</div>
@@ -78,23 +104,68 @@ const CheckoutPage = () => {
                         type="text"
                         className={`${errors.last_name ? "error_border" : ""}`}
                         name="last_name"
-                        {...register("last_name", { required: true })}
+                        {...register("last_name", {
+                          required: {
+                            value: true,
+                            message: "El apellido es obligatorio",
+                          },
+                          maxLength: {
+                            value: 35,
+                            message:
+                              "El apellido no puede tener mas de 35 caracteres",
+                          },
+                          minLength: {
+                            value: 3,
+                            message:
+                              "El apellido no puede tener menos de 3 caracteres",
+                          },
+                        })}
+                        maxLength={35}
+                        required
                       />
-                      <span className="error-message">
-                        {errors.last_name && "El apellido es obligatorio"}
-                      </span>
+                      {errors.last_name && (
+                        <span className="text-danger">
+                          {errors.last_name.message}
+                        </span>
+                      )}
                     </div>
                     <div className="form-group col-md-6 col-sm-6 col-xs-12">
                       <div className="field-label">Teléfono</div>
                       <input
-                        type="text"
                         name="phone"
                         className={`${errors.phone ? "error_border" : ""}`}
-                        {...register("phone", { pattern: /\d+/ })}
+                        {...register("phone", {
+                          required: {
+                            value: true,
+                            message: "El teléfono es obligatorio",
+                          },
+                          pattern: {
+                              value:
+                              /^\d{0,20}$/,
+                              message: "El teléfono ingresado no es válido",
+                            },
+                          maxLength: {
+                            value: 20,
+                            message:
+                              "El teléfono no puede tener mas de 20 caracteres",
+                          },
+                          minLength: {
+                            value: 7,
+                            message:
+                              "El teléfono no puede tener menos de 7 caracteres",
+                          },
+                         
+                        })}
+                        required
+                        type="number"
                       />
-                      <span className="error-message">
-                        {errors.phone && "Ingrese números para el teléfono"}
-                      </span>
+                      {errors.phone && (
+                         
+                            <span className="text-danger">
+                              {errors.phone.message}
+                            </span>
+                        
+                        )}
                     </div>
                     <div className="form-group col-md-6 col-sm-6 col-xs-12">
                       <div className="field-label">Email</div>
@@ -109,15 +180,31 @@ const CheckoutPage = () => {
                             message: "El correo es obligatorio",
                           },
                           pattern: {
-                            value:
-                              /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                            message: "El correo ingresado no es válido",
+                              value:
+                                /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                              message: "El correo ingresado no es válido",
+                            },
+                          maxLength: {
+                            value: 35,
+                            message:
+                              "El correo no puede tener mas de 35 caracteres",
+                          },
+                          minLength: {
+                            value: 7,
+                            message:
+                              "El correo no puede tener menos de 7 caracteres",
                           },
                         })}
+                        maxLength={35}
+                        required
                       />
-                      <span className="error-message">
-                        {errors.email && errors.email.message}
-                      </span>
+                       {errors.email && (
+                          
+                            <span className="text-danger">
+                              {errors.email.message}
+                            </span>
+                         
+                        )}
                     </div>
                     <div className="form-group col-md-12 col-sm-12 col-xs-12">
                       <div className="field-label">País</div>
@@ -216,7 +303,6 @@ const CheckoutPage = () => {
                               "La dirección no puede tener menos de 7 caracteres",
                           },
                         })}
-                        placeholder="Street address"
                       />
                       <span className="error-message">
                         {errors.address && errors.address.message}
@@ -257,7 +343,7 @@ const CheckoutPage = () => {
                         {errors.pincode && errors.pincode.message}
                       </span>
                     </div>
-                    <div className="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    {/* <div className="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                       <input
                         type="checkbox"
                         name="create_account"
@@ -265,7 +351,7 @@ const CheckoutPage = () => {
                       />
                       &ensp;{" "}
                       <label htmlFor="account-option">Create An Account?</label>
-                    </div>
+                    </div> */}
                   </div>
                 </Col>
                 <Col lg="6" sm="12" xs="12">
@@ -274,17 +360,13 @@ const CheckoutPage = () => {
                       <div className="order-box">
                         <div className="title-box">
                           <div>
-                            Product <span>Total</span>
+                            Producto <span>Total</span>
                           </div>
                         </div>
                         <ul className="qty">
-                          {cartItems.map((item, index) => (
+                          {userContext.cart.products.map((item, index) => (
                             <li key={index}>
-                              {item.title} × {item.qty}{" "}
-                              <span>
-                                {symbol}
-                                {item.total}
-                              </span>
+                              {item.name} × 1 <span>${item.price}</span>
                             </li>
                           ))}
                         </ul>
@@ -292,41 +374,44 @@ const CheckoutPage = () => {
                           <li>
                             Subtotal{" "}
                             <span className="count">
-                              {symbol}
-                              {cartTotal}
+                              ${calculateTotal(userContext.cart.products)}
                             </span>
                           </li>
                           <li>
-                            Shipping
+                            Método de entrega
                             <div className="shipping">
                               <div className="shopping-option">
                                 <input
-                                  value="shipping"
+                                  value="SHIPPING"
                                   type="radio"
-                                  name="shipment"
+                                  name="shipping_method"
                                   id="free-shipping"
                                   required
-                                  {...register("shipment", { required: true })}
+                                  {...register("shipping_method", {
+                                    required: true,
+                                  })}
                                 />
                                 <label htmlFor="free-shipping">
-                                  Free Shipping
+                                  Envío a domicilio
                                 </label>
                               </div>
 
                               <div className="shopping-option">
                                 <input
-                                  value="pickup"
+                                  value="PICKUP"
                                   type="radio"
-                                  name="shipment"
+                                  name="shipping_method"
                                   id="local-pickup"
                                   required
-                                  {...register("shipment", { required: true })}
+                                  {...register("shipping_method", {
+                                    required: true,
+                                  })}
                                 />
                                 <label htmlFor="local-pickup">
-                                  Local Pickup
+                                  Retirar en local
                                 </label>
                               </div>
-                              {errors.shipment && (
+                              {errors.shipping_method && (
                                 <small className="text-danger">
                                   * método de entrega
                                 </small>
@@ -338,8 +423,7 @@ const CheckoutPage = () => {
                           <li>
                             Total{" "}
                             <span className="count">
-                              {symbol}
-                              {cartTotal}
+                              $ {calculateTotal(userContext.cart.products)}
                             </span>
                           </li>
                         </ul>
@@ -380,11 +464,11 @@ const CheckoutPage = () => {
                           </div>
                         </div>
                         {/* REEMPLAZAR POR EL TOTAL DE MI CARRITO */}
-                        {cartTotal !== 0 ? (
+                        {calculateTotal(userContext.cart.products) !== 0 ? (
                           <div className="text-end">
                             {payment === "cod" ? (
                               <button type="submit" className="btn-solid btn">
-                                Place Order
+                                Finalizar
                               </button>
                             ) : (
                               <PayPalScriptProvider

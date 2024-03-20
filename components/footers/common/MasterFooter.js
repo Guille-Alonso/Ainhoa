@@ -48,7 +48,7 @@ const MasterFooter = ({
         {newLatter ? (
           <div className={footerLayOut}>
             <Container fluid={containerFluid ? containerFluid : ""}>
-              <section className={footerSection}>
+              {/* <section className={footerSection}>
                 <Row>
                   <Col lg="6">
                     <div className="subscribe">
@@ -77,7 +77,7 @@ const MasterFooter = ({
                     </Form>
                   </Col>
                 </Row>
-              </section>
+              </section> */}
             </Container>
           </div>
         ) : (
@@ -289,10 +289,10 @@ const MasterFooter = ({
           </Container>
         </section>
 
-        <CopyRight
+        {/* <CopyRight
           layout={layoutClass}
           fluid={CopyRightFluid ? CopyRightFluid : ""}
-        />
+        /> */}
       </footer>
     </div>
   );

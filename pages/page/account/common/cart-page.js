@@ -50,7 +50,7 @@ const CartPage = () => {
 
   return (
     <div>
-      {userContext.cart && userContext.cart.products.length > 0 ? (
+      {userContext.cart && userContext.cart?.products.length > 0 ? (
         <section className="cart-section section-b-space">
           <Container>
             <Row>
@@ -178,7 +178,7 @@ const CartPage = () => {
                         <h2>
                           {/* {symbol} */}
                            {/* ${total}{" "} */}
-                          $ {calculateTotal(userContext.cart.products)}
+                          $ {calculateTotal(userContext.cart?.products)}
                         </h2>
                       </td>
                     </tr>

@@ -33,11 +33,11 @@ const MasterProductDetail = ({
             (product.price - (product.price * product.discount) / 100) *
             currency.value
           ).toFixed(2)} */}
-          {product.price}
+          {product.sale_price}
           <del>
             <span className="money">
-              {currency.symbol}
-              {(product.price * 2).toFixed(2)}
+              {/* {currency.symbol} */}
+              {product.price == product.sale_price? "":<span>{currency.symbol} {product.price} </span>}
             </span>
           </del>
         </h4>

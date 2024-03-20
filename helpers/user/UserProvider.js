@@ -96,7 +96,7 @@ const UserProvider = (props) => {
           const productToAdd = {"product": product.code,"qty":qty}
           const {data} = await axios.post("/api/bff-store/private/carts/products",productToAdd)
           console.log(data);
-          toast.success("Producto agregado con éxito !");
+          toast.success("Producto agregado");
           setCart((prevCart) => ({
             ...prevCart,
             products: [...prevCart.products, product]
@@ -112,16 +112,62 @@ const UserProvider = (props) => {
       try {
        const {data} = await axios.delete(`/api/bff-store/private/carts/products/${code}`)
         console.log(data);
-        toast.error("Producto quitado con éxito !");
+        toast.error("Producto quitado");
         setCart((prevCart) => ({
           ...prevCart,
           products: prevCart.products.filter(product => product.code !== code)
         }));
         getProducts();
       } catch (error) {
-        
+        toast.error("Algo salió mal..");
       }
     };
+
+    const removeProductsFromCart = async () => {
+      try {
+
+        setCart((prevCart) => ({
+          ...prevCart,
+          products: []
+        }));
+
+        for(const product of cart.products){
+           await axios.delete(`/api/bff-store/private/carts/products/${product.code}`)
+        }
+
+        toast.error("Su tiempo de compra ha terminado..");
+        
+        getProducts();
+      } catch (error) {
+        toast.error("Algo salió mal..");
+      }
+    };
+
+    const checkout = async (values)=>{
+      setBotonState(true);
+      try {
+        console.log(values);
+        const checkoutObj = {
+          cart: cart.code,
+          email: values.email,
+          shipping_method: values. shipping_method,
+          address_street: null,
+          address_number: null,
+          address_extra: null,
+          address_city: null,
+          address_state: null,
+          address_zipcode: null
+        }
+        const { data } = await axios.post("/api/bff-store/private/carts/checkout", checkoutObj);
+        console.log(data);
+        toast.success("Orden realizada con éxito")
+        router.push("/")
+      } catch (error) {
+        toast.error(error.response?.data.message || error.message);
+        console.log(error.response.status);
+      }
+      setBotonState(false);
+    }
 
   return (
     <UserContext.Provider
@@ -143,7 +189,9 @@ const UserProvider = (props) => {
         setProducts,
         cart,
         addProductToCart,
-        removeProductFromCart
+        removeProductFromCart,
+        removeProductsFromCart,
+        checkout
       }}
     >
       {props.children}

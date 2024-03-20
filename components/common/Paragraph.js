@@ -19,7 +19,7 @@ const Paragraph = ({title, inner, line ,hrClass}) => {
                 <Row>
                     <Col lg="6" className="m-auto">
                         <div className="product-para">
-                            <p className="text-center">Segunda Mano - Compra Inteligente</p>
+                            <p className="text-center">Ropa de Segunda Mano - Compra Inteligente</p>
                         </div>
                     </Col>
                 </Row>
