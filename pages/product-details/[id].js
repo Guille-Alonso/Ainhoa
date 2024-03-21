@@ -14,19 +14,19 @@ const LeftSidebar = () => {
   const router = useRouter();
   const id = router.query.id;
 
-  const [sidebarView,setSidebarView] = useState(false)
+//   const [sidebarView,setSidebarView] = useState(false)
 
-  const openCloseSidebar = () => {
-    if(sidebarView){
-        setSidebarView(!sidebarView)
-    } else {
-        setSidebarView(!sidebarView)
-    }
-}
+//   const openCloseSidebar = () => {
+//     if(sidebarView){
+//         setSidebarView(!sidebarView)
+//     } else {
+//         setSidebarView(!sidebarView)
+//     }
+// }
 
-  const userContext = useContext(UserContext);
-  const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
-  const [attributes,loadingAttributes] = useGet("/api/bff-store/attributes",axios)
+  // const userContext = useContext(UserContext);
+  // const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
+  // const [attributes,loadingAttributes] = useGet("/api/bff-store/attributes",axios)
   return (
     <>
        {/* <FilterPage

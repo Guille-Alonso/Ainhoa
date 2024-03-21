@@ -51,7 +51,7 @@ const UserProvider = (props) => {
        
         setUser(data.user);
         setAuthenticated(true);
-        setCart(data.cart)
+        // setCart(data.cart)
       } catch (error) {
         logout();
         setAuthenticated(false);
@@ -104,13 +104,21 @@ const UserProvider = (props) => {
           const {data} = await axios.post("/api/bff-store/private/carts/products",productToAdd)
           console.log(data);
           toast.success("Producto agregado al carrito");
-          setCart((prevCart) => ({
-            ...prevCart,
-            products: [...prevCart?.products, product]
-          }));
+          if(cart){
+            setCart((prevCart) => ({
+              ...prevCart,
+              products: [...prevCart?.products, product]
+            }));
+          }else{
+            setCart(data)
+          }
         }
         getProducts();
       } catch (error) {
+        if(error.response.status == 401){
+          toast.error("Antes debe ingresar..");
+          router.push("/page/account/login")
+        }
         console.log(error);
       }
     };

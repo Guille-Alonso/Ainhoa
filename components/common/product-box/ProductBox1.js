@@ -80,13 +80,16 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
             <i className="fa fa-shopping-cart" aria-hidden="true"></i>
           </button>
           }
-          <a href={null} title="Add to Wishlist" onClick={addWishlist}>
+          {/* DESEOS */}
+          <a href={null} title="Add to Wishlist" >
             <i className="fa fa-heart" aria-hidden="true"></i>
           </a>
-          <a href={null} title="Quick View" onClick={toggle}>
+          {/* SEARCH */}
+          <a href={null} title="Quick View">
             <i className="fa fa-search" aria-hidden="true"></i>
           </a>
-          <a href={null} title="Compare" onClick={toggleCompare}>
+          {/* RELOAD */}
+          <a href={null} title="Compare" >
             <i className="fa fa-refresh" aria-hidden="true"></i>
           </a>
           <Modal isOpen={modalCompare} toggle={toggleCompare} size="lg" centered>

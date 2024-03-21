@@ -183,7 +183,7 @@ const NavBar = () => {
                               ""
                             )}
                             {childrenItem.type === "link" ? (
-                              <Link href={`${childrenItem.path}`}>
+                              <Link onClick={closeNav.bind(this)} href={`${childrenItem.path}`}>
                                 {/* <a> */}
                                 {childrenItem.title}
                                 {childrenItem.tag === "new" ? (
