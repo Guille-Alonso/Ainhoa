@@ -90,7 +90,7 @@ const LeftSidebar = () => {
                     colClass="col-xl-3 col-6 col-grid-box"
                     layoutList=""
                     openSidebar={() => openCloseSidebar(sidebarView)}
-                    products={productsToFilter.filter(item => userContext.cart?.products.indexOf(item) === -1)}
+                    products={productsToFilter.filter(item => userContext.cart?.products.indexOf(item) === -1).length==0? productsToFilter :  productsToFilter.filter(item => userContext.cart?.products.indexOf(item) === -1)}
                   />
                 </>
               ) : (
