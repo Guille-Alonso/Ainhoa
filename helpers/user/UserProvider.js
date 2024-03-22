@@ -53,7 +53,7 @@ const UserProvider = (props) => {
         setAuthenticated(true);
         // setCart(data.cart)
       } catch (error) {
-        logout();
+        await logout();
         setAuthenticated(false);
         router.push("/page/account/login")
         toast.error("Error de autenticación. Ingrese nuevamente");
@@ -63,6 +63,8 @@ const UserProvider = (props) => {
     };
 
     const logout = async () =>{
+      try {
+
       if(cart?.products.length > 0){
         
        await removeProductsFromCart()
@@ -71,7 +73,7 @@ const UserProvider = (props) => {
       setAuthenticated(false);
       localStorage.clear();
       router.push("/page/account/login");
-      try {
+      
         const {data} = await axios.post("/api/bff-store/private/auth/logout")
        
       } catch (error) {
@@ -141,14 +143,14 @@ const UserProvider = (props) => {
     const removeProductsFromCart = async () => {
       try {
 
+        for(const product of cart.products){
+           await axios.delete(`/api/bff-store/private/carts/products/${product.code}`)
+        }
+
         setCart((prevCart) => ({
           ...prevCart,
           products: []
         }));
-
-        for(const product of cart.products){
-           await axios.delete(`/api/bff-store/private/carts/products/${product.code}`)
-        }
 
         toast.error("Su tiempo de compra ha terminado..");
         
