@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Form, Input, Label, Col } from 'reactstrap';
+import TableOrdersProducts from "./table-orders"
 
 const ProfilePage = () => {
     return (
@@ -44,8 +45,9 @@ const ProfilePage = () => {
                 <Container>
                     <Row>
                         <Col sm="12">
-                            <h3>SHIPPING ADDRESS</h3>
-                            <Form className="theme-form">
+                            <h3>Pedidos</h3>
+                            <TableOrdersProducts/>
+                            {/* <Form className="theme-form">
                                 <Row>
                                     <Col md="6">
                                         <Label className="form-label" for="name">flat / plot</Label>
@@ -84,7 +86,7 @@ const ProfilePage = () => {
                                         <button className="btn btn-sm btn-solid" type="submit">Save setting</button>
                                     </div>
                                 </Row>
-                            </Form>
+                            </Form> */}
                         </Col>
                     </Row>
                 </Container>

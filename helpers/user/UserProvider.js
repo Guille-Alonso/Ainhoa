@@ -54,6 +54,7 @@ const UserProvider = (props) => {
         // setCart(data.cart)
       } catch (error) {
         if(error.response.status == 401){
+          localStorage.clear();
           setAuthenticated(false);
           toast.error("Error de autenticación. Ingrese nuevamente");
           router.push("/page/account/login")
@@ -85,6 +86,7 @@ const UserProvider = (props) => {
        
       } catch (error) {
         if(error.response.status == 401){
+          localStorage.clear();
           setAuthenticated(false);
           toast.error("Error de autenticación. Ingrese nuevamente");
           router.push("/page/account/login")
@@ -132,6 +134,7 @@ const UserProvider = (props) => {
         getProducts();
       } catch (error) {
         if(error.response.status == 401){
+          localStorage.clear();
           toast.error("Antes debe ingresar..");
           router.push("/page/account/login")
         }else{
@@ -152,6 +155,8 @@ const UserProvider = (props) => {
         getProducts();
       } catch (error) {
         if(error.response.status == 401){
+          localStorage.clear();
+          setAuthenticated(false);
           toast.error("Antes debe ingresar..");
           router.push("/page/account/login")
         }else{
@@ -177,6 +182,8 @@ const UserProvider = (props) => {
         getProducts();
       } catch (error) {
         if(error.response.status == 401){
+          localStorage.clear();
+          setAuthenticated(false);
           toast.error("Antes debe ingresar..");
           router.push("/page/account/login")
         }else{
@@ -206,6 +213,7 @@ const UserProvider = (props) => {
         router.push("/")
       } catch (error) {
         if(error.response.status == 401){
+          localStorage.clear();
           setAuthenticated(false);
           toast.error("Error de autenticación. Ingrese nuevamente");
           router.push("/page/account/login")

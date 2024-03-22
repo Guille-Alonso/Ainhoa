@@ -3,8 +3,7 @@ import { Container, Row, Col } from "reactstrap";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import UserContext from "../../../helpers/user/UserContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { BsInstagram } from "react-icons/bs";
 
 const TopBarDark = ({ topClass, fluid }) => {
   // const router = useRouter();
@@ -29,7 +28,7 @@ const TopBarDark = ({ topClass, fluid }) => {
                 {/* <li>Teléfono: </li> */}
                 <li>
                   {/* <i className="fa fa-phone text-white" aria-hidden="true"></i> */}
-                  <FontAwesomeIcon className="me-2" icon={faInstagram} />
+                  <BsInstagram className="me-2"/>
                   ainhoa_vintage
                 </li>
               </ul>
@@ -67,9 +66,14 @@ const TopBarDark = ({ topClass, fluid }) => {
                     </li>
                   )}
                   {userContext.authenticated && (
+                    <>
+                    <li>
+                      <Link href={`/page/account/profile`}>Perfil</Link>
+                    </li>
                     <li onClick={() => userContext.logout()}>
                       <a>Cerrar Sesión</a>
                     </li>
+                    </>
                   )}
                 </ul>
               </li>

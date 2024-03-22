@@ -7,7 +7,7 @@ const Wishliat = () => {
     
     return (
         // <CommonLayout parent="home" title="cart">
-        <PrivateRoute>
+        <PrivateRoute key="cart">
 
           <CartPage />
         </PrivateRoute>

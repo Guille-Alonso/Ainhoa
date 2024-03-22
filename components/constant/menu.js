@@ -235,8 +235,9 @@ export const MENUITEMS = [
       //     { path: "/page/account/checkout", title: "checkout", type: "link" },
       //   ],
       // },
+      { path: "/page/account/profile", title: "Perfil", type: "link" },
       { path: "/page/about-us", title: "Nosotros", type: "link" },
-      { path: "/page/search", title: "Buscar", type: "link" },
+      
       // { path: "/page/typography", title: "typography", type: "link", tag: "new" },
       // { path: "/page/review", title: "review", type: "link" },
       // { path: "/page/order-success", title: "order-success", type: "link" },
@@ -252,6 +253,7 @@ export const MENUITEMS = [
       // { path: "/page/lookbook", title: "lookbook", type: "link" },
       // { path: "/page/site-map", title: "site-map", type: "link" },
       { path: "/page/404", title: "Contacto", type: "link" },
+      { path: "/page/search", title: "Buscar", type: "link" },
       { path: "/page/404", title: "404", type: "link" },
       // { path: "/page/coming-soon", title: "coming-soon", type: "link" },
     ],
