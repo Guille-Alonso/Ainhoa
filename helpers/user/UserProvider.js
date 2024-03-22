@@ -53,11 +53,18 @@ const UserProvider = (props) => {
         setAuthenticated(true);
         // setCart(data.cart)
       } catch (error) {
-        await logout();
-        setAuthenticated(false);
-        router.push("/page/account/login")
-        toast.error("Error de autenticación. Ingrese nuevamente");
-        console.log(error);
+        if(error.response.status == 401){
+          setAuthenticated(false);
+          toast.error("Error de autenticación. Ingrese nuevamente");
+          router.push("/page/account/login")
+        }else{
+          toast.error(error.response?.data.message || error.message);
+        }
+        // await logout();
+        // setAuthenticated(false);
+        // router.push("/page/account/login")
+        // toast.error("Error de autenticación. Ingrese nuevamente");
+        // console.log(error);
       }
       setLoading(false);
     };
@@ -77,8 +84,15 @@ const UserProvider = (props) => {
         const {data} = await axios.post("/api/bff-store/private/auth/logout")
        
       } catch (error) {
-        localStorage.clear();
-        console.log(error);
+        if(error.response.status == 401){
+          setAuthenticated(false);
+          toast.error("Error de autenticación. Ingrese nuevamente");
+          router.push("/page/account/login")
+        }else{
+          toast.error(error.response?.data.message || error.message);
+        }
+        // localStorage.clear();
+        // console.log(error);
       }
     }
 
@@ -120,8 +134,9 @@ const UserProvider = (props) => {
         if(error.response.status == 401){
           toast.error("Antes debe ingresar..");
           router.push("/page/account/login")
+        }else{
+          toast.error(error.response?.data.message || error.message);
         }
-        console.log(error);
       }
     };
 
@@ -136,7 +151,12 @@ const UserProvider = (props) => {
         }));
         getProducts();
       } catch (error) {
-        toast.error("Algo salió mal..");
+        if(error.response.status == 401){
+          toast.error("Antes debe ingresar..");
+          router.push("/page/account/login")
+        }else{
+          toast.error(error.response?.data.message || error.message);
+        }
       }
     };
 
@@ -156,7 +176,12 @@ const UserProvider = (props) => {
         
         getProducts();
       } catch (error) {
-        toast.error("Algo salió mal..");
+        if(error.response.status == 401){
+          toast.error("Antes debe ingresar..");
+          router.push("/page/account/login")
+        }else{
+          toast.error(error.response?.data.message || error.message);
+        }
       }
     };
 
@@ -180,9 +205,16 @@ const UserProvider = (props) => {
         toast.success("Gracias por su compra")
         router.push("/")
       } catch (error) {
-        logout();
-        toast.error(error.response?.data.message || error.message);
-        console.log(error.response.status);
+        if(error.response.status == 401){
+          setAuthenticated(false);
+          toast.error("Error de autenticación. Ingrese nuevamente");
+          router.push("/page/account/login")
+        }else{
+          toast.error(error.response?.data.message || error.message);
+        }
+        // logout();
+        // toast.error(error.response?.data.message || error.message);
+        // console.log(error.response.status);
       }
       setBotonState(false);
     }
