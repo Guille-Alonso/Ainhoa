@@ -132,15 +132,19 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
           </div>
         </div>
         <div className="product-buttons">
-          <a href={null} className="btn btn-solid" onClick={() => userContext.addProductToCart(product, quantity)}>
+          <button disabled={userContext.botonState} href={null} className="btn btn-solid" onClick={() => userContext.addProductToCart(product, quantity)}>
             Agregar
-          </a>
-          <Link href={`/page/account/checkout`} className="btn btn-solid" onClick={userContext.cart?.products.find(p=>p.code == product.code)? console.log("producto ya ingresado") : () => userContext.addProductToCart(product, quantity)}>
+          </button>
+          <button disabled={userContext.botonState} href={null} className="btn btn-solid" onClick={()=> userContext.comprarAgregarProducto(product,quantity)}>
             Comprar
-          </Link>
+          </button>
         </div>
         <div className="border-product">
           <h6 className="product-title">Categoría: {product.category}</h6>
+          <p>{product.description}</p>
+        </div>
+        <div className="border-product">
+          <h6 className="product-title">Descripción: ...</h6>
           <p>{product.description}</p>
         </div>
         <div className="border-product">

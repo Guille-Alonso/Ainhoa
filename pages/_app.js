@@ -65,7 +65,6 @@ export default function MyApp({ Component, pageProps }) {
                     <CartContextProvider>
                       <WishlistContextProvider>
                         <FilterProvider>
-
                          <CommonLayout><Component {...pageProps} /></CommonLayout> 
                         </FilterProvider>
                       </WishlistContextProvider>

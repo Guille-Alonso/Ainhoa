@@ -34,10 +34,15 @@ const CartHeader = ({ item, symbol }) => {
           </div>
         </div>
         <div className="close-circle">
+          {
+            userContext.botonState ?
+            <></>
+            :
           <i
             className="fa fa-times"
             aria-hidden="true"
             onClick={() => userContext.removeProductFromCart(item.code)}></i>
+          }
         </div>
       </li>
     </Fragment>

@@ -113,35 +113,22 @@ const LeftSidebarPage = ({ pathId,noSidebar }) => {
         <Container>
           <Row>
             <Col sm="3" className="collection-filter" id="filter">
-              <div className="container">
-                {/* <Filter /> */}
-                { loadingCategories && loadingAttributes ? (
-                  <FilterPage
-                    sidebarView={sidebarView}
-                    closeSidebar={() => openCloseSidebar(sidebarView)}
-                    categories={categories}
-                    attributes={attributes}
-                    products={userContext.products}
-                  />
-                ) : (
-                  <PostLoader />
-                )}
-              </div>
-              {/* <Service /> */}
+              <Service />
 
-              {/* <NewProduct /> */}
+              <NewProduct />
             </Col>
             <Col lg="9" sm="12" xs="12">
               <Container fluid={true}>
                 <Row>
                   <Col xl="12" className="filter-col">
                     <div className="filter-main-btn mb-2">
-                    
-                      <span onClick={() => openCloseSidebar(sidebarView)} className="filter-btn btn btn-theme">
-                          <i className="fa fa-filter" aria-hidden="true"></i>{" "}
-                          Filter
+                      <span
+                        onClick={() => openCloseSidebar(sidebarView)}
+                        className="filter-btn btn btn-theme"
+                      >
+                        <i className="fa fa-filter" aria-hidden="true"></i>{" "}
+                        Filter
                       </span>
-                      
                     </div>
                   </Col>
                 </Row>

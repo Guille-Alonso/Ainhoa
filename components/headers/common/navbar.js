@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import { MENUITEMS } from "../../constant/menu";
 import { Container, Row } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
+import UserContext from "../../../helpers/user/UserContext";
 
 const NavBar = () => {
   const { t } = useTranslation();
@@ -54,6 +55,7 @@ const NavBar = () => {
   };
 
   const [mainmenu, setMainMenu] = useState(MENUITEMS);
+  const userContext = useContext(UserContext);
 
   useEffect(() => {
     const currentUrl = location.pathname;

@@ -8,11 +8,13 @@ import useGet from "../../utils/useGet";
 const UserProvider = (props) => {
     const [user, setUser] = useState(null);
     const [cart, setCart] = useState(null);
+    const [order, setOrder] = useState(null)
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const [botonState, setBotonState] = useState(false);
 
     const [products,loadingProducts,getProducts,setProducts] = useGet("/api/bff-store/products?page=1",axios)
+    const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
 
     const router = useRouter();
 
@@ -27,7 +29,6 @@ const UserProvider = (props) => {
         setCart(data.cart)
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token;
         localStorage.setItem("token", data.access_token);
-        // localStorage.setItem("user", JSON.stringify(data.user));
         router.push("/")
 
       } catch (error) {
@@ -51,7 +52,8 @@ const UserProvider = (props) => {
        
         setUser(data.user);
         setAuthenticated(true);
-        // setCart(data.cart)
+        setCart(data.cart);
+   
       } catch (error) {
         if(error.response.status == 401){
           localStorage.clear();
@@ -80,6 +82,7 @@ const UserProvider = (props) => {
 
       setAuthenticated(false);
       localStorage.clear();
+      setOrder(null);
       router.push("/page/account/login");
       
         const {data} = await axios.post("/api/bff-store/private/auth/logout")
@@ -114,6 +117,8 @@ const UserProvider = (props) => {
     }
 
     const addProductToCart = async (product,qty) => {
+      setBotonState(true);
+      setOrder(null);
       try {
         if(cart?.products.find(p=>p.code ==product.code)){
           toast.error("El producto ya fue agregado al carrito");
@@ -141,9 +146,46 @@ const UserProvider = (props) => {
           toast.error(error.response?.data.message || error.message);
         }
       }
+      setBotonState(false);
     };
 
+    const comprarAgregarProducto = async (product,qty)=>{
+      setBotonState(true);
+      setOrder(null);
+      try {
+        if(cart?.products.find(p=>p.code ==product.code)){
+          router.push(`/page/account/checkout`);
+        }else{
+          const productToAdd = {"product": product.code,"qty":qty}
+          const {data} = await axios.post("/api/bff-store/private/carts/products",productToAdd)
+          console.log(data);
+          toast.info("Ya casi terminas !");
+          if(cart){
+            setCart((prevCart) => ({
+              ...prevCart,
+              products: [...prevCart?.products, product]
+            }));
+          }else{
+            setCart(data)
+          }
+          router.push(`/page/account/checkout`);
+        }
+        getProducts();
+      } catch (error) {
+        if(error.response.status == 401){
+          localStorage.clear();
+          toast.error("Antes debe ingresar..");
+          router.push("/page/account/login")
+        }else{
+          toast.error(error.response?.data.message || error.message);
+        }
+      }
+      setBotonState(false);
+    }
+
     const removeProductFromCart = async (code) => {
+      setBotonState(true);
+      setOrder(null);
       try {
        const {data} = await axios.delete(`/api/bff-store/private/carts/products/${code}`)
         console.log(data);
@@ -163,6 +205,7 @@ const UserProvider = (props) => {
           toast.error(error.response?.data.message || error.message);
         }
       }
+      setBotonState(false);
     };
 
     const removeProductsFromCart = async () => {
@@ -208,9 +251,9 @@ const UserProvider = (props) => {
           address_zipcode: null
         }
         const { data } = await axios.post("/api/bff-store/private/carts/checkout", checkoutObj);
-        console.log(data);
-        toast.success("Gracias por su compra")
-        router.push("/")
+        setOrder(data);
+        toast.success("Gracias por su compra!")
+
       } catch (error) {
         if(error.response.status == 401){
           localStorage.clear();
@@ -245,11 +288,15 @@ const UserProvider = (props) => {
         register,
         products,
         setProducts,
+        categories,
         cart,
+        setCart,
+        order,
         addProductToCart,
         removeProductFromCart,
         removeProductsFromCart,
-        checkout
+        checkout,
+        comprarAgregarProducto
       }}
     >
       {props.children}

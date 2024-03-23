@@ -156,9 +156,12 @@ const CartPage = () => {
                             1
                           </td>
                           <td>
+                            {
+                              !userContext.botonState &&
                             <i
                               className="fa fa-times"
                               onClick={() => userContext.removeProductFromCart(item.code)}></i>
+                            }
                           </td>
                           <td>
                             <h2 className="td-color">

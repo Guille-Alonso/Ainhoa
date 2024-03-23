@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Media, Container, Form, Row, Col } from "reactstrap";
 import CartContext from "../../../../helpers/cart";
 import paypal from "../../../../public/assets/images/paypal.png";
@@ -54,6 +54,16 @@ const CheckoutPage = () => {
   };
 
   const userContext = useContext(UserContext);
+
+  useEffect(() => {
+  if(userContext.order && userContext.cart.products.length>0){
+    userContext.setCart((prevCart) => ({
+      ...prevCart,
+      products: []
+    }));
+    router.push("/page/order-success");
+  }
+  }, [userContext.order])
 
   return (
     <section className="section-b-space">
@@ -355,7 +365,7 @@ const CheckoutPage = () => {
                   </div>
                 </Col>
                 <Col lg="6" sm="12" xs="12">
-                  {userContext.cart.products.length > 0 ? (
+                  {userContext.cart?.products.length > 0 ? (
                     <div className="checkout-details">
                       <div className="order-box">
                         <div className="title-box">

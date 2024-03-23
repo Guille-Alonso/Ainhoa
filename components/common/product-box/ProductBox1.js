@@ -7,6 +7,7 @@ import { CurrencyContext } from "../../../helpers/Currency/CurrencyContext";
 import MasterProductDetail from "./MasterProductDetail";
 import UserContext from "../../../helpers/user/UserContext";
 import { useImageSize } from "../../../utils/useImageSize";
+import PostLoader from "../PostLoader";
 
 const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass, productDetail, addCompare, title }) => {
   // eslint-disable-next-line
@@ -75,23 +76,25 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
 
         <div className={cartClass}>
           {
-            userContext.authenticated &&
+            userContext.authenticated && !userContext.botonState ?
           <button title="Add to cart" onClick={addCart}>
             <i className="fa fa-shopping-cart" aria-hidden="true"></i>
           </button>
+          :
+          <PostLoader />
           }
           {/* DESEOS */}
-          <a href={null} title="Add to Wishlist" >
+          {/* <a href={null} title="Add to Wishlist" >
             <i className="fa fa-heart" aria-hidden="true"></i>
-          </a>
+          </a> */}
           {/* SEARCH */}
-          <a href={null} title="Quick View">
+          <a href={null} title="Quick View" >
             <i className="fa fa-search" aria-hidden="true"></i>
           </a>
           {/* RELOAD */}
-          <a href={null} title="Compare" >
+          {/* <a href={null} title="Compare" >
             <i className="fa fa-refresh" aria-hidden="true"></i>
-          </a>
+          </a> */}
           <Modal isOpen={modalCompare} toggle={toggleCompare} size="lg" centered>
             <ModalBody>
               <Row className="compare-modal">
