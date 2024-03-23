@@ -132,7 +132,7 @@ const LeftSidebarPage = ({ pathId,noSidebar }) => {
                     </div>
                   </Col>
                 </Row>
-                {userContext.products.length == 0 ? (
+                {newProductsArray.length == 0 ? (
                   "loading"
                 ) : (
                   <Row>

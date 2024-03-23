@@ -32,17 +32,19 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
     <>
       <div className={`product-right ${stickyClass}`}>
         <h2> {product.name} </h2>
-        <h4>
-          <del>
-            {symbol}
-            {product.price}
-          </del>
-          <span>{product.discount}% off</span>
-        </h4>
+        {product.special_price != 0 && (
+          <h4>
+            <del>
+              {symbol}
+              {product.special_price != 0 ? product.price : ""}
+            </del>
+            <span>% off</span>
+          </h4>
+        )}
         <h3>
           {symbol}
           {/* {product.price - (product.price * product.discount) / 100} */}
-          {product.price}
+          {product.special_price != 0 ? product.special_price : product.price}
         </h3>
         {/* {product.variants.map((vari) => {
           var findItem = uniqueColor.find((x) => x.color === vari.color);
@@ -55,7 +57,9 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
             {uniqueColor.some((vari) => vari.color) ? (
               <ul className="color-variant">
                 {uniqueColor.map((vari, i) => {
-                  return <li className={vari.color} key={i} title={vari.color}></li>;
+                  return (
+                    <li className={vari.color} key={i} title={vari.color}></li>
+                  );
                 })}
               </ul>
             ) : (
@@ -67,7 +71,14 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
             {uniqueColor.some((vari) => vari.color) ? (
               <ul className="color-variant">
                 {uniqueColor.map((vari, i) => {
-                  return <li className={vari.color} key={i} title={vari.color} onClick={() => changeColorVar(i)}></li>;
+                  return (
+                    <li
+                      className={vari.color}
+                      key={i}
+                      title={vari.color}
+                      onClick={() => changeColorVar(i)}
+                    ></li>
+                  );
                 })}
               </ul>
             ) : (
@@ -83,15 +94,26 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
                   <h6 className="product-title size-text">
                     select size
                     <span>
-                      <a href={null} data-toggle="modal" data-target="#sizemodal" onClick={toggle}>
+                      <a
+                        href={null}
+                        data-toggle="modal"
+                        data-target="#sizemodal"
+                        onClick={toggle}
+                      >
                         size chart
                       </a>
                     </span>
                   </h6>
                   <Modal isOpen={modal} toggle={toggle} centered>
-                    <ModalHeader toggle={toggle}>Sheer Straight Kurta</ModalHeader>
+                    <ModalHeader toggle={toggle}>
+                      Sheer Straight Kurta
+                    </ModalHeader>
                     <ModalBody>
-                      <Media src={sizeChart.src} alt="size" className="img-fluid" />
+                      <Media
+                        src={sizeChart.src}
+                        alt="size"
+                        className="img-fluid"
+                      />
                     </ModalBody>
                   </Modal>
                   <div className="size-box">
@@ -118,13 +140,34 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
           <div className="qty-box">
             <div className="input-group">
               <span className="input-group-prepend">
-                <button disabled type="button" className="btn quantity-left-minus" onClick={minusQty} data-type="minus" data-field="">
+                <button
+                  disabled
+                  type="button"
+                  className="btn quantity-left-minus"
+                  onClick={minusQty}
+                  data-type="minus"
+                  data-field=""
+                >
                   <i className="fa fa-angle-left"></i>
                 </button>
               </span>
-              <Input disabled type="text" name="quantity" value={quantity} onChange={changeQty} className="form-control input-number" />
+              <Input
+                disabled
+                type="text"
+                name="quantity"
+                value={quantity}
+                onChange={changeQty}
+                className="form-control input-number"
+              />
               <span className="input-group-prepend">
-                <button disabled type="button" className="btn quantity-right-plus" onClick={() => plusQty(product)} data-type="plus" data-field="">
+                <button
+                  disabled
+                  type="button"
+                  className="btn quantity-right-plus"
+                  onClick={() => plusQty(product)}
+                  data-type="plus"
+                  data-field=""
+                >
                   <i className="fa fa-angle-right"></i>
                 </button>
               </span>
@@ -132,10 +175,22 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
           </div>
         </div>
         <div className="product-buttons">
-          <button disabled={userContext.botonState} href={null} className="btn btn-solid" onClick={() => userContext.addProductToCart(product, quantity)}>
+          <button
+            disabled={userContext.botonState}
+            href={null}
+            className="btn btn-solid"
+            onClick={() => userContext.addProductToCart(product, quantity)}
+          >
             Agregar
           </button>
-          <button disabled={userContext.botonState} href={null} className="btn btn-solid" onClick={()=> userContext.comprarAgregarProducto(product,quantity)}>
+          <button
+            disabled={userContext.botonState}
+            href={null}
+            className="btn btn-solid"
+            onClick={() =>
+              userContext.comprarAgregarProducto(product, quantity)
+            }
+          >
             Comprar
           </button>
         </div>
