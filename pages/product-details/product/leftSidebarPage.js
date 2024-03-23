@@ -119,7 +119,7 @@ const LeftSidebarPage = ({ pathId,noSidebar }) => {
             </Col>
             <Col lg="9" sm="12" xs="12">
               <Container fluid={true}>
-                <Row>
+                {/* <Row>
                   <Col xl="12" className="filter-col">
                     <div className="filter-main-btn mb-2">
                       <span
@@ -131,7 +131,7 @@ const LeftSidebarPage = ({ pathId,noSidebar }) => {
                       </span>
                     </div>
                   </Col>
-                </Row>
+                </Row> */}
                 {newProductsArray.length == 0 ? (
                   "loading"
                 ) : (

@@ -7,10 +7,10 @@ const Wishliat = () => {
     
     return (
         // <CommonLayout parent="home" title="cart">
-        // <PrivateRoute key="cart">
+        <PrivateRoute key="cart">
 
           <CartPage />
-        // </PrivateRoute>
+        </PrivateRoute>
         // {/* </CommonLayout> */}
     );
 }

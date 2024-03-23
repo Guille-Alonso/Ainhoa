@@ -76,8 +76,8 @@ const TopCollection = ({ type, title, subtitle, designClass, noSlider, cartClass
   const settings = {
     infinite: true,
     speed: 300,
-    slidesToShow: userContext.products.length >= 4? 4 : userContext.products.length,
-    slidesToScroll: userContext.products.length >= 4? 4 : userContext.products.length,
+    slidesToShow: 4,
+    slidesToScroll: 4,
     autoplay: true,
     arrows: false,
     autoplaySpeed: 3000,

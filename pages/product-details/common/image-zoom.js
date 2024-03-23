@@ -7,7 +7,7 @@ const ImageZoom = (props) => {
     const imageSize = useImageSize();
 
     return (
-        <Media src={`${image.main}`} alt={image.alt} className="img-fluid image_zoom_cls-0" style={imageSize}/>
+        <Media src={`${image.main}`} alt={image.alt} className="img-fluid image_zoom_cls-0" />
     );
 }
 

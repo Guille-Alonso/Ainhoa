@@ -12,6 +12,7 @@ const UserProvider = (props) => {
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const [botonState, setBotonState] = useState(false);
+    const [flagTimer, setFlagTimer] = useState(false);
 
     const [products,loadingProducts,getProducts,setProducts] = useGet("/api/bff-store/products?page=1",axios)
     const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
@@ -128,13 +129,17 @@ const UserProvider = (props) => {
           console.log(data);
           toast.success("Producto agregado al carrito");
           if(cart){
+            const cartObj = {...data}
+            delete cartObj.products;
             setCart((prevCart) => ({
+              ...cartObj,
               ...prevCart,
               products: [...prevCart?.products, product]
             }));
           }else{
             setCart(data)
           }
+          setFlagTimer(!flagTimer)
         }
         getProducts();
       } catch (error) {
@@ -161,13 +166,17 @@ const UserProvider = (props) => {
           console.log(data);
           toast.info("Ya casi terminas !");
           if(cart){
+            const cartObj = {...data}
+            delete cartObj.products;
             setCart((prevCart) => ({
+              ...cartObj,
               ...prevCart,
               products: [...prevCart?.products, product]
             }));
           }else{
             setCart(data)
           }
+          setFlagTimer(!flagTimer)
           router.push(`/page/account/checkout`);
         }
         getProducts();
@@ -296,7 +305,8 @@ const UserProvider = (props) => {
         removeProductFromCart,
         removeProductsFromCart,
         checkout,
-        comprarAgregarProducto
+        comprarAgregarProducto,
+        flagTimer
       }}
     >
       {props.children}

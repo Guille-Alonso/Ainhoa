@@ -52,6 +52,11 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
   const userContext = useContext(UserContext);
   const imageSize = useImageSize();  
 
+  const agregarProducto = (product)=>{
+    setModal(false);
+    userContext.addProductToCart(product, 1);
+  }
+
   return (
     <div className="product-box product-wrap">
       <div className="img-wrapper">
@@ -60,7 +65,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
           {product.sale === true ? <span className="lable4">on sale</span> : ""}
         </div>
         <div className="front" onClick={clickProductDetail}>
-          <Media src={`${product.images[0].main}`} className="img-fluid" alt="" style={imageSize}/>
+          <Media src={`${product.images[0].main}`} className="img-fluid" alt=""/>
         </div>
         {/* {backImage ? (
           product.images[1] === "undefined" ? (
@@ -88,7 +93,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
             <i className="fa fa-heart" aria-hidden="true"></i>
           </a> */}
           {/* SEARCH */}
-          <a href={null} title="Quick View" >
+          <a href={null} title="Quick View" onClick={toggle}>
             <i className="fa fa-search" aria-hidden="true"></i>
           </a>
           {/* RELOAD */}
@@ -140,16 +145,16 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
           <Row>
             <Col lg="6" xs="12">
               <div className="quick-view-img">
-                <Media src={`${product.variants && image ? image : product.images[0].src}`} alt="" className="img-fluid" />
+                <Media src={product.images[0].main} alt="" className="img-fluid" />
               </div>
             </Col>
             <Col lg="6" className="rtl-text">
               <div className="product-right">
                 <button type="button" data-dismiss="modal" className="btn-close btn btn-secondary" aria-label="Close" onClick={toggle}></button>
-                <h2> {product.title} </h2>
+                <h2> {product.name} </h2>
                 <h3>
                   {currency.symbol}
-                  {(product.price * currency.value).toFixed(2)}
+                  {product.special_price != 0 ? product.special_price : product.price}
                 </h3>
                 {product.variants ? (
                   <ul className="color-variant">
@@ -173,8 +178,8 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
                   ""
                 )}
                 <div className="border-product">
-                  <h6 className="product-title">product details</h6>
-                  <p>{product.description}</p>
+                  <h6 className="product-title">Detalle</h6>
+                  <p>{product.category}</p>
                 </div>
                 <div className="product-description border-product">
                   {product.size ? (
@@ -192,17 +197,17 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
                   ) : (
                     ""
                   )}
-                  <h6 className="product-title">quantity</h6>
+                  <h6 className="product-title">Cantidad</h6>
                   <div className="qty-box">
                     <div className="input-group">
                       <span className="input-group-prepend">
-                        <button type="button" className="btn quantity-left-minus" onClick={minusQty} data-type="minus" data-field="">
+                        <button disabled type="button" className="btn quantity-left-minus" onClick={minusQty} data-type="minus" data-field="">
                           <i className="fa fa-angle-left"></i>
                         </button>
                       </span>
                       <input type="text" name="quantity" value={quantity} onChange={changeQty} className="form-control input-number" />
                       <span className="input-group-prepend">
-                        <button type="button" className="btn quantity-right-plus" onClick={() => plusQty(product)} data-type="plus" data-field="">
+                        <button disabled type="button" className="btn quantity-right-plus" onClick={() => plusQty(product)} data-type="plus" data-field="">
                           <i className="fa fa-angle-right"></i>
                         </button>
                       </span>
@@ -210,11 +215,11 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
                   </div>
                 </div>
                 <div className="product-buttons">
-                  <button className="btn btn-solid" onClick={() => addCart(product)}>
-                    add to cart
+                  <button  disabled={userContext.botonState} className="btn btn-solid" onClick={()=>agregarProducto(product)}>
+                    Agregar
                   </button>
                   <button className="btn btn-solid" onClick={clickProductDetail}>
-                    View detail
+                    Ver
                   </button>
                 </div>
               </div>
