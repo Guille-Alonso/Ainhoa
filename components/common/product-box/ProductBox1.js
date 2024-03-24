@@ -81,12 +81,10 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
 
         <div className={cartClass}>
           {
-            userContext.authenticated && !userContext.botonState ?
+            (userContext.authenticated && !userContext.botonState) && 
           <button title="Add to cart" onClick={addCart}>
             <i className="fa fa-shopping-cart" aria-hidden="true"></i>
           </button>
-          :
-          <PostLoader />
           }
           {/* DESEOS */}
           {/* <a href={null} title="Add to Wishlist" >
