@@ -4,6 +4,7 @@ import { gql } from "@apollo/client";
 import { Media } from "reactstrap";
 import Slider from "react-slick";
 import { CurrencyContext } from "../../../helpers/Currency/CurrencyContext";
+import UserContext from "../../../helpers/user/UserContext";
 
 const GET_PRODUCTS = gql`
   query newProducts($type: String!) {
@@ -27,27 +28,27 @@ const NewProduct = () => {
     },
   });
 
+  const userContext = useContext(UserContext);
+
   return (
     // <!-- side-bar single product slider start -->
     <div className="theme-card">
       <h5 className="title-border">Nuevos !</h5>
       <Slider className="offer-slider slide-1">
         <div>
-          {!data ||
-          !data.newProducts ||
-          data.newProducts.length === 0 ||
-          loading ? (
+          {!userContext.products ||
+          userContext.products.length === 0 ? (
             "loading"
           ) : (
             <>
-              {data &&
-                data.newProducts.slice(0, 3).map((product, index) => (
+              {userContext.products.length > 0 &&
+                userContext.products.slice(0, 3).map((product, index) => (
                   <div className="media" key={index}>
                     <a href="">
                       <Media
                         className="img-fluid blur-up lazyload"
-                        src={product.images[0].src}
-                        alt={product.images[0].alt}
+                        src={product.images[0].main}
+                        // alt={product.images[0].alt}
                       />
                     </a>
                     <div className="media-body align-self-center">
@@ -59,7 +60,7 @@ const NewProduct = () => {
                         <i className="fa fa-star"></i>
                       </div>
                       <a href={null}>
-                        <h6>{product.title}</h6>
+                        <h6>{product.name}</h6>
                       </a>
                       <h4>
                         {symbol}
@@ -72,21 +73,19 @@ const NewProduct = () => {
           )}
         </div>
         <div>
-          {!data ||
-          !data.newProducts ||
-          data.newProducts.length === 0 ||
-          loading ? (
+          {!userContext.products ||
+          userContext.products.length === 0 ? (
             "loading"
           ) : (
             <>
-              {data &&
-                data.newProducts.slice(4, 7).map((product, index) => (
+              {userContext.products.length > 0 &&
+                userContext.products.slice(4, 7).map((product, index) => (
                   <div className="media" key={index}>
                     <a href="">
                       <Media
                         className="img-fluid blur-up lazyload"
-                        src={product.images[0].src}
-                        alt={product.images[0].alt}
+                        src={product.images[0].main}
+                        // alt={product.images[0].alt}
                       />
                     </a>
                     <div className="media-body align-self-center">
@@ -98,7 +97,7 @@ const NewProduct = () => {
                         <i className="fa fa-star"></i>
                       </div>
                       <a href={null}>
-                        <h6>{product.title}</h6>
+                        <h6>{product.name}</h6>
                       </a>
                       <h4>
                         {symbol}

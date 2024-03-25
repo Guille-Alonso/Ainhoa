@@ -9,14 +9,14 @@ const ForgetPwd = () => {
                 <Container>
                     <Row>
                         <Col lg="6" className="m-auto">
-                            <h2>Forget Your Password</h2>
+                            <h5>Reestablecer Contraseña</h5>
                             <Form className="theme-form">
                                 <Row>
                                     <Col md="12">
-                                        <Input type="email" className="form-control" id="email" placeholder="Enter Your Email"
-                                            required="" />
+                                        <Input type="email" className="form-control" id="email" placeholder="Ingrese su correo"
+                                            required maxLength={30}/>
                                     </Col>
-                                    <a href="#" className="btn btn-solid w-auto">Submit</a>
+                                    <button type='submit' href="#" className="btn btn-solid w-auto">Enviar</button>
                                 </Row>
                             </Form>
                         </Col>

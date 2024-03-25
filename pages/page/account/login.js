@@ -5,6 +5,7 @@ import UserContext from "../../../helpers/user/UserContext";
 import {useForm} from "react-hook-form";
 import { useRouter } from "next/router";
 import LoggedRoute from "../../../routes/LoggedRoute";
+import Link from "next/link";
 
 const Login = () => {
   const userContext = useContext(UserContext);
@@ -22,7 +23,7 @@ const Login = () => {
 
   return (
     <LoggedRoute>
-    {/* <CommonLayout parent="home" title="login"> */}
+      {/* <CommonLayout parent="home" title="login"> */}
       <section className="login-page section-b-space">
         <Container>
           <Row>
@@ -110,14 +111,19 @@ const Login = () => {
                       </div>
                     )}
                   </div>
-                  <button
-                    disabled={userContext.botonState}
-                    type="submit"
-                    href="#"
-                    className="btn btn-solid"
-                  >
-                    Login
-                  </button>
+                  <div>
+                    <button
+                      disabled={userContext.botonState}
+                      type="submit"
+                      href="#"
+                      className="btn btn-solid"
+                    >
+                      Entrar
+                    </button>
+                    <li className="ms-2">
+                      <Link href="/page/account/forget-pwd">¿Olvidó su contraseña?</Link>
+                    </li>
+                  </div>
                 </form>
               </div>
             </Col>
@@ -126,9 +132,14 @@ const Login = () => {
               <div className="theme-card authentication-right">
                 <h6 className="title-font">¿Todavía no te registraste?</h6>
                 <p>
-                  Para comprar en Ainhoa Vintage tenes que registrarte y luego ingresar!
+                  Para comprar en Ainhoa Vintage tenes que registrarte y luego
+                  ingresar!
                 </p>
-                <button onClick={()=>router.push("/page/account/register")} href="#" className="btn btn-solid">
+                <button
+                  onClick={() => router.push("/page/account/register")}
+                  href="#"
+                  className="btn btn-solid"
+                >
                   Registrarse
                 </button>
               </div>
@@ -136,7 +147,7 @@ const Login = () => {
           </Row>
         </Container>
       </section>
-    {/* </CommonLayout> */}
+      {/* </CommonLayout> */}
     </LoggedRoute>
   );
 };
