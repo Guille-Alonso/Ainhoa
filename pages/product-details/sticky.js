@@ -7,12 +7,12 @@ import ProductTab from './common/product-tab';
 
 const Sticky = () => {
     return (
-        <CommonLayout parent="home" title="product">
-            <StickyPage />
-            <ProductTab />
-            <ProductSection />
-        </CommonLayout>
-    )
+      <>
+        <StickyPage />
+        <ProductTab />
+        <ProductSection />
+      </>
+    );
 }
 
 export default Sticky;

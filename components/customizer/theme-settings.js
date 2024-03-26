@@ -13,6 +13,8 @@ import {
 } from "reactstrap";
 import SettingContext from "../../helpers/theme-setting/SettingContext";
 import config from "./config.json";
+import Timer from "../../utils/timer";
+import UserContext from "../../helpers/user/UserContext";
 
 const ThemeSettings = () => {
   const [isOpen, setIsOpen] = useState();
@@ -277,9 +279,11 @@ const ThemeSettings = () => {
     );
   };
 
+  const userContext = useContext(UserContext);
+
   return (
     <div>
-      <a href={null} onClick={() => openSetting()}>
+      {/* <a href={null} onClick={() => openSetting()}>
         <div className="setting-sidebar" id="setting-icon">
           <div>
             <i className="fa fa-cog" aria-hidden="true"></i>
@@ -489,8 +493,13 @@ const ThemeSettings = () => {
             {themeLayout ? "Light" : "Dark"}
           </div>
         </div>
-      </div>
-      <div className="addcart_btm_popup" id="fixed_cart_icon">
+      </div> */}
+      {userContext.cart?.products.length > 0 && (
+        <div className="p-4 addcart_btm_popup" id="fixed_cart_icon">
+          <Timer />
+        </div>
+      )}
+      {/* <div className="addcart_btm_popup" id="fixed_cart_icon">
         <a href={null} className="fixed_cart">
           <i
             className="fa fa-clone"
@@ -498,8 +507,9 @@ const ThemeSettings = () => {
             onClick={toggle}
             title="Configuration"></i>
         </a>
-      </div>
-      <Modal centered={true} isOpen={modal} toggle={toggle}>
+    
+      </div> */}
+      {/* <Modal centered={true} isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Config</ModalHeader>
         <ModalBody className="p-3">
           {Object.keys(config.config).map((key, i) => (
@@ -515,7 +525,7 @@ const ThemeSettings = () => {
             <b>"/components/customizer/config.json"</b>{" "}
           </p>
         </ModalFooter>
-      </Modal>
+      </Modal> */}
 
       <ToastContainer />
     </div>

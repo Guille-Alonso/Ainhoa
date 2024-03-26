@@ -1,14 +1,61 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CommonLayout from '../../components/shop/common-layout';
 // import { withApollo } from '../../helpers/apollo/apollo';
 import ProductList from './common/productList';
 import { Container, Row} from 'reactstrap';
 import FilterPage from './common/filter';
+import UserContext from '../../helpers/user/UserContext';
+import useGet from '../../utils/useGet';
+import axios from '../../config/axios';
+import PostLoader from '../../components/common/PostLoader';
 
 const LeftSidebar = () => {
 
     const [sidebarView,setSidebarView] = useState(false)
+    const userContext = useContext(UserContext);
+    const [attributes,loadingAttributes] = useGet("/api/bff-store/attributes",axios)
+
+    const [category_id, setCategory] = useState(null);
+    const [page, setPage] = useState(1);
+    const [size, setSize] = useState(10);
+    const [is_new, setIsnew] = useState(null);
+    const [special_price, setSpecialPrice] = useState(null);
+    const [attribute, setAttribute] = useState(null);
+    const [productsToFilter, setProductsToFilter] = useState([])
+
+    const getProductsToFilter = async (url)=>{
+      try {
+        const {data} = await axios.get(url)
+        setProductsToFilter(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    useEffect(() => {
+     
+        let apiUrl = "/api/bff-store/products";
+        let queryParams = [];
+  
+        const filters = { category_id, size, page, is_new, special_price,attribute };
+  
+        for (const filter in filters) {
+         
+          if (filters[filter] !== null && filters[filter] !== undefined && filters[filter] !== -1) {
+              queryParams.push(`${filter}=${filters[filter]}`);
+          }
+      }
+  
+        if (queryParams.length > 0) {
+          apiUrl += '?' + queryParams.join('&');
+        }
+  
+      console.log(apiUrl); 
+     getProductsToFilter(apiUrl)
+    }, [ category_id, size, page, is_new, special_price, attribute]); 
     
+
     const openCloseSidebar = () => {
         if(sidebarView){
             setSidebarView(!sidebarView)
@@ -17,19 +64,47 @@ const LeftSidebar = () => {
         }
     }
     return (
-        <CommonLayout title="collection" parent="home" >
-            <section className="section-b-space ratio_asos">
-                <div className="collection-wrapper">
-                    <Container>
-                        <Row>
-                            <FilterPage sm="3" sidebarView={sidebarView} closeSidebar={() => openCloseSidebar(sidebarView)} />
-                            <ProductList colClass="col-xl-3 col-6 col-grid-box" layoutList=''  openSidebar={() => openCloseSidebar(sidebarView)}/>
-                        </Row>
-                    </Container>
-                </div>
-            </section>
-        </CommonLayout>
-    )
+     
+      <section className="section-b-space ratio_asos">
+        <div className="collection-wrapper">
+          <Container>
+            <Row>
+              {/* {!userContext.loadingCategories &&
+              !loadingAttributes &&
+              productsToFilter.length > 0 ? ( */}
+                <>
+                  <FilterPage
+                    sm="3"
+                    sidebarView={sidebarView}
+                    closeSidebar={() => openCloseSidebar(sidebarView)}
+                    categories={userContext.categories}
+                    attributes={attributes}
+                    products={userContext.products}
+                    is_new={is_new}
+                    setIsnew={setIsnew}
+                    setCategory={setCategory}
+                    special_price={special_price}
+                    setSpecialPrice={setSpecialPrice}
+                    attribute={attribute}
+                    setAttribute ={setAttribute}
+                  />
+                  <ProductList
+                    colClass="col-xl-3 col-6 col-grid-box"
+                    layoutList=""
+                    openSidebar={() => openCloseSidebar(sidebarView)}
+                    products={productsToFilter.filter(item => userContext.cart?.products.indexOf(item) === -1).length==0? productsToFilter :  productsToFilter.filter(item => userContext.cart?.products.indexOf(item) === -1)}
+                  />
+                </>
+              {/* // ) : (
+              //   // <PostLoader />
+              //   <p>No hay productos con el filtro ingresado</p>
+              // )} */}
+            </Row>
+          </Container>
+        </div>
+      </section>
+
+    );
 }
 
 export default LeftSidebar;

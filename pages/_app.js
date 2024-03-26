@@ -13,6 +13,10 @@ import { CurrencyContextProvider } from "../helpers/Currency/CurrencyContext";
 import Helmet from "react-helmet";
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "../helpers/apollo";
+import UserProvider from "../helpers/user/UserProvider";
+import CommonLayout from "../components/shop/common-layout";
+import "../public/assets/products.css"
+import TimerProvider from "../helpers/timer/timerProvider";
 
 export default function MyApp({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -45,19 +49,23 @@ export default function MyApp({ Component, pageProps }) {
           /> */}
             <Helmet>
               <meta name="viewport" content="width=device-width, initial-scale=1" />
-              {/* <Head>
-              <link rel="icon" type="image/x-icon" href={favicon} />
-            </Head> */}
-              <title>Multikart - Multi-purpopse E-commerce React Template</title>
+              <link
+          rel="icon"
+          type="image/x-icon"
+          href={"/assets/logo/A.png"}
+        />
+              <title>AINHOA</title>
             </Helmet>
             <div>
+              <UserProvider>
+                          <TimerProvider>
               <SettingProvider>
                 <CompareContextProvider>
                   <CurrencyContextProvider>
                     <CartContextProvider>
                       <WishlistContextProvider>
                         <FilterProvider>
-                          <Component {...pageProps} />
+                         <CommonLayout><Component {...pageProps} /></CommonLayout> 
                         </FilterProvider>
                       </WishlistContextProvider>
                     </CartContextProvider>
@@ -65,6 +73,8 @@ export default function MyApp({ Component, pageProps }) {
                   <ThemeSettings />
                 </CompareContextProvider>
               </SettingProvider>
+                          </TimerProvider>
+              </UserProvider>
               <ToastContainer />
               <TapTop />
             </div>

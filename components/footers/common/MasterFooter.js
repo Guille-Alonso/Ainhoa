@@ -48,7 +48,7 @@ const MasterFooter = ({
         {newLatter ? (
           <div className={footerLayOut}>
             <Container fluid={containerFluid ? containerFluid : ""}>
-              <section className={footerSection}>
+              {/* <section className={footerSection}>
                 <Row>
                   <Col lg="6">
                     <div className="subscribe">
@@ -77,7 +77,7 @@ const MasterFooter = ({
                     </Form>
                   </Col>
                 </Row>
-              </section>
+              </section> */}
             </Container>
           </div>
         ) : (
@@ -97,7 +97,7 @@ const MasterFooter = ({
                       setCollapse(1);
                       setIsOpen(!isOpen);
                     }}>
-                    about
+                    Nosotros
                     <span className="according-menu"></span>
                   </h4>
                 </div>
@@ -163,7 +163,7 @@ const MasterFooter = ({
                           setCollapse(2);
                         } else setIsOpen(true);
                       }}>
-                      my account
+                      Contacto
                       <span className="according-menu"></span>
                     </h4>
                   </div>
@@ -217,7 +217,7 @@ const MasterFooter = ({
                           setCollapse(3);
                         } else setIsOpen(true);
                       }}>
-                      why we choose
+                      Preguntas Frecuentes
                       <span className="according-menu"></span>
                     </h4>
                   </div>
@@ -258,7 +258,7 @@ const MasterFooter = ({
                           setCollapse(4);
                         } else setIsOpen(true);
                       }}>
-                      store information
+                      Información
                       <span className="according-menu"></span>
                     </h4>
                   </div>
@@ -267,8 +267,7 @@ const MasterFooter = ({
                     <div className="footer-contant">
                       <ul className="contact-list">
                         <li>
-                          <i className="fa fa-map-marker"></i>Multikart Demo
-                          Store, Demo store India 345-659
+                          <i className="fa fa-map-marker"></i>San Miguel de Tucumán
                         </li>
                         <li>
                           <i className="fa fa-phone"></i>Call Us: 123-456-7898

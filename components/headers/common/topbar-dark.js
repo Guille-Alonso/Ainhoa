@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import UserContext from "../../../helpers/user/UserContext";
+import { BsInstagram } from "react-icons/bs";
 
 const TopBarDark = ({ topClass, fluid }) => {
-  const router = useRouter();
-  const Logout = () => {
-    localStorage.setItem("user", false);
-    router.push("/page/account/login-auth");
-  };
+  // const router = useRouter();
+  // const Logout = () => {
+  //   localStorage.setItem("user", false);
+  //   router.push("/page/account/login-auth");
+  // };
+  const userContext = useContext(UserContext);
+  // useEffect(() => {
+  //   if(localStorage.getItem("token")){
+
+  //     userContext.getAuth()
+  //   }
+  // }, [])
   return (
     <div className={topClass}>
       <Container fluid={fluid}>
@@ -16,43 +25,56 @@ const TopBarDark = ({ topClass, fluid }) => {
           <Col lg="6">
             <div className="header-contact">
               <ul>
-                <li>Welcome to Our store Multikart</li>
+                {/* <li>Teléfono: </li> */}
                 <li>
-                  <i className="fa fa-phone text-white" aria-hidden="true"></i>
-                  Call Us: 123 - 456 - 7890
+                  {/* <i className="fa fa-phone text-white" aria-hidden="true"></i> */}
+                  <BsInstagram className="me-2"/>
+                  ainhoa_vintage
                 </li>
               </ul>
             </div>
           </Col>
           <Col lg="6" className="text-end">
             <ul className="header-dropdown">
-              <li className="mobile-wishlist">
-                <Link href="/page/account/wishlist">
-                  {/* <a> */}
-                  <i className="fa fa-heart" aria-hidden="true"></i> wishlist
-                  {/* </a> */}
-                </Link>
-              </li>
+              {userContext.authenticated && (
+                <li className="mobile-wishlist">
+                  <Link href="/page/account/wishlist">
+                    {/* <a> */}
+                    {/* <i className="fa fa-heart" aria-hidden="true"></i> Favs */}
+                    {/* </a> */}
+                  </Link>
+                </li>
+              )}
               <li className="onhover-dropdown mobile-account">
-                <i className="fa fa-user" aria-hidden="true"></i> My Account
+                <i className="fa fa-user" aria-hidden="true"></i>
+                {userContext.authenticated
+                  ? userContext.user.name
+                  : "Mi Cuenta"}
                 <ul className="onhover-show-div">
-                  <li>
-                    <Link href={`/page/account/login`}>
-                      {/* <a> */}
-                      Login
-                      {/* </a> */}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href={`/page/account/register`}>
-                      {/* <a> */}
-                      Register
-                      {/* </a> */}
-                    </Link>
-                  </li>
-                  <li onClick={() => Logout()}>
-                    <a>Logout</a>
-                  </li>
+                  {!userContext.authenticated && (
+                    <li>
+                      <Link href={`/page/account/login`}>Iniciar Sesión</Link>
+                    </li>
+                  )}
+                  {!userContext.authenticated && (
+                    <li>
+                      <Link href={`/page/account/register`}>
+                        {/* <a> */}
+                        Registrarse
+                        {/* </a> */}
+                      </Link>
+                    </li>
+                  )}
+                  {userContext.authenticated && (
+                    <>
+                    <li>
+                      <Link href={`/page/account/profile`}>Perfil</Link>
+                    </li>
+                    <li onClick={() => userContext.logout()}>
+                      <a>Cerrar Sesión</a>
+                    </li>
+                    </>
+                  )}
                 </ul>
               </li>
             </ul>

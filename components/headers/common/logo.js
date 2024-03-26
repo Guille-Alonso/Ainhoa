@@ -7,9 +7,10 @@ const LogoImage = ({ logo }) => {
       <Link href={"/"}>
         {/* <a> */}
         <img
-          src={`/assets/images/icon/${logo ? logo : "logo.png"}`}
+          // src={`/assets/images/icon/${logo ? logo : "logo.png"}`}
+          src="/assets/logo/Ainhoa.png"
           alt=""
-          className="img-fluid"
+          className="img-fluid logoAinhoa"
         />
         {/* </a> */}
       </Link>

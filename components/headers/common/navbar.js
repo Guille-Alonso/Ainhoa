@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
-import { MENUITEMS } from "../../constant/menu";
+// import { MENUITEMS } from "../../constant/menu";
+import { generateMenuItems } from "../../constant/menu";
 import { Container, Row } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
+import UserContext from "../../../helpers/user/UserContext";
 
 const NavBar = () => {
   const { t } = useTranslation();
-  const [navClose, setNavClose] = useState({ right: "0px" });
+  const [navClose, setNavClose] = useState({ right: "-410px" });
   const router = useRouter();
+  const userContext = useContext(UserContext);
 
   useEffect(() => {
     if (window.innerWidth < 750) {
@@ -25,7 +28,12 @@ const NavBar = () => {
       document.querySelector("#topHeader").classList.add("zindex-class");
   };
 
-  const closeNav = () => {
+  const closeNav = (cat) => {
+    if(cat){
+      if(cat != "TODOS"){
+        userContext.setCategory(userContext.categories.find(c=> c.name == cat).id)
+      }else userContext.setCategory(null);
+    }
     setNavClose({ right: "-410px" });
     if (router.asPath == "/layouts/Gym")
       document.querySelector("#topHeader").classList.remove("zindex-class");
@@ -53,8 +61,9 @@ const NavBar = () => {
     }
   };
 
+ 
+  const MENUITEMS = generateMenuItems(userContext.categories)
   const [mainmenu, setMainMenu] = useState(MENUITEMS);
-
   useEffect(() => {
     const currentUrl = location.pathname;
     MENUITEMS.filter((items) => {
@@ -122,7 +131,7 @@ const NavBar = () => {
       });
       document
         .querySelector(".mega-menu-container")
-        .classList.remove("opensubmenu");
+        ?.classList.remove("opensubmenu");
       event.target.nextElementSibling.classList.add("opensubmenu");
     }
   };
@@ -135,9 +144,9 @@ const NavBar = () => {
             <i className="fa fa-bars sidebar-bar"></i>
           </div>
           <ul className="nav-menu" style={navClose}>
-            <li className="back-btn" onClick={closeNav.bind(this)}>
+            <li className="back-btn" onClick={closeNav.bind(this,null)}>
               <div className="mobile-back text-end">
-                <span>Back navbar</span>
+                <span>Menu</span>
                 <i className="fa fa-angle-right ps-2" aria-hidden="true"></i>
               </div>
             </li>
@@ -147,7 +156,7 @@ const NavBar = () => {
                   key={i}
                   className={` ${menuItem.megaMenu ? "mega-menu" : ""}`}>
                   {menuItem.type == "link" ? (
-                    <Link href={menuItem.path} className="nav-link">
+                    <Link  onClick={closeNav.bind(this,null)} href={menuItem.path} className="nav-link">
                       {/* <a > */}
                       {t(menuItem.title)}
                       {/* </a> */}
@@ -183,7 +192,7 @@ const NavBar = () => {
                               ""
                             )}
                             {childrenItem.type === "link" ? (
-                              <Link href={`${childrenItem.path}`}>
+                              <Link onClick={closeNav.bind(this,childrenItem.title)} href={`${childrenItem.path}`}>
                                 {/* <a> */}
                                 {childrenItem.title}
                                 {childrenItem.tag === "new" ? (

@@ -11,6 +11,7 @@ import PostLoader from "../../../components/common/PostLoader";
 import CartContext from "../../../helpers/cart";
 import { WishlistContext } from "../../../helpers/wishlist/WishlistContext";
 import { CompareContext } from "../../../helpers/Compare/CompareContext";
+import UserContext from "../../../helpers/user/UserContext";
 
 const GET_PRODUCTS = gql`
   query products(
@@ -65,7 +66,7 @@ const GET_PRODUCTS = gql`
   }
 `;
 
-const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
+const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) => {
   const cartContext = useContext(CartContext);
   const quantity = cartContext.quantity;
   const wishlistContext = useContext(WishlistContext);
@@ -151,39 +152,13 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
     filterContext.setSelectedColor("");
   };
 
+  const userContext = useContext(UserContext);
+
   return (
     <Col className="collection-content">
       <div className="page-main-content">
         <Row>
           <Col sm="12">
-            <div className="top-banner-wrapper">
-              <a href={null}>
-                <Media
-                  src={Menu2.src}
-                  className="img-fluid blur-up lazyload"
-                  alt=""
-                />
-              </a>
-              <div className="top-banner-content small-section">
-                <h4>fashion</h4>
-                <h5>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
-                </h5>
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book. It has survived not only five centuries, but
-                  also the leap into electronic typesetting, remaining
-                  essentially unchanged. It was popularised in the 1960s with
-                  the release of Letraset sheets containing Lorem Ipsum
-                  passages, and more recently with desktop publishing software
-                  like Aldus PageMaker including versions of Lorem Ipsum.
-                </p>
-              </div>
-            </div>
             <Row>
               <Col xs="12">
                 <ul className="product-filter-tags">
@@ -248,133 +223,12 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
                 ) : (
                   ""
                 )}
-                <Row>
-                  <Col>
-                    <div className="product-filter-content">
-                      <div className="search-count">
-                        <h5>
-                          {data
-                            ? `Showing Products 1-${data.products.items.length} of ${data.products.total}`
-                            : "loading"}{" "}
-                          Result
-                        </h5>
-                      </div>
-                      <div className="collection-view">
-                        <ul>
-                          <li>
-                            <i
-                              className="fa fa-th grid-layout-view"
-                              onClick={() => {
-                                setLayout("");
-                                setGrid("col-lg-3");
-                              }}
-                            ></i>
-                          </li>
-                          <li>
-                            <i
-                              className="fa fa-list-ul list-layout-view"
-                              onClick={() => {
-                                setLayout("list-view");
-                                setGrid("col-lg-12");
-                              }}
-                            ></i>
-                          </li>
-                        </ul>
-                      </div>
-                      <div
-                        className="collection-grid-view"
-                        style={
-                          layout === "list-view"
-                            ? { visibility: "hidden" }
-                            : { visibility: "visible" }
-                        }
-                      >
-                        <ul>
-                          <li>
-                            <Media
-                              src={`/assets/images/icon/2.png`}
-                              alt=""
-                              className="product-2-layout-view"
-                              onClick={() => setGrid("col-lg-6")}
-                            />
-                          </li>
-                          <li>
-                            <Media
-                              src={`/assets/images/icon/3.png`}
-                              alt=""
-                              className="product-3-layout-view"
-                              onClick={() => setGrid("col-lg-4")}
-                            />
-                          </li>
-                          <li>
-                            <Media
-                              src={`/assets/images/icon/4.png`}
-                              alt=""
-                              className="product-4-layout-view"
-                              onClick={() => setGrid("col-lg-3")}
-                            />
-                          </li>
-                          <li>
-                            <Media
-                              src={`/assets/images/icon/6.png`}
-                              alt=""
-                              className="product-6-layout-view"
-                              onClick={() => setGrid("col-lg-2")}
-                            />
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="product-page-per-view">
-                        <select
-                          onChange={(e) => setLimit(parseInt(e.target.value))}
-                        >
-                          <option value="10">10 Products Per Page</option>
-                          <option value="15">15 Products Per Page</option>
-                          <option value="20">20 Products Per Page</option>
-                        </select>
-                      </div>
-                      <div className="product-page-filter">
-                        <select onChange={(e) => setSortBy(e.target.value)}>
-                          <option value="AscOrder">Sorting items</option>
-                          <option value="HighToLow">High To Low</option>
-                          <option value="LowToHigh">Low To High</option>
-                          <option value="Newest">Newest</option>
-                          <option value="AscOrder">Asc Order</option>
-                          <option value="DescOrder">Desc Order</option>
-                        </select>
-                      </div>
-                    </div>
-                  </Col>
-                </Row>
+
               </div>
               <div className={`product-wrapper-grid ${layout}`}>
                 <Row>
                   {/* Product Box */}
-                  {!data ||
-                    !data.products ||
-                    !data.products.items ||
-                    data.products.items.length === 0 ||
-                    loading ? (
-                    data &&
-                      data.products &&
-                      data.products.items &&
-                      data.products.items.length === 0 ? (
-                      <Col xs="12">
-                        <div>
-                          <div className="col-sm-12 empty-cart-cls text-center">
-                            <img
-                              src={`/assets/images/empty-search.jpg`}
-                              className="img-fluid mb-4 mx-auto"
-                              alt=""
-                            />
-                            <h3>
-                              <strong>Your Cart is Empty</strong>
-                            </h3>
-                            <h4>Explore more shortlist some items.</h4>
-                          </div>
-                        </div>
-                      </Col>
-                    ) : (
+                  {products.length == 0 ?  (
                       <div className="row mx-0 margin-default mt-4">
                         <div className="col-xl-3 col-lg-4 col-6">
                           <PostLoader />
@@ -389,10 +243,9 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
                           <PostLoader />
                         </div>
                       </div>
-                    )
-                  ) : (
-                    data &&
-                    data.products.items.map((product, i) => (
+                    ) : (
+                    products &&
+                      products.map((product, i) => (
                       <div className={grid} key={i}>
                         <div className="product">
                           <div>
@@ -408,7 +261,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
                                 wishlistContext.addToWish(product)
                               }
                               addCart={() =>
-                                cartContext.addToCart(product, quantity)
+                                userContext.addProductToCart(product, quantity)
                               }
                             />
                           </div>
@@ -427,7 +280,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
                           {isLoading && (
                             <Spinner animation="border" variant="light" />
                           )}
-                          Load More
+                          ver mas
                         </Button>
                       )}
                     </Col>

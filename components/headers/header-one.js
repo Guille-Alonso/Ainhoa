@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import NavBar from "./common/navbar";
 import SideBar from "./common/sidebar";
 import Cart from "../containers/Cart";
@@ -12,6 +12,8 @@ import cart from "../../public/assets/images/icon/cart.png";
 import Currency from "./common/currency";
 import { useRouter } from "next/router";
 import SearchOverlay from "./common/search-overlay";
+import UserContext from "../../helpers/user/UserContext";
+import PrivateRoute from "../../routes/PrivateRoute";
 
 const HeaderOne = ({
   logoName,
@@ -21,6 +23,7 @@ const HeaderOne = ({
   direction,
 }) => {
   const router = useRouter();
+  const userContext = useContext(UserContext);
 
   /*=====================
      Pre loader
@@ -71,12 +74,19 @@ const HeaderOne = ({
     });
   };
 
+  useEffect(() => {
+    // if(localStorage.getItem("token")){
+
+      userContext.getAuth()
+    // }
+  }, [])
+
   return (
     <div>
       <header id="sticky" className={`sticky ${headerClass}`}>
         <div className="mobile-fix-option"></div>
         {/*Top Header Component*/}
-        {noTopBar ? "" : <TopBarDark topClass={topClass} />}
+        {noTopBar ? "" :<TopBarDark topClass={topClass} />}
 
         <Container>
           <Row>
@@ -86,10 +96,10 @@ const HeaderOne = ({
                   <div className="navbar">
                     <a href={null} onClick={openNav}>
                       <div className="bar-style">
-                        <i
+                        {/* <i
                           className="fa fa-bars sidebar-bar"
                           aria-hidden="true"
-                        ></i>
+                        ></i> */}
                       </div>
                     </a>
                     {/*SideBar Navigation Component*/}
@@ -101,12 +111,12 @@ const HeaderOne = ({
                 </div>
                 <div className="menu-right pull-right">
                   {/*Top Navigation Bar Component*/}
-                   <NavBar />
+                  <NavBar />
 
                   <div>
                     <div className="icon-nav">
                       <ul>
-                        <li className="onhover-div mobile-search">
+                        {/* <li className="onhover-div mobile-search">
                           <div>
                             <Media
                               src={search.src}
@@ -119,16 +129,19 @@ const HeaderOne = ({
                               onClick={openSearch}
                             ></i>
                           </div>
-                        </li>
-                        <Currency icon={settings.src} />
-                        {/*Header Cart Component */}
-                        {direction === undefined ? (
-                          // <></>
+                        </li> */}
+                        {/* <Currency icon={settings.src} /> */}
+
+                        {userContext.authenticated &&
+                        direction === undefined ? (
                           <CartContainer layout={direction} icon={cart.src} />
-                        ) : (
-                          
+                        ) : userContext.authenticated &&
+                          direction != undefined ? (
                           <Cart layout={direction} icon={cart.src} />
+                        ) : (
+                          <></>
                         )}
+
                       </ul>
                     </div>
                   </div>

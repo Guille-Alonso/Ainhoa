@@ -7,10 +7,10 @@ import VerticalTabPage from './product/verticalTabPage';
 const VerticalTab = () => {
   const id = "1";
   return (
-    <CommonLayout parent="home" title="product">
+    <>
         <VerticalTabPage pathId="1" />
       <ProductSection />
-    </CommonLayout>
+    </>
   );
 }
 

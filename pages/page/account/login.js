@@ -1,49 +1,154 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import CommonLayout from "../../../components/shop/common-layout";
-import { Container, Row, Form, Label, Input, Col } from "reactstrap";
+import { Container, Row, Label, Col } from "reactstrap";
+import UserContext from "../../../helpers/user/UserContext";
+import {useForm} from "react-hook-form";
+import { useRouter } from "next/router";
+import LoggedRoute from "../../../routes/LoggedRoute";
+import Link from "next/link";
 
 const Login = () => {
+  const userContext = useContext(UserContext);
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const handleLogin = (data) => {
+    userContext.login(data);
+  };
+
   return (
-    <CommonLayout parent="home" title="login">
+    <LoggedRoute>
+      {/* <CommonLayout parent="home" title="login"> */}
       <section className="login-page section-b-space">
         <Container>
           <Row>
             <Col lg="6">
               <h3>Login</h3>
               <div className="theme-card">
-                <Form className="theme-form">
+                <form
+                  onSubmit={handleSubmit(handleLogin)}
+                  className="theme-form"
+                >
                   <div className="form-group">
                     <Label className="form-label" for="email">
                       Email
                     </Label>
-                    <Input type="email" className="form-control" id="email" placeholder="Email" required="" />
+                    <input
+                      {...register("email", {
+                        required: {
+                          value: true,
+                          message: "El correo es obligatorio",
+                        },
+                        pattern: {
+                          value:
+                            /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                          message: "El correo ingresado no es válido",
+                        },
+                        maxLength: {
+                          value: 35,
+                          message:
+                            "El correo no puede tener mas de 35 caracteres",
+                        },
+                        minLength: {
+                          value: 7,
+                          message:
+                            "El correo no puede tener menos de 7 caracteres",
+                        },
+                      })}
+                      required
+                      type="email"
+                      className="form-control"
+                      id="email"
+                      // placeholder="Email"
+                      maxlength={35}
+                    />
+                    {errors.email && (
+                      <div className="mb-3">
+                        <span className="text-danger">
+                          {errors.email.message}
+                        </span>
+                      </div>
+                    )}
                   </div>
                   <div className="form-group">
                     <Label className="form-label" for="review">
-                      Password
+                      Contraseña
                     </Label>
-                    <Input type="password" className="form-control" id="review" placeholder="Enter your password" required="" />
+                    <input
+                      {...register("password", {
+                        required: {
+                          value: true,
+                          message: "La contraseña es obligatoria",
+                        },
+                        maxLength: {
+                          value: 35,
+                          message:
+                            "La contraseña no puede tener mas de 35 caracteres",
+                        },
+                        minLength: {
+                          value: 5,
+                          message:
+                            "La contraseña no puede tener menos de 5 caracteres",
+                        },
+                      })}
+                      required
+                      type="password"
+                      className="form-control"
+                      id="review"
+                      // placeholder="Ingrese su contraseña"
+                      maxlength={35}
+                    />
+                    {errors.password && (
+                      <div className="mb-3">
+                        <span className="text-danger">
+                          {errors.password.message}
+                        </span>
+                      </div>
+                    )}
                   </div>
-                  <a href="#" className="btn btn-solid">
-                    Login
-                  </a>
-                </Form>
+                  <div>
+                    <button
+                      disabled={userContext.botonState}
+                      type="submit"
+                      href="#"
+                      className="btn btn-solid"
+                    >
+                      Login
+                    </button>
+                    <li className="ms-2">
+                      <Link href="/page/account/forget-pwd">¿Olvidaste tu contraseña?</Link>
+                    </li>
+                  </div>
+                </form>
               </div>
             </Col>
             <Col lg="6" className="right-login">
-              <h3>New Customer</h3>
+              <h3>Sumate !</h3>
               <div className="theme-card authentication-right">
-                <h6 className="title-font">Create A Account</h6>
-                <p>Sign up for a free account at our store. Registration is quick and easy. It allows you to be able to order from our shop. To start shopping click register.</p>
-                <a href="#" className="btn btn-solid">
-                  Create an Account
-                </a>
+                <h6 className="title-font">¿Todavía no te registraste?</h6>
+                <p>
+                  Para comprar en Ainhoa Vintage tenes que registrarte y luego
+                  ingresar!
+                </p>
+                <button
+                  onClick={() => router.push("/page/account/register")}
+                  href="#"
+                  className="btn btn-solid"
+                >
+                  Registrarse
+                </button>
               </div>
             </Col>
           </Row>
         </Container>
       </section>
-    </CommonLayout>
+      {/* </CommonLayout> */}
+    </LoggedRoute>
   );
 };
 

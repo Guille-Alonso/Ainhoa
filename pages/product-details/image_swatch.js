@@ -5,9 +5,9 @@ import ImageSwatchPage from "./product/ImageSwatchPage";
 
 const ImageSwatch = () => {
   return (
-    <CommonLayout parent="home" title="product">
+    
       <ImageSwatchPage />
-    </CommonLayout>
+ 
   );
 };
 

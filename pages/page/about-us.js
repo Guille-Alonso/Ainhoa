@@ -104,7 +104,7 @@ const TeamDetail = ({ img, name, post, about }) => {
 const AboutUs = () => {
   return (
     <>
-      <CommonLayout parent="home" title="About-us">
+      {/* <CommonLayout parent="home" title="About-us"> */}
         {/* // <!-- about section start --> */}
         <section className="about-page section-b-space">
           <Container>
@@ -166,7 +166,7 @@ const AboutUs = () => {
         <div className="section-b-space">
           <ServiceLayout sectionClass={"service border-section small-section"} />
         </div>
-      </CommonLayout>
+      {/* </CommonLayout> */}
     </>
   );
 };

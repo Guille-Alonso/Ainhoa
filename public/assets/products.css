@@ -1,0 +1,16 @@
+
+@media screen and (max-width: 767px) {
+  .logoAinhoa {
+    height: 5vh !important;
+  }
+}
+
+/* Media query para dispositivos grandes */
+@media screen and (min-width: 768px) {
+  .logoAinhoa {
+    height: 10vh  !important;
+  }
+  .section, .section-t-space {
+    padding-top: 40px !important;
+  }
+}
