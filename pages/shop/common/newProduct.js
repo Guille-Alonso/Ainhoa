@@ -53,15 +53,16 @@ const NewProduct = () => {
                       />
                     </Link>
                     <div className="media-body align-self-center">
-                      <div className="rating">
+                      {/* <div className="rating">
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>
-                      </div>
+                      </div> */}
+                      <h4>{product.name}</h4>
                       <a href={null}>
-                        <h6>{product.name}</h6>
+                        <h6>{product.category}</h6>
                       </a>
                       <h4>
                         {symbol}
@@ -90,15 +91,16 @@ const NewProduct = () => {
                       />
                     </Link>
                     <div className="media-body align-self-center">
-                      <div className="rating">
+                      {/* <div className="rating">
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>
-                      </div>
+                      </div> */}
+                       <h4>{product.name}</h4>
                       <a href={null}>
-                        <h6>{product.name}</h6>
+                        <h6>{product.category}</h6>
                       </a>
                       <h4>
                         {symbol}

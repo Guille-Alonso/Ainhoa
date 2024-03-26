@@ -74,7 +74,7 @@ const TopCollection = ({ type, title, subtitle, designClass, noSlider, cartClass
   const userContext = useContext(UserContext);
 
   const settings = {
-    infinite: true,
+    infinite: userContext.products.length <4 ? false : true,
     speed: 300,
     slidesToShow: 4,
     slidesToScroll: 4,

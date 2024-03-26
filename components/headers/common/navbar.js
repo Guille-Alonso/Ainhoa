@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
-import { MENUITEMS } from "../../constant/menu";
+// import { MENUITEMS } from "../../constant/menu";
+import { generateMenuItems } from "../../constant/menu";
 import { Container, Row } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
@@ -10,6 +11,7 @@ const NavBar = () => {
   const { t } = useTranslation();
   const [navClose, setNavClose] = useState({ right: "-410px" });
   const router = useRouter();
+  const userContext = useContext(UserContext);
 
   useEffect(() => {
     if (window.innerWidth < 750) {
@@ -26,7 +28,10 @@ const NavBar = () => {
       document.querySelector("#topHeader").classList.add("zindex-class");
   };
 
-  const closeNav = () => {
+  const closeNav = (cat) => {
+    if(cat != "TODOS"){
+      userContext.setCategory(userContext.categories.find(c=> c.name == cat).id)
+    }else userContext.setCategory(null);
     setNavClose({ right: "-410px" });
     if (router.asPath == "/layouts/Gym")
       document.querySelector("#topHeader").classList.remove("zindex-class");
@@ -54,9 +59,9 @@ const NavBar = () => {
     }
   };
 
+ 
+  const MENUITEMS = generateMenuItems(userContext.categories)
   const [mainmenu, setMainMenu] = useState(MENUITEMS);
-  const userContext = useContext(UserContext);
-
   useEffect(() => {
     const currentUrl = location.pathname;
     MENUITEMS.filter((items) => {
@@ -185,7 +190,7 @@ const NavBar = () => {
                               ""
                             )}
                             {childrenItem.type === "link" ? (
-                              <Link onClick={closeNav.bind(this)} href={`${childrenItem.path}`}>
+                              <Link onClick={closeNav.bind(this,childrenItem.title)} href={`${childrenItem.path}`}>
                                 {/* <a> */}
                                 {childrenItem.title}
                                 {childrenItem.tag === "new" ? (

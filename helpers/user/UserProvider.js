@@ -13,11 +13,46 @@ const UserProvider = (props) => {
     const [loading, setLoading] = useState(true);
     const [botonState, setBotonState] = useState(false);
     const [flagTimer, setFlagTimer] = useState(false);
+    const [category_id, setCategory] = useState(null);
+    const [products, setProducts] = useState([])
 
-    const [products,loadingProducts,getProducts,setProducts] = useGet("/api/bff-store/products?page=1",axios)
+    // const [products,loadingProducts,getProducts,setProducts] = useGet(`/api/bff-store/products?page=1`,axios)
     const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
 
     const router = useRouter();
+
+    const getProductsToFilter = async (url)=>{
+      try {
+        const {data} = await axios.get(url)
+        setProducts(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    useEffect(() => {
+      let apiUrl = "/api/bff-store/products";
+      let queryParams = [];
+
+      const filters = { category_id };
+
+      for (const filter in filters) {
+       
+        if (filters[filter] !== null && filters[filter] !== undefined && filters[filter] !== -1) {
+            queryParams.push(`${filter}=${filters[filter]}`);
+        }
+    }
+
+      if (queryParams.length > 0) {
+        apiUrl += '?' + queryParams.join('&');
+      }
+
+    console.log(apiUrl); 
+   getProductsToFilter(apiUrl)
+      
+    }, [category_id])
+    
 
     const login = async (values) => {
       setBotonState(true);
@@ -141,9 +176,11 @@ const UserProvider = (props) => {
           }
           setFlagTimer(!flagTimer)
         }
-        getProducts();
+        // getProducts();
+        getProductsToFilter("/api/bff-store/products");
       } catch (error) {
-        if(error.response.status == 401){
+        console.log(error);
+        if(error?.response?.status == 401){
           localStorage.clear();
           toast.error("Antes debe ingresar..");
           router.push("/page/account/login")
@@ -179,9 +216,10 @@ const UserProvider = (props) => {
           setFlagTimer(!flagTimer)
           router.push(`/page/account/checkout`);
         }
-        getProducts();
+        // getProducts();
+        getProductsToFilter("/api/bff-store/products");
       } catch (error) {
-        if(error.response.status == 401){
+        if(error?.response?.status == 401){
           localStorage.clear();
           toast.error("Antes debe ingresar..");
           router.push("/page/account/login")
@@ -203,9 +241,11 @@ const UserProvider = (props) => {
           ...prevCart,
           products: prevCart.products.filter(product => product.code !== code)
         }));
-        getProducts();
+        // getProducts();
+        getProductsToFilter("/api/bff-store/products");
       } catch (error) {
-        if(error.response.status == 401){
+        if(error?.response?.status == 401){
+          console.log(error);
           localStorage.clear();
           setAuthenticated(false);
           toast.error("Antes debe ingresar..");
@@ -231,9 +271,10 @@ const UserProvider = (props) => {
 
         toast.error("Su tiempo de compra ha terminado..");
         
-        getProducts();
+        // getProducts();
+        getProductsToFilter("/api/bff-store/products");
       } catch (error) {
-        if(error.response.status == 401){
+        if(error?.response?.status == 401){
           localStorage.clear();
           setAuthenticated(false);
           toast.error("Antes debe ingresar..");
@@ -264,7 +305,7 @@ const UserProvider = (props) => {
         toast.success("Gracias por su compra!")
 
       } catch (error) {
-        if(error.response.status == 401){
+        if(error?.response?.status == 401){
           localStorage.clear();
           setAuthenticated(false);
           toast.error("Error de autenticación. Ingrese nuevamente");
@@ -320,7 +361,8 @@ const UserProvider = (props) => {
         checkout,
         comprarAgregarProducto,
         flagTimer,
-        recoveryPassword
+        recoveryPassword,
+        setCategory
       }}
     >
       {props.children}

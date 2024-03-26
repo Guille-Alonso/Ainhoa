@@ -12,7 +12,11 @@ const GET_BRAND = gql`
   }
 `;
 
-const Attributes = ({name,values}) => {
+const Attributes = ({idAttribute,name,values,attribute, setAttribute}) => {
+  console.log(idAttribute);
+
+  const [checked, setChecked] = useState(false)
+
   const context = useContext(FilterContext);
   const isChecked = context.isChecked;
   const filterChecked = context.filterChecked;
@@ -24,6 +28,32 @@ const Attributes = ({name,values}) => {
       type: context.state,
     },
   });
+
+  const onChangeCheck = (brand, isChecked)=>{
+    console.log(isChecked);
+      let cadena = `${idAttribute.id},${brand}`
+      setAttribute(cadena)
+      context.handleBrands(brand, isChecked);
+  
+  }
+
+  const [selectedCheckbox, setSelectedCheckbox] = useState(null);
+
+  const handleCheckboxChange = (id,brand) => {
+    console.log(selectedCheckbox);
+    console.log(id);
+    if(selectedCheckbox == null){
+
+      setSelectedCheckbox(id === selectedCheckbox ? null : id);
+      let cadena = `${idAttribute.id},${brand}`
+        setAttribute(cadena)
+        context.handleBrands(brand, isChecked);
+    }else{
+      setAttribute(null);
+      setSelectedCheckbox(id === selectedCheckbox ? null : id);
+      context.handleBrands(brand, isChecked);
+    }
+  };
 
   return (
     <div className="collection-collapse-block open">
@@ -42,10 +72,8 @@ const Attributes = ({name,values}) => {
                     key={index}
                   >
                     <Input
-                      checked={context.selectedBrands.includes(brand)}
-                      onChange={() => {
-                        context.handleBrands(brand, isChecked);
-                      }}
+                      checked={index === selectedCheckbox}
+                      onChange={() => handleCheckboxChange(index,brand)}
                       type="checkbox"
                       className="custom-control-input"
                       id={brand}

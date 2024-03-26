@@ -20,6 +20,7 @@ const LeftSidebar = () => {
     const [size, setSize] = useState(10);
     const [is_new, setIsnew] = useState(null);
     const [special_price, setSpecialPrice] = useState(null);
+    const [attribute, setAttribute] = useState(null);
     const [productsToFilter, setProductsToFilter] = useState([])
 
     const getProductsToFilter = async (url)=>{
@@ -37,7 +38,7 @@ const LeftSidebar = () => {
         let apiUrl = "/api/bff-store/products";
         let queryParams = [];
   
-        const filters = { category_id, size, page, is_new, special_price };
+        const filters = { category_id, size, page, is_new, special_price,attribute };
   
         for (const filter in filters) {
          
@@ -52,7 +53,7 @@ const LeftSidebar = () => {
   
       console.log(apiUrl); 
      getProductsToFilter(apiUrl)
-    }, [ category_id, size, page, is_new, special_price]); 
+    }, [ category_id, size, page, is_new, special_price, attribute]); 
     
 
     const openCloseSidebar = () => {
@@ -84,6 +85,8 @@ const LeftSidebar = () => {
                     setCategory={setCategory}
                     special_price={special_price}
                     setSpecialPrice={setSpecialPrice}
+                    attribute={attribute}
+                    setAttribute ={setAttribute}
                   />
                   <ProductList
                     colClass="col-xl-3 col-6 col-grid-box"

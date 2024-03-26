@@ -11,7 +11,7 @@ import IsNew from './isNew';
 import Attributes from './Attributes';
 import SpecialPrice from './specialPrice';
 
-const FilterPage = ({sm,sidebarView,closeSidebar,categories,attributes,products,is_new,setIsnew,setCategory,special_price,setSpecialPrice}) => {
+const FilterPage = ({sm,sidebarView,closeSidebar,categories,attributes,products,is_new,setIsnew,setCategory,special_price,setSpecialPrice, attribute, setAttribute}) => {
    
     const attributesArray = productAttributes(products)
     return (
@@ -36,7 +36,7 @@ const FilterPage = ({sm,sidebarView,closeSidebar,categories,attributes,products,
             <Category categories={categories} setCategory={setCategory}/>
 
             {attributesArray?.map((a) => (
-              <Attributes name={a.name} values={a.values} />
+              <Attributes idAttribute={attributes.find(at=>at.name == a.name)} name={a.name} values={a.values} attribute={attribute} setAttribute={setAttribute} />
             ))}
 
             <SpecialPrice special_price={special_price} setSpecialPrice={setSpecialPrice}/>

@@ -41,16 +41,6 @@ const SpecialPrice = ({special_price, setSpecialPrice}) => {
         />
         <label className="custom-control-label">No</label>
       </div>
-
-      {/* <div className="form-check custom-checkbox collection-filter-checkbox">
-        <Input
-          checked={special_price === null}
-          onChange={() => handleCheckboxChange(null)}
-          type="checkbox"
-          className="custom-control-input"
-        />
-        <label className="custom-control-label">Ambos</label>
-      </div> */}
           </div>
         </Collapse>
       </div>

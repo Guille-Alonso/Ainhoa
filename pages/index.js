@@ -34,7 +34,7 @@ const Fashion = () => {
       </Helmet>
       {/* <ModalComponent /> */}
       {/* <HeaderOne logoName={"logo.png"} topClass="top-header" /> */}
-      <Banner />
+      {/* <Banner /> */}
       {/* <CollectionBanner /> */}
       <Paragraph
         title="title1 section-t-space"
@@ -53,7 +53,6 @@ const Fashion = () => {
           designClass="section-b-space p-t-0 ratio_asos px-2"
           noSlider="false"
           cartClass="cart-info cart-wrap"
-          // products={userContext.products}
           products={userContext.products}
         />
       ) : (
@@ -73,7 +72,8 @@ const Fashion = () => {
       </div>
       )}
 
-      <Parallax />
+      {/* <Parallax /> */}
+      <Banner />
       {
         userContext.products.length > 0 ?
         <SpecialProducts
