@@ -62,7 +62,7 @@ const NewProduct = () => {
                       </div> */}
                       <h4>{product.name}</h4>
                       <a href={null}>
-                        <h6>{product.category}</h6>
+                        <h6>{product.category.length > 10 ? product.category.slice(0, 10)+"...": product.category}</h6>
                       </a>
                       <h4>
                         {symbol}
@@ -100,7 +100,7 @@ const NewProduct = () => {
                       </div> */}
                        <h4>{product.name}</h4>
                       <a href={null}>
-                        <h6>{product.category}</h6>
+                        <h6>{product.category.length > 10 ? product.category.slice(0, 10)+"...": product.category}</h6>
                       </a>
                       <h4>
                         {symbol}
