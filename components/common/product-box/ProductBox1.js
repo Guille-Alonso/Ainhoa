@@ -65,7 +65,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
           {product.sale === true ? <span className="lable4">on sale</span> : ""}
         </div>
         <div className="front" onClick={clickProductDetail}>
-          <Media src={`${product.images[0].main}`} className="img-fluid" alt=""/>
+          <Media src={`${product.images[0]?.main}`} className="img-fluid" alt=""/>
         </div>
         {/* {backImage ? (
           product.images[1] === "undefined" ? (
@@ -103,7 +103,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
               <Row className="compare-modal">
                 <Col lg="12">
                   <div className="media">
-                    <Media src={`${product.variants && image ? image : product.images[0].src}`} alt="" className="img-fluid" />
+                    <Media src={`${product.variants && image ? image : product.images[0]?.main}`} alt="" className="img-fluid" />
                     <div className="media-body align-self-center text-center">
                       <h5>
                         <i className="fa fa-check"></i>Item <span>{product.title} </span>
@@ -143,7 +143,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
           <Row>
             <Col lg="6" xs="12">
               <div className="quick-view-img">
-                <Media src={product.images[0].main} alt="" className="img-fluid" />
+                <Media src={product.images[0]?.main} alt="" className="img-fluid" />
               </div>
             </Col>
             <Col lg="6" className="rtl-text">

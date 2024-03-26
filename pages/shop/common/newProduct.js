@@ -48,7 +48,7 @@ const NewProduct = () => {
                     <Link href={`/product-details/` + product.code}>
                       <Media
                         className="img-fluid blur-up lazyload"
-                        src={product.images[0].main}
+                        src={product.images[0]?.main}
                         // alt={product.images[0].alt}
                       />
                     </Link>
@@ -86,7 +86,7 @@ const NewProduct = () => {
                     <Link href={`/product-details/` + product.code}>
                       <Media
                         className="img-fluid blur-up lazyload"
-                        src={product.images[0].main}
+                        src={product.images[0]?.main}
                         // alt={product.images[0].alt}
                       />
                     </Link>
