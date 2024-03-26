@@ -29,9 +29,11 @@ const NavBar = () => {
   };
 
   const closeNav = (cat) => {
-    if(cat != "TODOS"){
-      userContext.setCategory(userContext.categories.find(c=> c.name == cat).id)
-    }else userContext.setCategory(null);
+    if(cat){
+      if(cat != "TODOS"){
+        userContext.setCategory(userContext.categories.find(c=> c.name == cat).id)
+      }else userContext.setCategory(null);
+    }
     setNavClose({ right: "-410px" });
     if (router.asPath == "/layouts/Gym")
       document.querySelector("#topHeader").classList.remove("zindex-class");
@@ -142,7 +144,7 @@ const NavBar = () => {
             <i className="fa fa-bars sidebar-bar"></i>
           </div>
           <ul className="nav-menu" style={navClose}>
-            <li className="back-btn" onClick={closeNav.bind(this)}>
+            <li className="back-btn" onClick={closeNav.bind(this,null)}>
               <div className="mobile-back text-end">
                 <span>Menu</span>
                 <i className="fa fa-angle-right ps-2" aria-hidden="true"></i>
@@ -154,7 +156,7 @@ const NavBar = () => {
                   key={i}
                   className={` ${menuItem.megaMenu ? "mega-menu" : ""}`}>
                   {menuItem.type == "link" ? (
-                    <Link  onClick={closeNav.bind(this)} href={menuItem.path} className="nav-link">
+                    <Link  onClick={closeNav.bind(this,null)} href={menuItem.path} className="nav-link">
                       {/* <a > */}
                       {t(menuItem.title)}
                       {/* </a> */}
