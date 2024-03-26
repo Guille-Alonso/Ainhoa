@@ -43,7 +43,7 @@ const NewProduct = () => {
           ) : (
             <>
               {userContext.products.length > 0 &&
-                userContext.products.slice(0, 3).map((product, index) => (
+                userContext.products.slice(3, 5).map((product, index) => (
                   <div className="media" key={index}>
                     <Link href={`/product-details/` + product.code}>
                       <Media
@@ -81,7 +81,7 @@ const NewProduct = () => {
           ) : (
             <>
               {userContext.products.length > 0 &&
-                userContext.products.slice(0, 3).map((product, index) => (
+                userContext.products.slice(0, 2).map((product, index) => (
                   <div className="media" key={index}>
                     <Link href={`/product-details/` + product.code}>
                       <Media
