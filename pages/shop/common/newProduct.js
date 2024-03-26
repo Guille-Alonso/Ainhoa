@@ -5,6 +5,7 @@ import { Media } from "reactstrap";
 import Slider from "react-slick";
 import { CurrencyContext } from "../../../helpers/Currency/CurrencyContext";
 import UserContext from "../../../helpers/user/UserContext";
+import Link from "next/link";
 
 const GET_PRODUCTS = gql`
   query newProducts($type: String!) {
@@ -44,13 +45,13 @@ const NewProduct = () => {
               {userContext.products.length > 0 &&
                 userContext.products.slice(0, 3).map((product, index) => (
                   <div className="media" key={index}>
-                    <a href="">
+                    <Link href={`/product-details/` + product.code}>
                       <Media
                         className="img-fluid blur-up lazyload"
                         src={product.images[0].main}
                         // alt={product.images[0].alt}
                       />
-                    </a>
+                    </Link>
                     <div className="media-body align-self-center">
                       <div className="rating">
                         <i className="fa fa-star"></i>{" "}
@@ -64,7 +65,7 @@ const NewProduct = () => {
                       </a>
                       <h4>
                         {symbol}
-                        {product.price}
+                        {product.special_price != 0 ?product.special_price : product.price }
                       </h4>
                     </div>
                   </div>
@@ -79,15 +80,15 @@ const NewProduct = () => {
           ) : (
             <>
               {userContext.products.length > 0 &&
-                userContext.products.slice(4, 7).map((product, index) => (
+                userContext.products.slice(0, 3).map((product, index) => (
                   <div className="media" key={index}>
-                    <a href="">
+                    <Link href={`/product-details/` + product.code}>
                       <Media
                         className="img-fluid blur-up lazyload"
                         src={product.images[0].main}
                         // alt={product.images[0].alt}
                       />
-                    </a>
+                    </Link>
                     <div className="media-body align-self-center">
                       <div className="rating">
                         <i className="fa fa-star"></i>{" "}
@@ -101,7 +102,7 @@ const NewProduct = () => {
                       </a>
                       <h4>
                         {symbol}
-                        {product.price}
+                        {product.special_price != 0 ?product.special_price : product.price }
                       </h4>
                     </div>
                   </div>

@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import SettingContext from "../../helpers/theme-setting/SettingContext";
 import config from "./config.json";
-import Timer from "../../utils/Timer";
+import Timer from "../../utils/timer";
 import UserContext from "../../helpers/user/UserContext";
 
 const ThemeSettings = () => {

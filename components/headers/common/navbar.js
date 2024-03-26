@@ -149,7 +149,7 @@ const NavBar = () => {
                   key={i}
                   className={` ${menuItem.megaMenu ? "mega-menu" : ""}`}>
                   {menuItem.type == "link" ? (
-                    <Link href={menuItem.path} className="nav-link">
+                    <Link  onClick={closeNav.bind(this)} href={menuItem.path} className="nav-link">
                       {/* <a > */}
                       {t(menuItem.title)}
                       {/* </a> */}

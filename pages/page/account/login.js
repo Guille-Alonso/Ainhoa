@@ -118,10 +118,10 @@ const Login = () => {
                       href="#"
                       className="btn btn-solid"
                     >
-                      Entrar
+                      Login
                     </button>
                     <li className="ms-2">
-                      <Link href="/page/account/forget-pwd">¿Olvidó su contraseña?</Link>
+                      <Link href="/page/account/forget-pwd">¿Olvidaste tu contraseña?</Link>
                     </li>
                   </div>
                 </form>

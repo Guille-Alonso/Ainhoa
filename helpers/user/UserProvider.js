@@ -279,6 +279,19 @@ const UserProvider = (props) => {
       setBotonState(false);
     }
 
+    const recoveryPassword = async (values) =>{
+      setBotonState(true);
+      try {
+          // const token = localStorage.getItem("token")
+          const { data } = await axios.post("/api/bff-store/auth/password/reset", {...values,token:"iB7k09RbPck1p5sL8MEHUYrAo7D79aI1xNl0Xclp1GGcn0kxyByDLCuLsw2U"});
+          toast.success("Contraseña modificada con éxito")
+          router.push("/page/account/login")
+      } catch (error) {
+          toast.error(error.message);
+      }
+      setBotonState(false);
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -298,6 +311,7 @@ const UserProvider = (props) => {
         products,
         setProducts,
         categories,
+        loadingCategories,
         cart,
         setCart,
         order,
@@ -306,7 +320,8 @@ const UserProvider = (props) => {
         removeProductsFromCart,
         checkout,
         comprarAgregarProducto,
-        flagTimer
+        flagTimer,
+        recoveryPassword
       }}
     >
       {props.children}

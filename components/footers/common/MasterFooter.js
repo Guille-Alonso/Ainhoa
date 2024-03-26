@@ -97,7 +97,7 @@ const MasterFooter = ({
                       setCollapse(1);
                       setIsOpen(!isOpen);
                     }}>
-                    about
+                    Nosotros
                     <span className="according-menu"></span>
                   </h4>
                 </div>
@@ -163,7 +163,7 @@ const MasterFooter = ({
                           setCollapse(2);
                         } else setIsOpen(true);
                       }}>
-                      Mi Cuenta
+                      Contacto
                       <span className="according-menu"></span>
                     </h4>
                   </div>
@@ -217,7 +217,7 @@ const MasterFooter = ({
                           setCollapse(3);
                         } else setIsOpen(true);
                       }}>
-                      Secciones
+                      Preguntas Frecuentes
                       <span className="according-menu"></span>
                     </h4>
                   </div>

@@ -13,7 +13,6 @@ const LeftSidebar = () => {
 
     const [sidebarView,setSidebarView] = useState(false)
     const userContext = useContext(UserContext);
-    const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
     const [attributes,loadingAttributes] = useGet("/api/bff-store/attributes",axios)
 
     const [category_id, setCategory] = useState(null);
@@ -69,15 +68,15 @@ const LeftSidebar = () => {
         <div className="collection-wrapper">
           <Container>
             <Row>
-              {!loadingCategories &&
+              {/* {!userContext.loadingCategories &&
               !loadingAttributes &&
-              productsToFilter.length > 0 ? (
+              productsToFilter.length > 0 ? ( */}
                 <>
                   <FilterPage
                     sm="3"
                     sidebarView={sidebarView}
                     closeSidebar={() => openCloseSidebar(sidebarView)}
-                    categories={categories}
+                    categories={userContext.categories}
                     attributes={attributes}
                     products={userContext.products}
                     is_new={is_new}
@@ -93,9 +92,10 @@ const LeftSidebar = () => {
                     products={productsToFilter.filter(item => userContext.cart?.products.indexOf(item) === -1).length==0? productsToFilter :  productsToFilter.filter(item => userContext.cart?.products.indexOf(item) === -1)}
                   />
                 </>
-              ) : (
-                <PostLoader />
-              )}
+              {/* // ) : (
+              //   // <PostLoader />
+              //   <p>No hay productos con el filtro ingresado</p>
+              // )} */}
             </Row>
           </Container>
         </div>

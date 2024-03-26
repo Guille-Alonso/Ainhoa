@@ -104,9 +104,6 @@ const LeftSidebarPage = ({ pathId,noSidebar }) => {
     }
 }
 
-  const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
-  const [attributes,loadingAttributes] = useGet("/api/bff-store/attributes",axios)
-
   return (
     <section className="">
       <div className="collection-wrapper">
