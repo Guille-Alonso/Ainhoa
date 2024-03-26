@@ -8,9 +8,11 @@ import { useRouter } from 'next/router';
 const ForgetPwd = () => {
 
     const [email, setEmail] = useState({email:""});
+    const [flag, setFlag] = useState(false);
     const router = useRouter();
 
     const forgetPassword = async (e) =>{
+        setFlag(true);
         e.preventDefault();
         try {
             const { data } = await axios.post("/api/bff-store/auth/password/reset-request", email);
@@ -20,6 +22,7 @@ const ForgetPwd = () => {
         } catch (error) {
             toast.error(error.message);
         }
+        setFlag(false);
     }
     return (
         // <CommonLayout parent="home" title="Forget Password">
@@ -34,7 +37,7 @@ const ForgetPwd = () => {
                                         <Input value={email.email} onChange={(e) => setEmail({email:e.target.value})} name='email' type="email" className="form-control" id="email" placeholder="Ingrese su correo"
                                             required maxLength={30}/>
                                     </Col>
-                                    <button type='submit' className="btn btn-solid w-auto">Enviar</button>
+                                    <button disabled={flag} type='submit' className="btn btn-solid w-auto">Enviar</button>
                                 </Row>
                             </Form>
                         </Col>

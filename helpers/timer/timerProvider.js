@@ -20,7 +20,7 @@ const TimerProvider = ({ children }) => {
     useEffect(() => {
         setSeconds(getClockTime());
      
-    }, [userContext.flagTimer,userContext.cart])
+    }, [userContext.flagTimer,userContext.user])
 
     useEffect(() => {
         if (userContext.cart?.products.length > 0 && flag && seconds != 0) {
