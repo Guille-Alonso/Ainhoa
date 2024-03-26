@@ -45,7 +45,7 @@ const UserProvider = (props) => {
         const token = localStorage.getItem("token");
         if (!token) {
           setLoading(false);
-          router.push("/")
+          // router.push("/")
           return setAuthenticated(false);
         }
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
@@ -282,8 +282,7 @@ const UserProvider = (props) => {
     const recoveryPassword = async (values) =>{
       setBotonState(true);
       try {
-          // const token = localStorage.getItem("token")
-          const { data } = await axios.post("/api/bff-store/auth/password/reset", {...values,token:"iB7k09RbPck1p5sL8MEHUYrAo7D79aI1xNl0Xclp1GGcn0kxyByDLCuLsw2U"});
+          const { data } = await axios.post("/api/bff-store/auth/password/reset",values);
           toast.success("Contraseña modificada con éxito")
           router.push("/page/account/login")
       } catch (error) {

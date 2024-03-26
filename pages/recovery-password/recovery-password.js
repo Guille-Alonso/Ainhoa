@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Container, Row, Form, Input,Col, Label } from 'reactstrap';
 import { useForm } from 'react-hook-form';
-import UserContext from '../helpers/user/UserContext';
+import UserContext from '../../helpers/user/UserContext';
 import { useRouter } from 'next/router';
 
-const RecoveryPassword = () => {
+const RecoveryPassword = ({token}) => {
     
     const userContext = useContext(UserContext);
     const router = useRouter();
@@ -17,10 +17,7 @@ const RecoveryPassword = () => {
       } = useForm();
 
     const password = watch("password", ""); 
-
-    
-    const {token} = router.query;
-
+   
     const handleRecovery = (data)=>{
         const obj = {...data,token}
         userContext.recoveryPassword(obj);
