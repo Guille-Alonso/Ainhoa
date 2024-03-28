@@ -64,9 +64,14 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
           {product.new === true ? <span className="lable3">new</span> : ""}
           {product.sale === true ? <span className="lable4">on sale</span> : ""}
         </div>
+        {
+          product.images[0]?.main ?
         <div className="front" onClick={clickProductDetail}>
           <Media src={`${product.images[0]?.main}`} className="img-fluid" alt=""/>
         </div>
+        :
+        <PostLoader/>
+        }
         {/* {backImage ? (
           product.images[1] === "undefined" ? (
             "false"

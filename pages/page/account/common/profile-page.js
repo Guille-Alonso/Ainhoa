@@ -7,7 +7,8 @@ import PostLoader from '../../../../components/common/PostLoader';
 
 const ProfilePage = () => {
     const [size, setSize] = useState(5)
-    const [pedidos,loadingPedidos, getPedidos] = useGet(`/api/bff-store/private/orders?page=1&size=${size}`,axios);
+    const [page, setPage] = useState(1)
+    const [pedidos,loadingPedidos, getPedidos] = useGet(`/api/bff-store/private/orders?page=${page}&size=${size}`,axios);
 
     useEffect(() => {
       if(size > 5){

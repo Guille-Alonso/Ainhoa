@@ -141,11 +141,15 @@ const LeftSidebarPage = ({ pathId,noSidebar }) => {
                           ref={(slider) => setSlider1(slider)}
                           className="product-slick"
                         >
-                          {data.images.map((vari, index) => (
-                            <div key={index}>
-                              <ImageZoom image={vari} />
-                            </div>
-                          ))}
+                          {data.images && data.images.length > 0 ? (
+                            data.images.map((vari, index) => (
+                              <div key={index}>
+                                <ImageZoom image={vari} />
+                              </div>
+                            ))
+                          ) : (
+                            <PostLoader/>
+                          )}
                         </Slider>
                       )}
                       {/* {data.product.variants.length > 1 && (
