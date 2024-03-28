@@ -75,8 +75,8 @@ const CartPage = () => {
                               <Media
                                 src={
                                   item.images
-                                    ? item.images[0].main
-                                    : item.images[0].main
+                                    ? item.images[0]?.main
+                                    : item.images[0]?.main
                                 }
                                 alt=""
                               />

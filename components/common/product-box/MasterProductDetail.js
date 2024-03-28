@@ -25,7 +25,7 @@ const MasterProductDetail = ({
           ""
         )} */}
         <h5>{product.name}</h5>
-        <h6 className="mb-1">{product.category}</h6>
+        <h6 className="mb-1">{product.category.length > 10 ? product.category.slice(0, 10)+"...": product.category}</h6>
         {/* {des ? <p>{product.description}</p> : ""} */}
         {/* <p>{product.category}</p> */}
         <h4>

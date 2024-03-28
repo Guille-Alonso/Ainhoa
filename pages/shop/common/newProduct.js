@@ -43,12 +43,12 @@ const NewProduct = () => {
           ) : (
             <>
               {userContext.products.length > 0 &&
-                userContext.products.slice(0, 3).map((product, index) => (
+                userContext.products.slice(3, 5).map((product, index) => (
                   <div className="media" key={index}>
                     <Link href={`/product-details/` + product.code}>
                       <Media
                         className="img-fluid blur-up lazyload"
-                        src={product.images[0].main}
+                        src={product.images[0]?.main}
                         // alt={product.images[0].alt}
                       />
                     </Link>
@@ -62,7 +62,7 @@ const NewProduct = () => {
                       </div> */}
                       <h4>{product.name}</h4>
                       <a href={null}>
-                        <h6>{product.category}</h6>
+                        <h6>{product.category.length > 10 ? product.category.slice(0, 10)+"...": product.category}</h6>
                       </a>
                       <h4>
                         {symbol}
@@ -81,12 +81,12 @@ const NewProduct = () => {
           ) : (
             <>
               {userContext.products.length > 0 &&
-                userContext.products.slice(0, 3).map((product, index) => (
+                userContext.products.slice(0, 2).map((product, index) => (
                   <div className="media" key={index}>
                     <Link href={`/product-details/` + product.code}>
                       <Media
                         className="img-fluid blur-up lazyload"
-                        src={product.images[0].main}
+                        src={product.images[0]?.main}
                         // alt={product.images[0].alt}
                       />
                     </Link>
@@ -100,7 +100,7 @@ const NewProduct = () => {
                       </div> */}
                        <h4>{product.name}</h4>
                       <a href={null}>
-                        <h6>{product.category}</h6>
+                        <h6>{product.category.length > 10 ? product.category.slice(0, 10)+"...": product.category}</h6>
                       </a>
                       <h4>
                         {symbol}
