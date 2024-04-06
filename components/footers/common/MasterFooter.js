@@ -52,16 +52,15 @@ const MasterFooter = ({
       <footer className={footerClass}>
         {newLatter ? (
           <div className={footerLayOut}>
-            {/* <Container fluid={containerFluid ? containerFluid : ""}>
+            <Container fluid={containerFluid ? containerFluid : ""}>
               <section className={footerSection}>
                 <Row>
                   <Col lg="6">
                     <div className="subscribe">
                       <div>
-                        <h4>KNOW IT ALL FIRST!</h4>
-                        <p>
-                          Never Miss Anything From Multikart By Signing Up To
-                          Our Newsletter.
+                        <h4>CONOCENOS!</h4>
+                        <p className="text-black">
+                          No te pierdas nada de Ainhoa Vintage.
                         </p>
                       </div>
                     </div>
@@ -70,20 +69,22 @@ const MasterFooter = ({
                     <Form className="form-inline subscribe-form">
                       <div className="mx-sm-3">
                         <Input
-                          type="text"
+                          type="email"
                           className="form-control"
                           id="exampleFormControlInput1"
-                          placeholder="Enter your email"
+                          placeholder="Ingrese su email"
+                          maxLength={40}
+                          required
                         />
                       </div>
                       <Button type="submit" className="btn btn-solid">
-                        subscribe
+                        suscribirse
                       </Button>
                     </Form>
                   </Col>
                 </Row>
               </section>
-            </Container> */}
+            </Container>
           </div>
         ) : (
           ""
