@@ -26,7 +26,7 @@ const TopBarDark = ({ topClass, fluid }) => {
             <div className="header-contact">
               <ul>
                 {/* <li>Teléfono: </li> */}
-                <li>
+                <li className="text-black">
                   {/* <i className="fa fa-phone text-white" aria-hidden="true"></i> */}
                   <BsInstagram className="me-2"/>
                   ainhoa_vintage
@@ -45,7 +45,7 @@ const TopBarDark = ({ topClass, fluid }) => {
                   </Link>
                 </li>
               )}
-              <li className="onhover-dropdown mobile-account">
+              <li className="onhover-dropdown mobile-account text-black">
                 <i className="fa fa-user" aria-hidden="true"></i>
                 {userContext.authenticated
                   ? userContext.user.name

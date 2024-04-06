@@ -56,7 +56,7 @@ const Fashion = () => {
           products={userContext.products}
         />
       ) : (
-        <div className="row margin-default">
+        <div className="row margin-default mx-md-5 mb-md-3">
           <div className="col-xl-3 col-lg-4 col-6">
             <PostLoader />
           </div>
@@ -73,7 +73,7 @@ const Fashion = () => {
       )}
 
       {/* <Parallax /> */}
-      {userContext.products.length > 0 ? (
+      {/* {userContext.products.length > 0 ? (
         <SpecialProducts
           type="fashion"
           backImage={true}
@@ -101,7 +101,7 @@ const Fashion = () => {
             <PostLoader />
           </div>
         </div>
-      )}
+      )} */}
       {/* <Blog type="fashion" title="title1" inner="title-inner1" /> */}
       {/* <Instagram type="fashion" /> */}
       {/* <div className="section-b-space">

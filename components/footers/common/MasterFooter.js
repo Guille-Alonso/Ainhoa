@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Container,
@@ -13,6 +13,7 @@ import {
 import LogoImage from "../../headers/common/logo";
 import CopyRight from "./copyright";
 import { BsInstagram } from "react-icons/bs";
+import UserContext from "../../../helpers/user/UserContext";
 
 const MasterFooter = ({
   containerFluid,
@@ -43,6 +44,9 @@ const MasterFooter = ({
       window.removeEventListener("resize", changeCollapse);
     };
   }, []);
+
+  const userContext = useContext(UserContext);
+
   return (
     <div>
       <footer className={footerClass}>
@@ -108,12 +112,13 @@ const MasterFooter = ({
                   isOpen={width ? (collapse === 1 ? isOpen : false) : true}
                 >
                   <div className="footer-contant">
-                    <div className="footer-logo">
+                    <div className="footer-logo d-none d-md-block">
                       <LogoImage logo={logoName} />
                     </div>
-                    <p>
-                    Encontranos en las Redes, no dejes pasar mas tiempo!!<br></br>
-                    Comprá y vendé con Ainhoa Vintage
+                    <p className="ms-md-3 text-black">
+                      Encontranos en las redes.
+                      <br></br>
+                      Comprá y vendé con Ainhoa Vintage.
                     </p>
                     {/* <div className="footer-social">
                       <ul>
@@ -160,41 +165,6 @@ const MasterFooter = ({
                 <div className="sub-title">
                   <div
                     className={`footer-title ${
-                      isOpen && collapse == 2 ? "active" : ""
-                    } `}
-                  >
-                    <h4
-                      onClick={() => {
-                        if (width) {
-                          setIsOpen(!isOpen);
-                          setCollapse(2);
-                        } else setIsOpen(true);
-                      }}
-                    >
-                      Redes Sociales
-                      <span className="according-menu"></span>
-                    </h4>
-                  </div>
-                  <Collapse
-                    isOpen={width ? (collapse === 2 ? isOpen : false) : true}
-                  >
-                    <div className="footer-contant">
-                      <ul>
-                        <li>
-                          <Link href="https://www.instagram.com/ainhoa_vintage" target="_blank">
-                            <BsInstagram className="me-2 mb-1" />
-                            ainhoa_vintage
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </Collapse>
-                </div>
-              </Col>
-              <Col>
-                <div className="sub-title">
-                  <div
-                    className={`footer-title ${
                       isOpen && collapse == 3 ? "active" : ""
                     } `}
                   >
@@ -216,25 +186,70 @@ const MasterFooter = ({
                     <div className="footer-contant">
                       <ul>
                         <li>
-                          <Link href="/">Inicio</Link>
+                          <Link className="text-black" href="/">Inicio</Link>
+                        </li>
+                        {!userContext.authenticated && (
+                          <>
+                            <li>
+                              <Link className="text-black" href="/page/account/login">Login</Link>
+                            </li>
+                            <li>
+                              <Link className="text-black" href="/page/account/register">
+                                Registro
+                              </Link>
+                            </li>
+                          </>
+                        )}
+                        <li>
+                          <Link className="text-black" href="/">Quienes somos</Link>
                         </li>
                         <li>
-                          <Link href="/page/account/login">Login</Link>
+                          <Link className="text-black" href="/">Vendé con nosotros</Link>
                         </li>
-                        <li>
-                          <Link href="/page/account/register">Registro</Link>
-                        </li>
-                        {/* <li>
-                          <a href="#">affiliates</a>
-                        </li>
-                        <li>
-                          <a href="#">contacts</a>
-                        </li> */}
                       </ul>
                     </div>
                   </Collapse>
                 </div>
               </Col>
+              <Col >
+                <div className="sub-title">
+                  <div
+                    className={`footer-title ${
+                      isOpen && collapse == 2 ? "active" : ""
+                    } `}
+                  >
+                    <h4
+                      onClick={() => {
+                        if (width) {
+                          setIsOpen(!isOpen);
+                          setCollapse(2);
+                        } else setIsOpen(true);
+                      }}
+                    >
+                      Redes Sociales
+                      <span className="according-menu"></span>
+                    </h4>
+                  </div>
+                  <Collapse
+                    isOpen={width ? (collapse === 2 ? isOpen : false) : true}
+                  >
+                    <div className="footer-contant">
+                      <ul>
+                        <li>
+                          <Link
+                            href="https://www.instagram.com/ainhoa_vintage"
+                            target="_blank" className="text-black"
+                          >
+                            <BsInstagram className="me-2" />
+                            ainhoa_vintage
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </Collapse>
+                </div>
+              </Col>
+              
               <Col>
                 <div className="sub-title">
                   <div
@@ -259,7 +274,7 @@ const MasterFooter = ({
                   >
                     <div className="footer-contant">
                       <ul className="contact-list">
-                        <li>
+                        <li className="text-black">
                           <i className="fa fa-map-marker"></i>San Miguel de
                           Tucumán
                         </li>
