@@ -29,7 +29,7 @@ const SearchOverlay = () => {
                       type="text"
                       className="form-control"
                       id="exampleInputPassword1"
-                      placeholder="Search a Product"
+                      placeholder="Busque un producto"
                     />
                   </FormGroup>
                 </Form>

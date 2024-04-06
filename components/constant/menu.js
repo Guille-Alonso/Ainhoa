@@ -18,18 +18,23 @@ export const generateMenuItems = (categories) => {
       type: "link",
       path:"/"
     },
-    productoItem,
-
     {
-      title: "Nosotros",
+      title: "Quienes somos",
+      type: "link",
+      path:"/"
+    },
+    productoItem,
+    {
+      title: "Vendé en Ainhoa",
       type: "link",
       path:"/"
     },
     {
-      title: "Preguntas Frecuentes",
+      title: "Contacto",
       type: "link",
       path:"/"
     }
+   
   ];
 
   return MENUITEMS;

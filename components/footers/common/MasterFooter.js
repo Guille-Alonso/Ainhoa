@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 import LogoImage from "../../headers/common/logo";
 import CopyRight from "./copyright";
+import { BsInstagram } from "react-icons/bs";
 
 const MasterFooter = ({
   containerFluid,
@@ -47,8 +48,8 @@ const MasterFooter = ({
       <footer className={footerClass}>
         {newLatter ? (
           <div className={footerLayOut}>
-            <Container fluid={containerFluid ? containerFluid : ""}>
-              {/* <section className={footerSection}>
+            {/* <Container fluid={containerFluid ? containerFluid : ""}>
+              <section className={footerSection}>
                 <Row>
                   <Col lg="6">
                     <div className="subscribe">
@@ -77,8 +78,8 @@ const MasterFooter = ({
                     </Form>
                   </Col>
                 </Row>
-              </section> */}
-            </Container>
+              </section>
+            </Container> */}
           </div>
         ) : (
           ""
@@ -91,41 +92,45 @@ const MasterFooter = ({
                 <div
                   className={`footer-title ${
                     isOpen && collapse == 1 ? "active" : ""
-                  } footer-mobile-title`}>
+                  } footer-mobile-title`}
+                >
                   <h4
                     onClick={() => {
                       setCollapse(1);
                       setIsOpen(!isOpen);
-                    }}>
+                    }}
+                  >
                     Nosotros
                     <span className="according-menu"></span>
                   </h4>
                 </div>
                 <Collapse
-                  isOpen={width ? (collapse === 1 ? isOpen : false) : true}>
+                  isOpen={width ? (collapse === 1 ? isOpen : false) : true}
+                >
                   <div className="footer-contant">
                     <div className="footer-logo">
                       <LogoImage logo={logoName} />
                     </div>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam,
+                    Encontranos en las Redes, no dejes pasar mas tiempo!!<br></br>
+                    Comprá y vendé con Ainhoa Vintage
                     </p>
-                    <div className="footer-social">
+                    {/* <div className="footer-social">
                       <ul>
                         <li>
                           <a href="https://www.facebook.com" target="_blank">
                             <i
                               className="fa fa-facebook"
-                              aria-hidden="true"></i>
+                              aria-hidden="true"
+                            ></i>
                           </a>
                         </li>
                         <li>
                           <a href="https://plus.google.com" target="_blank">
                             <i
                               className="fa fa-google-plus"
-                              aria-hidden="true"></i>
+                              aria-hidden="true"
+                            ></i>
                           </a>
                         </li>
                         <li>
@@ -137,7 +142,8 @@ const MasterFooter = ({
                           <a href="https://www.instagram.com" target="_blank">
                             <i
                               className="fa fa-instagram"
-                              aria-hidden="true"></i>
+                              aria-hidden="true"
+                            ></i>
                           </a>
                         </li>
                         <li>
@@ -146,7 +152,7 @@ const MasterFooter = ({
                           </a>
                         </li>
                       </ul>
-                    </div>
+                    </div> */}
                   </div>
                 </Collapse>
               </Col>
@@ -155,48 +161,29 @@ const MasterFooter = ({
                   <div
                     className={`footer-title ${
                       isOpen && collapse == 2 ? "active" : ""
-                    } `}>
+                    } `}
+                  >
                     <h4
                       onClick={() => {
                         if (width) {
                           setIsOpen(!isOpen);
                           setCollapse(2);
                         } else setIsOpen(true);
-                      }}>
-                      Contacto
+                      }}
+                    >
+                      Redes Sociales
                       <span className="according-menu"></span>
                     </h4>
                   </div>
                   <Collapse
-                    isOpen={width ? (collapse === 2 ? isOpen : false) : true}>
+                    isOpen={width ? (collapse === 2 ? isOpen : false) : true}
+                  >
                     <div className="footer-contant">
                       <ul>
                         <li>
-                          <Link href={`/shop/left_sidebar`}>
-                            {/* <a> */}
-                            womens
-                            {/* </a> */}
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href={`/shop/left_sidebar`}>
-                            {/* <a>  */}
-                            clothing
-                            {/* </a> */}
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href={`/shop/left_sidebar`}>
-                            {/* <a> */}
-                            accessories
-                            {/* </a> */}
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href={`/shop/left_sidebar`}>
-                            {/* <a> */}
-                            featured
-                            {/* </a> */}
+                          <Link href="https://www.instagram.com/ainhoa_vintage" target="_blank">
+                            <BsInstagram className="me-2 mb-1" />
+                            ainhoa_vintage
                           </Link>
                         </li>
                       </ul>
@@ -209,37 +196,40 @@ const MasterFooter = ({
                   <div
                     className={`footer-title ${
                       isOpen && collapse == 3 ? "active" : ""
-                    } `}>
+                    } `}
+                  >
                     <h4
                       onClick={() => {
                         if (width) {
                           setIsOpen(!isOpen);
                           setCollapse(3);
                         } else setIsOpen(true);
-                      }}>
-                      Preguntas Frecuentes
+                      }}
+                    >
+                      Navegación
                       <span className="according-menu"></span>
                     </h4>
                   </div>
                   <Collapse
-                    isOpen={width ? (collapse === 3 ? isOpen : false) : true}>
+                    isOpen={width ? (collapse === 3 ? isOpen : false) : true}
+                  >
                     <div className="footer-contant">
                       <ul>
                         <li>
-                          <a href="#">shipping & return</a>
+                          <Link href="/">Inicio</Link>
                         </li>
                         <li>
-                          <a href="#">secure shopping</a>
+                          <Link href="/page/account/login">Login</Link>
                         </li>
                         <li>
-                          <a href="#">gallary</a>
+                          <Link href="/page/account/register">Registro</Link>
                         </li>
-                        <li>
+                        {/* <li>
                           <a href="#">affiliates</a>
                         </li>
                         <li>
                           <a href="#">contacts</a>
-                        </li>
+                        </li> */}
                       </ul>
                     </div>
                   </Collapse>
@@ -250,26 +240,30 @@ const MasterFooter = ({
                   <div
                     className={`footer-title ${
                       isOpen && collapse == 4 ? "active" : ""
-                    } `}>
+                    } `}
+                  >
                     <h4
                       onClick={() => {
                         if (width) {
                           setIsOpen(!isOpen);
                           setCollapse(4);
                         } else setIsOpen(true);
-                      }}>
-                      Información
+                      }}
+                    >
+                      Contactanos
                       <span className="according-menu"></span>
                     </h4>
                   </div>
                   <Collapse
-                    isOpen={width ? (collapse === 4 ? isOpen : false) : true}>
+                    isOpen={width ? (collapse === 4 ? isOpen : false) : true}
+                  >
                     <div className="footer-contant">
                       <ul className="contact-list">
                         <li>
-                          <i className="fa fa-map-marker"></i>San Miguel de Tucumán
+                          <i className="fa fa-map-marker"></i>San Miguel de
+                          Tucumán
                         </li>
-                        <li>
+                        {/* <li>
                           <i className="fa fa-phone"></i>Call Us: 123-456-7898
                         </li>
                         <li>
@@ -278,7 +272,7 @@ const MasterFooter = ({
                         </li>
                         <li>
                           <i className="fa fa-fax"></i>Fax: 123456
-                        </li>
+                        </li> */}
                       </ul>
                     </div>
                   </Collapse>

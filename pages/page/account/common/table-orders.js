@@ -5,7 +5,7 @@ import { calculateTotal } from "../../../../utils/calculateTotal";
 import axios from "../../../../config/axios";
 import { toast } from "react-toastify";
 
-const TableOrdersProducts = ({pedidos,setSize,size,loadingPedidos}) => {
+const TableOrdersProducts = ({pedidos,setSize,size,loadingPedidos,page}) => {
 
   const [products, setProducts] = useState([])
 
@@ -25,6 +25,24 @@ const TableOrdersProducts = ({pedidos,setSize,size,loadingPedidos}) => {
       toast.error(error.message);
     }
   }
+
+  const [loading, setLoading] = useState(false); 
+
+  const handleLoadMore = (operacion) => {
+    if(operacion == "resta" && page > 1){
+      setSize(0);
+
+    }else if (operacion == "resta"){
+      setSize(size - 15)
+    }else if(operacion == "suma"){
+      setSize(size + 5)
+    }
+    setLoading(true); 
+    setTimeout(() => {
+      setLoading(false); 
+    }, 1000); 
+  };
+
   return (
     <>
       <Table responsive>
@@ -49,36 +67,46 @@ const TableOrdersProducts = ({pedidos,setSize,size,loadingPedidos}) => {
               <td>{pedido.subtotal}</td>
               <td>{pedido.total}</td>
               <td>
-
                 <FaEye onClick={() => getOrder(pedido.code)} />
-              
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
-       
+
       <Container>
         <div id="target-div" className="section-t-space">
           <div className="text-center">
             <Row>
               <Col xl="12" md="12" sm="12">
-                {
-                  <Button
-                    className="load-more"
-                    onClick={() => setSize(size+4)}
-                  >
-                    {loadingPedidos && <Spinner animation="border" variant="light" />}
-                    ver mas
-                  </Button>
-                }
+                {loading ? (
+                  <Spinner animation="border" variant="light" />
+                ) : (
+                  <>
+                    {(pedidos.length < size && size > 5) || (page > 1 && pedidos.length < size) ? (
+                      <Button
+                        className="load-more"
+                        onClick={() => handleLoadMore("resta")}
+                      >
+                        ver menos
+                      </Button>
+                    ) : size === pedidos.length ? (
+                      <Button
+                        className="load-more"
+                        onClick={() => handleLoadMore("suma")}
+                      >
+                        ver mas
+                      </Button>
+                    ) : <></>}
+                  </>
+                )}
               </Col>
             </Row>
           </div>
         </div>
         <Row className="d-flex justify-content-center">
           <Col lg="9">
-            <div  className="product-order">
+            <div className="product-order">
               {products.length > 0 && (
                 <h3 className="text-center mt-5">Detalle del pedido</h3>
               )}

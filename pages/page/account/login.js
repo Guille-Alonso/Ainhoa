@@ -121,7 +121,7 @@ const Login = () => {
                       Login
                     </button>
                     <li className="ms-2">
-                      <Link href="/page/account/forget-pwd">¿Olvidaste tu contraseña?</Link>
+                      <Link className="text-black" href="/page/account/forget-pwd">¿Olvidaste tu contraseña?</Link>
                     </li>
                   </div>
                 </form>
