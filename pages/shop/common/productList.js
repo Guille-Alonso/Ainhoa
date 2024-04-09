@@ -194,13 +194,13 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
                       </a>
                     </li>
                   ))}
-                  {
+                  {/* {
                     <li>
                       <a href={null} className="filter_tag">
-                        price: {selectedPrice.min}- {selectedPrice.max}
+                        Precio: {selectedPrice.min}- {selectedPrice.max}
                       </a>
                     </li>
-                  }
+                  } */}
                 </ul>
               </Col>
             </Row>
@@ -271,7 +271,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
                   )}
                 </Row>
               </div>
-              <div className="section-t-space">
+              {/* <div className="section-t-space">
                 <div className="text-center">
                   <Row>
                     <Col xl="12" md="12" sm="12">
@@ -286,7 +286,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
                     </Col>
                   </Row>
                 </div>
-              </div>
+              </div> */}
             </div>
           </Col>
         </Row>

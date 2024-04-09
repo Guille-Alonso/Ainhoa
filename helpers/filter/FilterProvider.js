@@ -25,19 +25,36 @@ const FilterProvider = (props) => {
   const [isChecked, setIsChecked] = useState(true);
   const [filterChecked, setFilterChecked] = useState([{}]);
 
-  const handleBrands = (brand, checked) => {
-    var index = selectedBrands.indexOf(brand);
+const handleBrands = (brand, checked) => {
+  // Verifica si la marca actual ya está seleccionada
+  const isSelected = selectedBrands.includes(brand);
 
-    if (index > -1) {
-      setIsChecked(!isChecked);
-      setFilterChecked([{ brand, checked }]);
-      setSelectedBrands(selectedBrands.filter((e) => e !== brand));
-    } else {
-      setIsChecked(!isChecked);
-      setFilterChecked([{ brand, checked }]);
-      setSelectedBrands([...selectedBrands, brand]);
-    }
-  };
+  // Si la marca actual ya está seleccionada y está siendo seleccionada nuevamente,
+  // no hacemos nada ya que no se puede seleccionar una marca que ya está seleccionada.
+  if (isSelected && checked) {
+    return;
+  }
+
+  // Si la marca actual no está seleccionada y está siendo deseleccionada,
+  // no hacemos nada ya que no se puede deseleccionar una marca que no está seleccionada.
+  if (!isSelected && !checked) {
+    return;
+  }
+
+  // En este punto, sabemos que la marca actual está siendo seleccionada
+  // y la marca previamente seleccionada (si existe) debe ser deseleccionada.
+
+  // Si hay una marca previamente seleccionada, la deseleccionamos
+  const updatedBrands = isSelected ? selectedBrands.filter(e => e !== brand) : selectedBrands;
+
+  // Establecemos la marca actual como la única seleccionada
+  setSelectedBrands([brand]);
+
+  // Actualizamos otros estados según sea necesario
+  setIsChecked(checked);
+  setFilterChecked([{ brand, checked }]);
+};
+
 
   const handleSizes = (size, checked) => {
     var index = selectedSize.indexOf(size);

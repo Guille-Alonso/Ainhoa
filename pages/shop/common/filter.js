@@ -41,7 +41,7 @@ const FilterPage = ({sm,sidebarView,closeSidebar,categories,attributes,products,
 
             <SpecialPrice special_price={special_price} setSpecialPrice={setSpecialPrice}/>
             <IsNew is_new={is_new} setIsnew={setIsnew}/>
-            <Price />
+            {/* <Price /> */}
           </div>
          
           {/* <NewProduct /> */}
