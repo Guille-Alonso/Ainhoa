@@ -145,6 +145,19 @@ const UserProvider = (props) => {
       setBotonState(false);
     }
 
+    const contact = async (values)=>{
+      setBotonState(true);
+      try {
+        const {data} = await axios.post("/api/bff-store/contact",values)
+        toast.success("Gracias")
+        router.push("/")
+       } catch (error) {
+        toast.error(error.response?.data.message || error.message);
+        console.log(error.response.status);
+       }
+       setBotonState(false);
+    }
+
     const addProductToCart = async (product,qty) => {
       setBotonState(true);
       setOrder(null);
@@ -352,7 +365,9 @@ const UserProvider = (props) => {
         comprarAgregarProducto,
         flagTimer,
         recoveryPassword,
-        setCategory
+        setCategory,
+        getProductsToFilter,
+        contact
       }}
     >
       {props.children}

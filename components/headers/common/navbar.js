@@ -32,7 +32,7 @@ const NavBar = () => {
     if(cat){
       if(cat != "TODOS"){
         userContext.setCategory(userContext.categories.find(c=> c.name == cat).id)
-      }else userContext.setCategory(null);
+      }else userContext.getProductsToFilter("/api/bff-store/products");
     }
     setNavClose({ right: "-410px" });
     if (router.asPath == "/layouts/Gym")

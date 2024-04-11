@@ -32,7 +32,7 @@ export const generateMenuItems = (categories) => {
     {
       title: "Contacto",
       type: "link",
-      path:"/"
+      path:"/page/account/contact"
     }
    
   ];

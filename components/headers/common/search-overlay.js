@@ -9,8 +9,9 @@ import {
   Row,
 } from "reactstrap";
 import UserContext from "../../../helpers/user/UserContext";
-import { useRouter } from "next/router";
 import axios from "../../../config/axios";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const SearchOverlay = () => {
 
@@ -21,15 +22,27 @@ const closeSearch = () => {
   document.getElementById("search-overlay").style.display = "none";
 };
 
-const searchProduct = (e)=>{
-  e.preventDefault();
-  const searchTerm = e.target.elements.searchInput.value;
-  const filterProducts = userContext.products.filter(p=>p.name.toLowerCase().includes(searchTerm.toLowerCase()) || p.category.toLowerCase().includes(searchTerm.toLowerCase()));
- 
-  e.target.elements.searchInput.value = "";
-  closeSearch();
-}
-
+const searchProduct = async (e) => {
+  try {
+    e.preventDefault();
+    const searchTerm = e.target.elements.searchInput.value;
+    const { data } = await axios.get(
+      `/api/bff-store/products?search=${searchTerm}`
+    );
+   
+    e.target.elements.searchInput.value = "";
+    if(data.length == 0){
+      toast.error("producto no encontrado..");
+    }else{
+      userContext.setProducts(data);
+      router.push("/")
+    }
+    closeSearch();
+  } catch (error) {
+    console.log(error);
+    toast.error("producto no encontrado..");
+  }
+};
 
   return (
     <div id="search-overlay" className="search-overlay">
