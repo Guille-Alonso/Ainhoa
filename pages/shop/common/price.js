@@ -3,6 +3,8 @@ import { Range, getTrackBackground } from "react-range";
 import FilterContext from "../../../helpers/filter/FilterContext";
 import { useRouter } from "next/router";
 import { Collapse } from "reactstrap";
+import UserContext from "../../../helpers/user/UserContext";
+import { obtenerPrecioExtremo } from "../../../utils/obtenerPrecioExtremo";
 
 const Price = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,10 +26,14 @@ const Price = () => {
       router.push(`${url}?category=${context.state}&brand=${context.selectedBrands}&color=${context.selectedColor}&size=${context.selectedSize}&minPrice=${context.selectedPrice?.min}&maxPrice=${context.selectedPrice?.max}`, undefined, { shallow: true });
     }
   };
+
+  // const userContext = useContext(UserContext);
+  // const { precioMinimo, precioMaximo } = obtenerPrecioExtremo(userContext.products);
+
   return (
     <div className="collection-collapse-block border-0 open">
       <h3 className="collapse-block-title" onClick={toggle}>
-        price
+        Precio
       </h3>
       <Collapse isOpen={isOpen}>
         <div className="collection-collapse-block-content">

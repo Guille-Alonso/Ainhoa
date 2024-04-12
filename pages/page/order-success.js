@@ -43,7 +43,7 @@ const OrderSuccess = () => {
             <section className="section-b-space">
                 <Container>
                     <Row>
-                        <Col lg="6">
+                        <Col lg="12">
                             <div className="product-order">
                                 <h3>Detalles del pedido</h3>
 
@@ -83,7 +83,7 @@ const OrderSuccess = () => {
                                 </div>
                             </div>
                         </Col>
-                        <Col lg="6">
+                        {/* <Col lg="6">
                             <Row className="order-success-sec">
                                 <Col sm="6">
                                     <h4>summery</h4>
@@ -114,7 +114,7 @@ const OrderSuccess = () => {
                                     </div>
                                 </Col>
                             </Row>
-                        </Col>
+                        </Col> */}
                     </Row>
                 </Container>
             </section>

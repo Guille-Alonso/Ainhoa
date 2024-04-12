@@ -53,7 +53,7 @@ const LeftSidebar = () => {
   
       console.log(apiUrl); 
      getProductsToFilter(apiUrl)
-    }, [ category_id, size, page, is_new, special_price, attribute]); 
+    }, [ category_id, size, page, is_new, special_price, attribute, userContext.products]); 
     
 
     const openCloseSidebar = () => {

@@ -7,13 +7,21 @@ import PostLoader from '../../../../components/common/PostLoader';
 
 const ProfilePage = () => {
     const [size, setSize] = useState(5)
-    const [pedidos,loadingPedidos, getPedidos] = useGet(`/api/bff-store/private/orders?page=1&size=${size}`,axios);
+    const [page, setPage] = useState(1)
+    const [pedidos,loadingPedidos, getPedidos] = useGet(`/api/bff-store/private/orders?page=${page}&size=${size}`,axios);
 
     useEffect(() => {
-      if(size > 5){
+
+      if (size > 20) {
+        setPage(page + 1);
+        setSize(5); 
+      } else if (size >= 5 && pedidos.length > 0) {
         getPedidos();
+      } else if( size == 0 && page > 1){
+        setPage(page - 1)
+        setSize(5)
       }
-    }, [size])
+    }, [size]);
     
     return (
       <>
@@ -23,7 +31,7 @@ const ProfilePage = () => {
               <Col sm="12">
                 <h3>Pedidos</h3>
                 {!loadingPedidos ? (
-                    <TableOrdersProducts pedidos={pedidos} setSize={setSize} size={size} loadingPedidos={loadingPedidos}/>
+                    <TableOrdersProducts pedidos={pedidos} setSize={setSize} size={size} loadingPedidos={loadingPedidos} page={page}/>
               
                 ) : (
                   <PostLoader />

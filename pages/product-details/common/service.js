@@ -9,23 +9,23 @@ import {
 const Data = [
   {
     link: svgFreeShipping,
-    title: "free shipping",
-    service: "free shipping world wide",
+    title: "Envíos",
+    service: "",
   },
   {
     link: svgservice,
-    title: "24 X 7 service",
-    service: "online service for 24 x 7",
+    title: "Cambios",
+    service: "",
   },
   {
     link: svgoffer,
-    title: "festival offer",
-    service: "new online special festival offer",
+    title: "Descuentos",
+    service: "",
   },
   {
     link: svgpayment,
-    title: "online payment",
-    service: "new online special festival offer",
+    title: "Pago online",
+    service: "",
     lastChild: true,
   },
 ];

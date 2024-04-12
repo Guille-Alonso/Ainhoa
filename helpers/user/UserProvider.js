@@ -60,12 +60,12 @@ const UserProvider = (props) => {
         console.log(values);
         const { data } = await axios.post("/api/bff-store/auth/login", values);
         console.log(data);
+        router.push("/")
         setAuthenticated(!!data.user);
         setUser(data.user);
         setCart(data.cart)
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token;
         localStorage.setItem("token", data.access_token);
-        router.push("/")
 
       } catch (error) {
         toast.error(error.response?.data.message || error.message);
@@ -99,11 +99,6 @@ const UserProvider = (props) => {
         }else{
           toast.error(error.response?.data.message || error.message);
         }
-        // await logout();
-        // setAuthenticated(false);
-        // router.push("/page/account/login")
-        // toast.error("Error de autenticación. Ingrese nuevamente");
-        // console.log(error);
       }
       setLoading(false);
     };
@@ -116,10 +111,10 @@ const UserProvider = (props) => {
        await removeProductsFromCart()
       }
 
+      router.push("/page/account/login");
       setAuthenticated(false);
       localStorage.clear();
       setOrder(null);
-      router.push("/page/account/login");
       
         const {data} = await axios.post("/api/bff-store/private/auth/logout")
        
@@ -132,8 +127,6 @@ const UserProvider = (props) => {
         }else{
           toast.error(error.response?.data.message || error.message);
         }
-        // localStorage.clear();
-        // console.log(error);
       }
     }
 
@@ -150,6 +143,19 @@ const UserProvider = (props) => {
         console.log(error.response.status);
       }
       setBotonState(false);
+    }
+
+    const contact = async (values)=>{
+      setBotonState(true);
+      try {
+        const {data} = await axios.post("/api/bff-store/contact",values)
+        toast.success("Gracias")
+        router.push("/")
+       } catch (error) {
+        toast.error(error.response?.data.message || error.message);
+        console.log(error.response.status);
+       }
+       setBotonState(false);
     }
 
     const addProductToCart = async (product,qty) => {
@@ -176,7 +182,7 @@ const UserProvider = (props) => {
           }
           setFlagTimer(!flagTimer)
         }
-        // getProducts();
+ 
         getProductsToFilter("/api/bff-store/products");
       } catch (error) {
         console.log(error);
@@ -216,7 +222,7 @@ const UserProvider = (props) => {
           setFlagTimer(!flagTimer)
           router.push(`/page/account/checkout`);
         }
-        // getProducts();
+    
         getProductsToFilter("/api/bff-store/products");
       } catch (error) {
         if(error?.response?.status == 401){
@@ -241,7 +247,7 @@ const UserProvider = (props) => {
           ...prevCart,
           products: prevCart.products.filter(product => product.code !== code)
         }));
-        // getProducts();
+    
         getProductsToFilter("/api/bff-store/products");
       } catch (error) {
         if(error?.response?.status == 401){
@@ -271,7 +277,6 @@ const UserProvider = (props) => {
 
         toast.error("Su tiempo de compra ha terminado..");
         
-        // getProducts();
         getProductsToFilter("/api/bff-store/products");
       } catch (error) {
         if(error?.response?.status == 401){
@@ -313,9 +318,7 @@ const UserProvider = (props) => {
         }else{
           toast.error(error.response?.data.message || error.message);
         }
-        // logout();
-        // toast.error(error.response?.data.message || error.message);
-        // console.log(error.response.status);
+       
       }
       setBotonState(false);
     }
@@ -362,7 +365,9 @@ const UserProvider = (props) => {
         comprarAgregarProducto,
         flagTimer,
         recoveryPassword,
-        setCategory
+        setCategory,
+        getProductsToFilter,
+        contact
       }}
     >
       {props.children}

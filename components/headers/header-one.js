@@ -116,8 +116,8 @@ const HeaderOne = ({
                   <div>
                     <div className="icon-nav">
                       <ul>
-                        {/* <li className="onhover-div mobile-search">
-                          <div>
+                        <li className="onhover-div mobile-search">
+                          <div className="mx-sm-3 mx-xl-0 me-xl-3">
                             <Media
                               src={search.src}
                               onClick={openSearch}
@@ -129,7 +129,7 @@ const HeaderOne = ({
                               onClick={openSearch}
                             ></i>
                           </div>
-                        </li> */}
+                        </li>
                         {/* <Currency icon={settings.src} /> */}
 
                         {userContext.authenticated &&

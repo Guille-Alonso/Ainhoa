@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Container,
@@ -12,6 +12,8 @@ import {
 } from "reactstrap";
 import LogoImage from "../../headers/common/logo";
 import CopyRight from "./copyright";
+import { BsInstagram } from "react-icons/bs";
+import UserContext from "../../../helpers/user/UserContext";
 
 const MasterFooter = ({
   containerFluid,
@@ -42,21 +44,23 @@ const MasterFooter = ({
       window.removeEventListener("resize", changeCollapse);
     };
   }, []);
+
+  const userContext = useContext(UserContext);
+
   return (
     <div>
       <footer className={footerClass}>
         {newLatter ? (
           <div className={footerLayOut}>
             <Container fluid={containerFluid ? containerFluid : ""}>
-              {/* <section className={footerSection}>
+              <section className={footerSection}>
                 <Row>
                   <Col lg="6">
                     <div className="subscribe">
                       <div>
-                        <h4>KNOW IT ALL FIRST!</h4>
-                        <p>
-                          Never Miss Anything From Multikart By Signing Up To
-                          Our Newsletter.
+                        <h4>CONOCENOS!</h4>
+                        <p className="text-black">
+                          No te pierdas nada de Ainhoa Vintage.
                         </p>
                       </div>
                     </div>
@@ -65,19 +69,21 @@ const MasterFooter = ({
                     <Form className="form-inline subscribe-form">
                       <div className="mx-sm-3">
                         <Input
-                          type="text"
+                          type="email"
                           className="form-control"
                           id="exampleFormControlInput1"
-                          placeholder="Enter your email"
+                          placeholder="Ingrese su email"
+                          maxLength={40}
+                          required
                         />
                       </div>
                       <Button type="submit" className="btn btn-solid">
-                        subscribe
+                        suscribirse
                       </Button>
                     </Form>
                   </Col>
                 </Row>
-              </section> */}
+              </section>
             </Container>
           </div>
         ) : (
@@ -91,41 +97,46 @@ const MasterFooter = ({
                 <div
                   className={`footer-title ${
                     isOpen && collapse == 1 ? "active" : ""
-                  } footer-mobile-title`}>
+                  } footer-mobile-title`}
+                >
                   <h4
                     onClick={() => {
                       setCollapse(1);
                       setIsOpen(!isOpen);
-                    }}>
+                    }}
+                  >
                     Nosotros
                     <span className="according-menu"></span>
                   </h4>
                 </div>
                 <Collapse
-                  isOpen={width ? (collapse === 1 ? isOpen : false) : true}>
+                  isOpen={width ? (collapse === 1 ? isOpen : false) : true}
+                >
                   <div className="footer-contant">
-                    <div className="footer-logo">
+                    <div className="footer-logo d-none d-md-block">
                       <LogoImage logo={logoName} />
                     </div>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam,
+                    <p className="ms-md-3 text-black">
+                      Encontranos en las redes.
+                      <br></br>
+                      Comprá y vendé con Ainhoa Vintage.
                     </p>
-                    <div className="footer-social">
+                    {/* <div className="footer-social">
                       <ul>
                         <li>
                           <a href="https://www.facebook.com" target="_blank">
                             <i
                               className="fa fa-facebook"
-                              aria-hidden="true"></i>
+                              aria-hidden="true"
+                            ></i>
                           </a>
                         </li>
                         <li>
                           <a href="https://plus.google.com" target="_blank">
                             <i
                               className="fa fa-google-plus"
-                              aria-hidden="true"></i>
+                              aria-hidden="true"
+                            ></i>
                           </a>
                         </li>
                         <li>
@@ -137,7 +148,8 @@ const MasterFooter = ({
                           <a href="https://www.instagram.com" target="_blank">
                             <i
                               className="fa fa-instagram"
-                              aria-hidden="true"></i>
+                              aria-hidden="true"
+                            ></i>
                           </a>
                         </li>
                         <li>
@@ -146,7 +158,7 @@ const MasterFooter = ({
                           </a>
                         </li>
                       </ul>
-                    </div>
+                    </div> */}
                   </div>
                 </Collapse>
               </Col>
@@ -154,122 +166,120 @@ const MasterFooter = ({
                 <div className="sub-title">
                   <div
                     className={`footer-title ${
-                      isOpen && collapse == 2 ? "active" : ""
-                    } `}>
-                    <h4
-                      onClick={() => {
-                        if (width) {
-                          setIsOpen(!isOpen);
-                          setCollapse(2);
-                        } else setIsOpen(true);
-                      }}>
-                      Contacto
-                      <span className="according-menu"></span>
-                    </h4>
-                  </div>
-                  <Collapse
-                    isOpen={width ? (collapse === 2 ? isOpen : false) : true}>
-                    <div className="footer-contant">
-                      <ul>
-                        <li>
-                          <Link href={`/shop/left_sidebar`}>
-                            {/* <a> */}
-                            womens
-                            {/* </a> */}
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href={`/shop/left_sidebar`}>
-                            {/* <a>  */}
-                            clothing
-                            {/* </a> */}
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href={`/shop/left_sidebar`}>
-                            {/* <a> */}
-                            accessories
-                            {/* </a> */}
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href={`/shop/left_sidebar`}>
-                            {/* <a> */}
-                            featured
-                            {/* </a> */}
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </Collapse>
-                </div>
-              </Col>
-              <Col>
-                <div className="sub-title">
-                  <div
-                    className={`footer-title ${
                       isOpen && collapse == 3 ? "active" : ""
-                    } `}>
+                    } `}
+                  >
                     <h4
                       onClick={() => {
                         if (width) {
                           setIsOpen(!isOpen);
                           setCollapse(3);
                         } else setIsOpen(true);
-                      }}>
-                      Preguntas Frecuentes
+                      }}
+                    >
+                      Navegación
                       <span className="according-menu"></span>
                     </h4>
                   </div>
                   <Collapse
-                    isOpen={width ? (collapse === 3 ? isOpen : false) : true}>
+                    isOpen={width ? (collapse === 3 ? isOpen : false) : true}
+                  >
                     <div className="footer-contant">
                       <ul>
                         <li>
-                          <a href="#">shipping & return</a>
+                          <Link className="text-black" href="/">Inicio</Link>
+                        </li>
+                        {!userContext.authenticated && (
+                          <>
+                            <li>
+                              <Link className="text-black" href="/page/account/login">Login</Link>
+                            </li>
+                            <li>
+                              <Link className="text-black" href="/page/account/register">
+                                Registro
+                              </Link>
+                            </li>
+                          </>
+                        )}
+                        <li>
+                          <Link className="text-black" href="/">Quienes somos</Link>
                         </li>
                         <li>
-                          <a href="#">secure shopping</a>
-                        </li>
-                        <li>
-                          <a href="#">gallary</a>
-                        </li>
-                        <li>
-                          <a href="#">affiliates</a>
-                        </li>
-                        <li>
-                          <a href="#">contacts</a>
+                          <Link className="text-black" href="/">Vendé con nosotros</Link>
                         </li>
                       </ul>
                     </div>
                   </Collapse>
                 </div>
               </Col>
+              <Col >
+                <div className="sub-title">
+                  <div
+                    className={`footer-title ${
+                      isOpen && collapse == 2 ? "active" : ""
+                    } `}
+                  >
+                    <h4
+                      onClick={() => {
+                        if (width) {
+                          setIsOpen(!isOpen);
+                          setCollapse(2);
+                        } else setIsOpen(true);
+                      }}
+                    >
+                      Redes Sociales
+                      <span className="according-menu"></span>
+                    </h4>
+                  </div>
+                  <Collapse
+                    isOpen={width ? (collapse === 2 ? isOpen : false) : true}
+                  >
+                    <div className="footer-contant">
+                      <ul>
+                        <li>
+                          <Link
+                            href="https://www.instagram.com/ainhoa_vintage"
+                            target="_blank" className="text-black"
+                          >
+                            <BsInstagram className="me-2" />
+                            ainhoa_vintage
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </Collapse>
+                </div>
+              </Col>
+              
               <Col>
                 <div className="sub-title">
                   <div
                     className={`footer-title ${
                       isOpen && collapse == 4 ? "active" : ""
-                    } `}>
+                    } `}
+                  >
                     <h4
                       onClick={() => {
                         if (width) {
                           setIsOpen(!isOpen);
                           setCollapse(4);
                         } else setIsOpen(true);
-                      }}>
-                      Información
+                      }}
+                    >
+                      Contactanos
                       <span className="according-menu"></span>
                     </h4>
                   </div>
                   <Collapse
-                    isOpen={width ? (collapse === 4 ? isOpen : false) : true}>
+                    isOpen={width ? (collapse === 4 ? isOpen : false) : true}
+                  >
                     <div className="footer-contant">
                       <ul className="contact-list">
-                        <li>
-                          <i className="fa fa-map-marker"></i>San Miguel de Tucumán
+                        <li className="text-black">
+                          <i className="fa fa-map-marker"></i>San Miguel de
+                          Tucumán
                         </li>
-                        <li>
+                        {/* <li>
                           <i className="fa fa-phone"></i>Call Us: 123-456-7898
                         </li>
                         <li>
@@ -278,7 +288,7 @@ const MasterFooter = ({
                         </li>
                         <li>
                           <i className="fa fa-fax"></i>Fax: 123456
-                        </li>
+                        </li> */}
                       </ul>
                     </div>
                   </Collapse>

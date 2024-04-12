@@ -4,13 +4,14 @@ import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client";
 import ProductItem from "../product-box/ProductBox1";
 import CartContext from "../../../helpers/cart/index";
-import { Container, Row, Col, Media } from "reactstrap";
+import { Container, Row, Col, Media, Button } from "reactstrap";
 import { WishlistContext } from "../../../helpers/wishlist/WishlistContext";
 import PostLoader from "../PostLoader";
 import { CompareContext } from "../../../helpers/Compare/CompareContext";
 import { CurrencyContext } from "../../../helpers/Currency/CurrencyContext";
 import emptySearch from "../../../public/assets/images/empty-search.jpg";
 import UserContext from "../../../helpers/user/UserContext";
+import { useRouter } from "next/router";
 
 const GET_PRODUCTS = gql`
   query products($type: _CategoryType!, $indexFrom: Int!, $limit: Int!) {
@@ -62,6 +63,11 @@ const TabContent = ({
   const quantity = context.quantity;
 
   const userContext = useContext(UserContext);
+  const router = useRouter();
+
+  const goToMoreProducts = ()=>{
+    router.push("/shop/left_sidebar")
+  }
 
   return (
     <Row className="no-slider">
@@ -83,9 +89,9 @@ const TabContent = ({
                   alt=""
                 />
                 <h3>
-                  <strong>Your Cart is Empty</strong>
+                  <strong>Su carrito está vacío</strong>
                 </h3>
-                <h4>Explore more shortlist some items.</h4>
+                {/* <h4>Explore more shortlist some items.</h4> */}
               </div>
             </div>
           </Col>
@@ -107,7 +113,8 @@ const TabContent = ({
         )
       ) : (
         products &&
-       products
+        products
+          .slice(0, 8)
           .map((product, i) => (
             <ProductItem
               key={i}
@@ -120,6 +127,13 @@ const TabContent = ({
               backImage={backImage}
             />
           ))
+      )}
+      {products.length > 0 && (
+        <div className="d-flex justify-content-center mt-4">
+          <Button className="load-more" onClick={() => goToMoreProducts()}>
+            ver mas
+          </Button>
+        </div>
       )}
     </Row>
   );
@@ -159,7 +173,7 @@ const SpecialProducts = ({
     <div>
       <section className={designClass}>
         <Container fluid={fluid}>
-          {noTitle ? (
+          {/* {noTitle ? (
             ""
           ) : (
             <div className={title}>
@@ -173,10 +187,10 @@ const SpecialProducts = ({
                 ""
               )}
             </div>
-          )}
+          )} */}
 
           <Tabs className="theme-tab">
-            <TabList className="tabs tab-title">
+            {/* <TabList className="tabs tab-title">
               <Tab
                 className={activeTab == type ? "active" : ""}
                 onClick={() => setActiveTab(type)}
@@ -195,7 +209,7 @@ const SpecialProducts = ({
               >
                 SPECIAL
               </Tab>
-            </TabList>
+            </TabList> */}
 
             <TabPanel>
               <TabContent
@@ -208,7 +222,7 @@ const SpecialProducts = ({
                 products={products}
               />
             </TabPanel>
-            <TabPanel>
+            {/* <TabPanel>
               <TabContent
                 data={data}
                 loading={loading}
@@ -227,7 +241,7 @@ const SpecialProducts = ({
                 cartClass={cartClass}
                 backImage={backImage}
               />
-            </TabPanel>
+            </TabPanel> */}
           </Tabs>
         </Container>
       </section>
