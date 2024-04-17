@@ -15,6 +15,7 @@ const UserProvider = (props) => {
     const [flagTimer, setFlagTimer] = useState(false);
     const [category_id, setCategory] = useState(null);
     const [products, setProducts] = useState([])
+    const [flagSearch, setFlagSearch] = useState(false);
 
     // const [products,loadingProducts,getProducts,setProducts] = useGet(`/api/bff-store/products?page=1`,axios)
     const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
@@ -25,7 +26,6 @@ const UserProvider = (props) => {
       try {
         const {data} = await axios.get(url)
         setProducts(data);
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -367,7 +367,10 @@ const UserProvider = (props) => {
         recoveryPassword,
         setCategory,
         getProductsToFilter,
-        contact
+        contact,
+        flagSearch,
+        setFlagSearch,
+        category_id
       }}
     >
       {props.children}

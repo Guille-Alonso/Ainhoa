@@ -21,7 +21,7 @@ const Category = ({categories,setCategory}) => {
     <>
       <div className="collection-collapse-block open">
         <h3 className="collapse-block-title" onClick={resetCategories}>
-          Category
+          Categoría
         </h3>
         <Collapse isOpen={isCategoryOpen}>
           <div className="collection-collapse-block-content">

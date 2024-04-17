@@ -35,13 +35,14 @@ const searchProduct = async (e) => {
       toast.error("producto no encontrado..");
     }else{
       userContext.setProducts(data);
-      router.push("/")
+      userContext.setFlagSearch(searchTerm);
+      router.push("/shop/left_sidebar");
     }
-    closeSearch();
   } catch (error) {
     console.log(error);
-    toast.error("producto no encontrado..");
+    toast.error(error.response?.data.message || error.message);
   }
+  closeSearch();
 };
 
   return (

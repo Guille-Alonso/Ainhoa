@@ -3,9 +3,9 @@ export const generateMenuItems = (categories) => {
     title: "Productos",
     type: "sub",
     children: [
-      { path: "/", title: "TODOS", type: "link" },
+      { path: "/shop/left_sidebar", title: "TODOS", type: "link" },
       ...categories.map(category => ({
-        path: "/",
+        path: "/shop/left_sidebar",
         title: category.name,
         type: "link"
       }))

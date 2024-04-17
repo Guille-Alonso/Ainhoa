@@ -51,7 +51,7 @@ const MasterFooter = ({
     <div>
       <footer className={footerClass}>
         {newLatter ? (
-          <div className={footerLayOut}>
+          <div className={`hiddenDivFoot ${footerLayOut}`}>
             <Container fluid={containerFluid ? containerFluid : ""}>
               <section className={footerSection}>
                 <Row>
@@ -276,8 +276,7 @@ const MasterFooter = ({
                     <div className="footer-contant">
                       <ul className="contact-list">
                         <li className="text-black">
-                          <i className="fa fa-map-marker"></i>San Miguel de
-                          Tucumán
+                          <i className="fa fa-map-marker"></i>Chubut 2.525 - Yerba Buena, Tucumán - Oficina 1er Piso 'Ainhoa'
                         </li>
                         {/* <li>
                           <i className="fa fa-phone"></i>Call Us: 123-456-7898

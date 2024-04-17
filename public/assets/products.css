@@ -14,3 +14,22 @@
     padding-top: 40px !important;
   }
 }
+
+@media only screen and (min-width: 700px) and (max-width: 1367px) {
+  .navLinkInicio {
+    display: none !important;
+  }
+}
+/* @media only screen and (min-width: 1367px) {
+  .productsMenuItem {
+    margin-right: 1.5rem;
+  }
+} */
+
+.productsMenuItem {
+  margin-right: 1rem;
+}
+
+.hiddenDivFoot{
+  visibility: hidden;
+}

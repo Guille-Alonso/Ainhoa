@@ -50,9 +50,15 @@ const LeftSidebar = () => {
         if (queryParams.length > 0) {
           apiUrl += '?' + queryParams.join('&');
         }
-  
-      console.log(apiUrl); 
-     getProductsToFilter(apiUrl)
+
+        if(userContext.flagSearch || userContext.category_id){
+          setProductsToFilter(userContext.products);
+          userContext.setFlagSearch(false);
+        }else{
+          getProductsToFilter(apiUrl);
+        }
+      
+     
     }, [ category_id, size, page, is_new, special_price, attribute, userContext.products]); 
     
 
@@ -69,9 +75,7 @@ const LeftSidebar = () => {
         <div className="collection-wrapper">
           <Container>
             <Row>
-              {/* {!userContext.loadingCategories &&
-              !loadingAttributes &&
-              productsToFilter.length > 0 ? ( */}
+    
                 <>
                   <FilterPage
                     sm="3"
@@ -95,10 +99,7 @@ const LeftSidebar = () => {
                     products={productsToFilter.filter(item => userContext.cart?.products.indexOf(item) === -1).length==0? productsToFilter :  productsToFilter.filter(item => userContext.cart?.products.indexOf(item) === -1)}
                   />
                 </>
-              {/* // ) : (
-              //   // <PostLoader />
-              //   <p>No hay productos con el filtro ingresado</p>
-              // )} */}
+           
             </Row>
           </Container>
         </div>

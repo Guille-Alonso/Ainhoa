@@ -439,7 +439,7 @@ const CheckoutPage = () => {
                         </ul>
                       </div>
                       <div className="payment-box">
-                        <div className="upper-box">
+                        {/* <div className="upper-box">
                           <div className="payment-options">
                             <ul>
                               <li>
@@ -472,7 +472,7 @@ const CheckoutPage = () => {
                               </li>
                             </ul>
                           </div>
-                        </div>
+                        </div> */}
                         {/* REEMPLAZAR POR EL TOTAL DE MI CARRITO */}
                         {calculateTotal(userContext.cart.products) !== 0 ? (
                           <div className="text-end">

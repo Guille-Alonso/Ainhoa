@@ -13,10 +13,10 @@ const MasterBanner = ({ img, title, desc, link, classes, btn, btnClass }) => {
                   <h4>{title}</h4>
                   <h1>{desc}</h1>
                   <Link
-                    href={link}
+                    href="/shop/left_sidebar"
                     className={`btn ${btnClass ? btnClass : "btn-solid"}`}>
                     {/* <a > */}
-                    {btn ? btn : "Shop Now"} {/* </a> */}
+                    {btn ? btn : "Comprar"} {/* </a> */}
                   </Link>
                 </div>
               </div>

@@ -15,13 +15,13 @@ const Data = [
   {
     img: "fa-map-marker",
     // title: "Dirección",
-    desc1: "Tucumán, San Miguel de Tucumán",
-    // desc2: "USA 123456",
+    desc1: "Chubut 2.525 Yerba Buena, Tucumán",
+    desc2: "Oficina 1er Piso - 'Ainhoa'",
   },
   {
     img: "fa-envelope-o",
     // title: "Email",
-    desc1: "Support@Shopcart.com",
+    desc1: "ainhoavintage@gmail.com",
     // desc2: "info@shopcart.com",
   },
   {

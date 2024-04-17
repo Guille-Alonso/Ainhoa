@@ -156,13 +156,13 @@ const NavBar = () => {
                   key={i}
                   className={` ${menuItem.megaMenu ? "mega-menu" : ""}`}>
                   {menuItem.type == "link" ? (
-                    <Link  onClick={closeNav.bind(this,null)} href={menuItem.path} className="nav-link">
+                    <Link  onClick={closeNav.bind(this,null)} href={menuItem.path} className={menuItem.title != "Inicio"? "nav-link": "nav-link navLinkInicio"}>
                       {/* <a > */}
                       {t(menuItem.title)}
                       {/* </a> */}
                     </Link>
                   ) : (
-                    <a className="nav-link" onClick={(e) => openMblNav(e)}>
+                    <a className="nav-link productsMenuItem" onClick={(e) => openMblNav(e)}>
                       {t(menuItem.title)}
                       <span className="sub-arrow"></span>
                     </a>
