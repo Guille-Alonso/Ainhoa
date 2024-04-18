@@ -436,6 +436,7 @@ const CheckoutPage = () => {
                               $ {calculateTotal(userContext.cart.products)}
                             </span>
                           </li>
+                          <small>*Pago al retirar el producto*</small>
                         </ul>
                       </div>
                       <div className="payment-box">
