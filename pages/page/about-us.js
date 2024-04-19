@@ -114,7 +114,10 @@ const AboutUs = () => {
                   <Media src={aboutus.src} className="img-fluid blur-up lazyload" alt="" />
                 </div>
               </Col>
-              <Col sm="12">
+              <Col  sm="6">
+          
+              </Col>
+              <Col sm="6">
                 <h4>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</h4>
                 <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,</p>
                 <p>
@@ -151,7 +154,7 @@ const AboutUs = () => {
           <Container>
             <Row>
               <Col sm="12">
-                <h2>Our Team</h2>
+                <h2>Nuestro Equipo</h2>
                 <Slider className="team-4" {...Slider4}>
                   {TeamData.map((data, i) => {
                     return <Team key={i} img={data.img} name={data.name} post={data.post} />;

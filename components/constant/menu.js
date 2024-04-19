@@ -21,13 +21,13 @@ export const generateMenuItems = (categories) => {
     {
       title: "Quienes somos",
       type: "link",
-      path:"/"
+      path:"/page/about-us"
     },
     productoItem,
     {
       title: "Vendé en Ainhoa",
       type: "link",
-      path:"/"
+      path:"/page/vendor/become-vendor"
     },
     {
       title: "Contacto",
