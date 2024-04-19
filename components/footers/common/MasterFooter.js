@@ -202,10 +202,10 @@ const MasterFooter = ({
                           </>
                         )}
                         <li>
-                          <Link className="text-black" href="/">Quienes somos</Link>
+                          <Link className="text-black" href="/page/about-us">Quienes somos</Link>
                         </li>
                         <li>
-                          <Link className="text-black" href="/">Vendé con nosotros</Link>
+                          <Link className="text-black" href="/page/vendor/become-vendor">Vendé con nosotros</Link>
                         </li>
                       </ul>
                     </div>
