@@ -154,7 +154,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
             <Col lg="6" className="rtl-text">
               <div className="product-right">
                 <button type="button" data-dismiss="modal" className="btn-close btn btn-secondary" aria-label="Close" onClick={toggle}></button>
-                <h2> {product.name} </h2>
+                <h2 className="me-3"> {product.name} </h2>
                 <h3>
                   {currency.symbol}
                   {product.special_price != 0 ? product.special_price : product.price}
@@ -181,7 +181,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
                   ""
                 )}
                 <div className="border-product">
-                  <h6 className="product-title">Detalle</h6>
+                  <h6 className="product-title">Categoría</h6>
                   <p>{product.category}</p>
                 </div>
                 <div className="product-description border-product">

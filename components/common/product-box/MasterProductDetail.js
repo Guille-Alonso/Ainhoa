@@ -24,8 +24,11 @@ const MasterProductDetail = ({
         ) : (
           ""
         )} */}
-        <h5>{product.name}</h5>
-        <h6 className="mb-1">{product.category.length > 10 ? product.category.slice(0, 10)+"...": product.category}</h6>
+        <h5>{product.name.toUpperCase()}</h5>
+        <h6 className="mb-1">  
+        {product.category.charAt(0).toUpperCase() + product.category.slice(1).toLowerCase()}
+        {product.category.length > 10 ? "..." : ""}
+</h6>
         {/* {des ? <p>{product.description}</p> : ""} */}
         {/* <p>{product.category}</p> */}
         <h4>

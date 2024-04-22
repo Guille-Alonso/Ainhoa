@@ -6,7 +6,7 @@ export const generateMenuItems = (categories) => {
       { path: "/shop/left_sidebar", title: "TODOS", type: "link" },
       ...categories.map(category => ({
         path: "/shop/left_sidebar",
-        title: category.name,
+        title: category.name.length > 18 ? category.name.toUpperCase().slice(0, 16)+"...":category.name.toUpperCase(),
         type: "link"
       }))
     ]

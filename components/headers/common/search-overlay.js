@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import {
   Button,
   Col,
@@ -45,6 +45,13 @@ const searchProduct = async (e) => {
   closeSearch();
 };
 
+useEffect(() => {
+  const input = document.getElementById("searchInput");
+  if (input) {
+    input.focus();
+  }
+}, []);
+
   return (
     <div id="search-overlay" className="search-overlay">
       <div>
@@ -65,6 +72,7 @@ const searchProduct = async (e) => {
                       required
                       maxLength={50}
                       name="searchInput"
+                      autoComplete="off"
                     />
                   </FormGroup>
                 </Form>

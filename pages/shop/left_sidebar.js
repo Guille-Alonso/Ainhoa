@@ -8,6 +8,7 @@ import UserContext from '../../helpers/user/UserContext';
 import useGet from '../../utils/useGet';
 import axios from '../../config/axios';
 import PostLoader from '../../components/common/PostLoader';
+import { toast } from 'react-toastify';
 
 const LeftSidebar = () => {
 
@@ -26,6 +27,9 @@ const LeftSidebar = () => {
     const getProductsToFilter = async (url)=>{
       try {
         const {data} = await axios.get(url)
+        if(data.length == 0 && category_id !== null){
+          toast.error("No se encontraron productos para la categoría seleccionada")
+        }
         setProductsToFilter(data);
         console.log(data);
       } catch (error) {
