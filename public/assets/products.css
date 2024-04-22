@@ -33,3 +33,7 @@
 .hiddenDivFoot{
   visibility: hidden;
 }
+
+.imageProductCursorPointer{
+  cursor: pointer !important;
+}

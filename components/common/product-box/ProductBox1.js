@@ -66,23 +66,23 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
         </div>
         {
           product.images[0]?.main ?
-        <div className="front" onClick={clickProductDetail}>
-          <Media src={`${product.images[0]?.main}`} className="img-fluid" alt=""/>
+        <div className="front" onClick={toggle}>
+          <Media src={`${image ? image : product.images[0]?.main}`} className="img-fluid imageProductCursorPointer" alt=""/>
         </div>
         :
         <PostLoader/>
         }
-        {/* {backImage ? (
+        {backImage ? (
           product.images[1] === "undefined" ? (
             "false"
           ) : (
-            <div className="back" onClick={clickProductDetail}>
-              <Media src={`${image ? image : product.images[1].src}`} className="img-fluid m-auto" alt="" />
+            <div className="back" onClick={toggle}>
+              <Media src={`${image ? image : product.images[1]?.main}`} className="img-fluid m-auto imageProductCursorPointer" alt="" />
             </div>
           )
         ) : (
           ""
-        )} */}
+        )}
 
         <div className={cartClass}>
           {
@@ -131,9 +131,9 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
         {product.images ? (
           <ul className="product-thumb-list">
             {product.images.map((img, i) => (
-              <li className={`grid_thumb_img ${img.src === image ? "active" : ""}`} key={i}>
+              <li className={`grid_thumb_img ${img.main === image ? "active" : ""}`} key={i}>
                 <a href={null} title="Add to Wishlist">
-                  {/* <Media src={`${img.src}`} alt="wishlist" onClick={() => onClickHandle(img.src)} /> */}
+                  <Media src={`${img.main}`} alt="wishlist" onClick={() => onClickHandle(img.main)} />
                 </a>
               </li>
             ))}
@@ -148,7 +148,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
           <Row>
             <Col lg="6" xs="12">
               <div className="quick-view-img">
-                <Media src={product.images[0]?.main} alt="" className="img-fluid" />
+                <Media src={ image ? image : product.images[0]?.main} alt="" className="img-fluid" />
               </div>
             </Col>
             <Col lg="6" className="rtl-text">
