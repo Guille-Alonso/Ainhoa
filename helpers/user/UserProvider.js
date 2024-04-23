@@ -52,7 +52,6 @@ const UserProvider = (props) => {
         apiUrl += '?' + queryParams.join('&');
       }
 
-    console.log(apiUrl); 
    getProductsToFilter(apiUrl)
       
     }, [category_id])

@@ -27,12 +27,9 @@ const LeftSidebar = () => {
     const getProductsToFilter = async (url)=>{
       try {
         const {data} = await axios.get(url)
-        if(data.length == 0 && category_id !== null){
-          toast.error("No se encontraron productos para la categoría seleccionada")
-        }else{
+    
           setProductsToFilter(data);
-        }
-        console.log(data);
+   
       } catch (error) {
         console.log(error);
       }
@@ -43,7 +40,7 @@ const LeftSidebar = () => {
         let apiUrl = "/api/bff-store/products";
         let queryParams = [];
   
-        const filters = { category_id, size, page, is_new, special_price,attribute };
+        const filters = {  size, page, is_new, special_price,attribute };
   
         for (const filter in filters) {
          
@@ -64,7 +61,7 @@ const LeftSidebar = () => {
         }
       
      
-    }, [ category_id, size, page, is_new, special_price, attribute, userContext.products]); 
+    }, [ size, page, is_new, special_price, attribute, userContext.products]); 
     
 
     const openCloseSidebar = () => {
@@ -86,12 +83,12 @@ const LeftSidebar = () => {
                     sm="3"
                     sidebarView={sidebarView}
                     closeSidebar={() => openCloseSidebar(sidebarView)}
-                    categories={userContext.categories} //ARREGLAR
+                    categories={userContext.categories}
                     attributes={attributes}
                     products={userContext.products}
                     is_new={is_new}
                     setIsnew={setIsnew}
-                    setCategory={setCategory}
+                    setCategory={userContext.setCategory}
                     special_price={special_price}
                     setSpecialPrice={setSpecialPrice}
                     attribute={attribute}

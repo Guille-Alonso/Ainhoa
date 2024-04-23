@@ -35,7 +35,6 @@ const NavBar = () => {
         console.log(userContext.categories);
         const cleanedCatName = cat.replace(/\.{3}/g, ''); // Eliminar puntos suspensivos de 'cat'
         const idCat = userContext.categories.find(c=> c.name.toUpperCase().includes(cleanedCatName.toUpperCase()))?.id;
-        console.log(idCat);
         userContext.setCategory(idCat)
       }else userContext.getProductsToFilter("/api/bff-store/products");
     }
@@ -43,7 +42,6 @@ const NavBar = () => {
     if (router.asPath == "/layouts/Gym")
       document.querySelector("#topHeader").classList.remove("zindex-class");
   };
-  // eslint-disable-next-line
 
   const handleMegaSubmenu = (event) => {
     if (event.target.classList.contains("sub-arrow")) return;
