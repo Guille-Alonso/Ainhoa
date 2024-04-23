@@ -25,7 +25,11 @@ const UserProvider = (props) => {
     const getProductsToFilter = async (url)=>{
       try {
         const {data} = await axios.get(url)
-        setProducts(data);
+        if(data.length == 0 && category_id !== null){
+          toast.error("No se encontraron productos para la categoría seleccionada")
+        }else{
+          setProducts(data);
+        }
       } catch (error) {
         console.log(error);
       }

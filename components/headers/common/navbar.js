@@ -33,7 +33,10 @@ const NavBar = () => {
       if(cat != "TODOS"){
         console.log(cat);
         console.log(userContext.categories);
-        userContext.setCategory(userContext.categories.find(c=> c.name.toLowerCase() == cat.toLowerCase())?.id)
+        const cleanedCatName = cat.replace(/\.{3}/g, ''); // Eliminar puntos suspensivos de 'cat'
+        const idCat = userContext.categories.find(c=> c.name.toUpperCase().includes(cleanedCatName.toUpperCase()))?.id;
+        console.log(idCat);
+        userContext.setCategory(idCat)
       }else userContext.getProductsToFilter("/api/bff-store/products");
     }
     setNavClose({ right: "-410px" });

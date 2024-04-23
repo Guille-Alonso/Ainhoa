@@ -29,8 +29,9 @@ const LeftSidebar = () => {
         const {data} = await axios.get(url)
         if(data.length == 0 && category_id !== null){
           toast.error("No se encontraron productos para la categoría seleccionada")
+        }else{
+          setProductsToFilter(data);
         }
-        setProductsToFilter(data);
         console.log(data);
       } catch (error) {
         console.log(error);
@@ -85,7 +86,7 @@ const LeftSidebar = () => {
                     sm="3"
                     sidebarView={sidebarView}
                     closeSidebar={() => openCloseSidebar(sidebarView)}
-                    categories={userContext.categories}
+                    categories={userContext.categories} //ARREGLAR
                     attributes={attributes}
                     products={userContext.products}
                     is_new={is_new}
