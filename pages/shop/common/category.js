@@ -15,11 +15,20 @@ const Category = ({categories,setCategory}) => {
 
   const resetCategories = ()=>{
     setIsCategoryOpen(!isCategoryOpen);
-    setCategory(null)
+    // setCategory(null)
+    // context.handleCategories("todas");
   }
 
   const showAllCategories = () =>{
     setCategory(null)
+    context.handleCategories("todas");
+  }
+
+  const pillCategories = (id,cat) =>{
+    if(!context.selectedCategoryPill.includes(cat)){
+      setCategory(id)
+      context.handleCategories(cat);
+    }
   }
 
   return (
@@ -39,7 +48,7 @@ const Category = ({categories,setCategory}) => {
                 {/* Mapear las categorías */}
                 {categories.map((cat, index) => (
                   <li key={index}>
-                    <a onClick={() => setCategory(cat.id)}>
+                    <a onClick={() => pillCategories(cat.id,cat.name)}>
                       {cat.name.length > 18
                         ? cat.name.toUpperCase().slice(0, 20) + "..."
                         : cat.name.toUpperCase()}

@@ -20,6 +20,7 @@ const Attributes = ({ idAttribute, name, values, attribute, setAttribute }) => {
   const toggleBrand = () => setIsOpen(!isOpen);
 
   const handleCheckboxChange = (index, brand) => {
+    
     // Deseleccionar el checkbox actual si ya estaba seleccionado, de lo contrario, seleccionarlo
     setSelectedCheckbox(prevIndex => prevIndex === index ? null : index);
   
@@ -28,17 +29,19 @@ const Attributes = ({ idAttribute, name, values, attribute, setAttribute }) => {
     setAttribute(cadena);
   
     // Manejar la selección/deselección del checkbox actual en el contexto
+    console.log(selectedCheckbox !== index);
     context.handleBrands(brand, selectedCheckbox !== index);
   
     // Deseleccionar los checkboxes de los otros atributos
     values.forEach((otherBrand, i) => {
-      if (i !== index && i !== selectedCheckbox) {
+      if (i !== index && i !== selectedCheckbox && selectedCheckbox !== null) {
         const otherCadena = `${idAttribute.id},${otherBrand}`;
         context.handleBrands(otherBrand, false);
       }
     });
     
   };  
+  
 
   var { loading, data } = useQuery(GET_BRAND, {
     variables: {

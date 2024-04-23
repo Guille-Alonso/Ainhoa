@@ -7,10 +7,13 @@ const FilterProvider = (props) => {
   const brand = router.query.brand;
   const color = router.query.color;
   const size = router.query.size;
+  const specialPrice = router.query.specialPrice;
+  const categoryPill = router.query.categoryPill;
   const category = router.query.category;
   const min = router.query.min;
   const max = router.query.max;
   let sizeParam = size ? size.split(",") : null;
+  let specialPriceParam = specialPrice ? specialPrice.split(",") : null;
   let param = brand ? brand.split(",") : [];
   const [selectedCategory, setSelectedCategory] = useState(
     category ? category : "fashion"
@@ -18,6 +21,10 @@ const FilterProvider = (props) => {
   const [selectedBrands, setSelectedBrands] = useState(param ? param : []);
   const [selectedColor, setSelectedColor] = useState(color ? color : "");
   const [selectedSize, setSelectedSize] = useState(sizeParam ? sizeParam : []);
+  const [selectedCategoryPill, setSelectedCategoryPill] = useState(categoryPill ? categoryPill : []);
+
+  const [selectedSpecialPrice, setSelectedSpecialPrice] = useState(sizeParam ? sizeParam : []);
+
   const [selectedPrice, setSelectedPrice] = useState({
     min: min ? min : 0,
     max: max ? max : 500,
@@ -26,6 +33,7 @@ const FilterProvider = (props) => {
   const [filterChecked, setFilterChecked] = useState([{}]);
 
 const handleBrands = (brand, checked) => {
+  console.log(brand);
   // Verifica si la marca actual ya está seleccionada
   const isSelected = selectedBrands.includes(brand);
 
@@ -36,8 +44,9 @@ const handleBrands = (brand, checked) => {
   }
 
   // Si la marca actual no está seleccionada y está siendo deseleccionada,
-  // no hacemos nada ya que no se puede deseleccionar una marca que no está seleccionada.
-  if (!isSelected && !checked) {
+  // establecemos selectedBrands como un array vacío y salimos de la función.
+  if (!checked) {
+    setSelectedBrands([]);
     return;
   }
 
@@ -55,7 +64,6 @@ const handleBrands = (brand, checked) => {
   setFilterChecked([{ brand, checked }]);
 };
 
-
   const handleSizes = (size, checked) => {
     var index = selectedSize.indexOf(size);
     if (index > -1) {
@@ -68,6 +76,42 @@ const handleBrands = (brand, checked) => {
       setSelectedSize([...selectedSize, size]);
     }
   };
+
+  const handleSpecialPrice = (price, checked) => {
+    var index = selectedSpecialPrice.indexOf(price);
+    if (index > -1) {
+      setIsChecked(!isChecked);
+      setFilterChecked([{ price, checked }]);
+      setSelectedSpecialPrice(selectedSpecialPrice.filter((e) => e !== price));
+    } else {
+      setIsChecked(!isChecked);
+      setFilterChecked([{ price, checked }]);
+      setSelectedSpecialPrice([...selectedSpecialPrice, price]);
+    }
+  };
+
+  const handleCategories = (category) => {
+    console.log(category);
+    if (category === "todas") {
+      // Si la categoría seleccionada es "TODAS", vaciamos el array
+      setSelectedCategoryPill(categoryPill ? categoryPill : []);
+      setSelectedBrands([])
+    } else {
+      // Verifica si la categoría ya está seleccionada
+      const isCategorySelected = selectedCategoryPill.includes(category);
+  
+      if (isCategorySelected) {
+        // Si la categoría ya está seleccionada, la quitamos
+        const newSelectedCategories = selectedCategoryPill.filter((c) => c !== category);
+        setSelectedCategoryPill(newSelectedCategories);
+      } else {
+        // Si la categoría no está seleccionada, la agregamos y quitamos las demás
+        setSelectedCategoryPill([category]);
+      }
+      setSelectedBrands([])
+    }
+  };
+  
 
   return (
     <FilterContext.Provider
@@ -87,6 +131,12 @@ const handleBrands = (brand, checked) => {
         setSelectedPrice,
         handleBrands: handleBrands,
         handleSizes: handleSizes,
+        handleCategories : handleCategories,
+        selectedCategoryPill,
+        setSelectedCategoryPill,
+        handleSpecialPrice,
+        selectedSpecialPrice,
+        setSelectedSpecialPrice
       }}
     >
       {props.children}

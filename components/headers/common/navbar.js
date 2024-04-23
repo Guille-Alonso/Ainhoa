@@ -6,6 +6,7 @@ import { Container, Row } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import UserContext from "../../../helpers/user/UserContext";
+import FilterContext from "../../../helpers/filter/FilterContext";
 
 const NavBar = () => {
   const { t } = useTranslation();
@@ -28,6 +29,8 @@ const NavBar = () => {
       document.querySelector("#topHeader").classList.add("zindex-class");
   };
 
+  const contextFilter = useContext(FilterContext);
+
   const closeNav = (cat) => {
     if(cat){
       if(cat != "TODOS"){
@@ -36,7 +39,15 @@ const NavBar = () => {
         const cleanedCatName = cat.replace(/\.{3}/g, ''); // Eliminar puntos suspensivos de 'cat'
         const idCat = userContext.categories.find(c=> c.name.toUpperCase().includes(cleanedCatName.toUpperCase()))?.id;
         userContext.setCategory(idCat)
-      }else userContext.getProductsToFilter("/api/bff-store/products");
+
+        if(!contextFilter.selectedCategoryPill.includes(cat)){
+          contextFilter.handleCategories(cat);
+        }
+
+      }else {
+        contextFilter.handleCategories("todas");
+        userContext.getProductsToFilter("/api/bff-store/products");
+      }
     }
     setNavClose({ right: "-410px" });
     if (router.asPath == "/layouts/Gym")
