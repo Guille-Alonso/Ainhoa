@@ -13,7 +13,7 @@ import axios from "../../../config/axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
-const SearchOverlay = () => {
+const SearchOverlay = ({setOpenearchOverlay}) => {
 
 const userContext = useContext(UserContext);
 const router = useRouter();
@@ -42,20 +42,14 @@ const searchProduct = async (e) => {
     console.log(error);
     toast.error(error.response?.data.message || error.message);
   }
-  closeSearch();
+  setOpenearchOverlay(false);
+  // closeSearch();
 };
-
-useEffect(() => {
-  const input = document.getElementById("searchInput");
-  if (input) {
-    input.focus();
-  }
-}, []);
 
   return (
     <div id="search-overlay" className="search-overlay">
       <div>
-        <span className="closebtn" onClick={closeSearch} title="Close Overlay">
+        <span className="closebtn" onClick={()=>setOpenearchOverlay(false)} title="Close Overlay">
           ×
         </span>
         <div className="overlay-content">
@@ -73,6 +67,7 @@ useEffect(() => {
                       maxLength={50}
                       name="searchInput"
                       autoComplete="off"
+                      autoFocus
                     />
                   </FormGroup>
                 </Form>

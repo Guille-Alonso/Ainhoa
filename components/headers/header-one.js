@@ -61,8 +61,11 @@ const HeaderOne = ({
       openmyslide.classList.add("open-side");
     }
   };
+  
+  const [openSearchOverlay, setOpenearchOverlay] = useState(false);
   const openSearch = () => {
-    document.getElementById("search-overlay").style.display = "block";
+    setOpenearchOverlay(true);
+    // document.getElementById("search-overlay").style.display = "block";
   };
 
   // eslint-disable-next-line
@@ -151,8 +154,10 @@ const HeaderOne = ({
           </Row>
         </Container>
       </header>
-
-      <SearchOverlay />
+      {
+        openSearchOverlay &&
+        <SearchOverlay setOpenearchOverlay={setOpenearchOverlay}/>
+      }
     </div>
   );
 };

@@ -31,7 +31,9 @@ const NavBar = () => {
   const closeNav = (cat) => {
     if(cat){
       if(cat != "TODOS"){
-        userContext.setCategory(userContext.categories.find(c=> c.name == cat).id)
+        console.log(cat);
+        console.log(userContext.categories);
+        userContext.setCategory(userContext.categories.find(c=> c.name.toLowerCase() == cat.toLowerCase())?.id)
       }else userContext.getProductsToFilter("/api/bff-store/products");
     }
     setNavClose({ right: "-410px" });
