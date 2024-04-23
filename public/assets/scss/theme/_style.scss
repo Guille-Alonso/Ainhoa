@@ -44,21 +44,22 @@
     1.General CSS start
 ==========================*/
 body {
-  font-family: $font_0, $font_1;
+  // font-family: $font_0, $font_1;
+  font-family: $font_0;
   position: relative;
   background: $white;
   font-size: 14px;
   overflow-x: hidden;
   letter-spacing: 0.8px;
-  &.christmas {
-    font-family: $font_2, $font_1;
-    .dark-light {
-      display: none;
-    }
-    section {
-      overflow: hidden;
-    }
-  }
+  // &.christmas {
+  //   font-family: $font_2, $font_1;
+  //   .dark-light {
+  //     display: none;
+  //   }
+  //   section {
+  //     overflow: hidden;
+  //   }
+  // }
 }
 h1 {
   font-size: 60px;

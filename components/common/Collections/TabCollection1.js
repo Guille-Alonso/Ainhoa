@@ -129,7 +129,7 @@ const TabContent = ({
           ))
       )}
       {products.length > 0 && (
-        <div className="d-flex justify-content-center mt-4">
+        <div className="d-flex justify-content-center mt-5">
           <Button className="load-more" onClick={() => goToMoreProducts()}>
             ver mas
           </Button>
