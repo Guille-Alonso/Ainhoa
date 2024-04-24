@@ -208,7 +208,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
                           <i className="fa fa-angle-left"></i>
                         </button>
                       </span>
-                      <input type="text" name="quantity" value={quantity} onChange={changeQty} className="form-control input-number" />
+                      <input disabled type="text" name="quantity" value={quantity} onChange={changeQty} className="form-control input-number" />
                       <span className="input-group-prepend">
                         <button disabled type="button" className="btn quantity-right-plus" onClick={() => plusQty(product)} data-type="plus" data-field="">
                           <i className="fa fa-angle-right"></i>
