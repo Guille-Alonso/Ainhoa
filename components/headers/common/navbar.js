@@ -41,7 +41,7 @@ const NavBar = () => {
         userContext.setCategory(idCat)
 
         if(!contextFilter.selectedCategoryPill.includes(cat)){
-          contextFilter.handleCategories(cat);
+          contextFilter.handleCategories(cat.toLowerCase());
         }
 
       }else {
