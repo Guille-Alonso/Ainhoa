@@ -273,7 +273,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
                       >
                         <span className="filter-btn btn btn-theme">
                           <i className="fa fa-filter" aria-hidden="true"></i>{" "}
-                          Filter
+                          Filtros
                         </span>
                       </div>
                     </Col>

@@ -25,7 +25,7 @@ export const generateMenuItems = (categories) => {
     },
     productoItem,
     {
-      title: "Vendé en Ainhoa",
+      title: "Vendé con Ainhoa",
       type: "link",
       path:"/page/vendor/become-vendor"
     },

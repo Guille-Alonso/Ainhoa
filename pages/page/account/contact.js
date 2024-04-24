@@ -9,14 +9,14 @@ const Data = [
   {
     img: "fa-phone",
     // title: "Teléfono",
-    desc1: "+54 9 3816 80-8411",
+    desc1: "+54 9 3813582327",
     // desc2: "+86 163 - 451 - 7894",
   },
   {
     img: "fa-map-marker",
     // title: "Dirección",
     desc1: "Chubut 2.525 Yerba Buena, Tucumán",
-    desc2: "Oficina 1er Piso - 'Ainhoa'",
+    desc2: "Oficina 1er Piso - 'Ainhoa Vintage'",
   },
   {
     img: "fa-envelope-o",
@@ -109,9 +109,9 @@ const Contact = () => {
                           "El nombre no puede tener mas de 35 caracteres",
                       },
                       minLength: {
-                        value: 3,
+                        value: 2,
                         message:
-                          "El nombre no puede tener menos de 3 caracteres",
+                          "El nombre no puede tener menos de 2 caracteres",
                       },
                     })}
                     type="text"
@@ -214,7 +214,7 @@ const Contact = () => {
                   )}
                 </Col>
                 <Col md="12">
-                  <Label className="form-label" for="review">
+                  <Label className="form-label descapitalize" for="review">
                     Escriba su mensaje
                   </Label>
                   <textarea

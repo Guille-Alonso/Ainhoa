@@ -37,3 +37,10 @@
 .imageProductCursorPointer{
   cursor: pointer !important;
 }
+
+.descapitalize {
+  text-transform: lowercase !important;
+}
+.descapitalize:first-letter {
+  text-transform: uppercase;
+}
