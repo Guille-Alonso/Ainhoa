@@ -8,12 +8,14 @@ const FilterProvider = (props) => {
   const color = router.query.color;
   const size = router.query.size;
   const specialPrice = router.query.specialPrice;
+  const newAndUsed = router.query.newAndUsed;
   const categoryPill = router.query.categoryPill;
   const category = router.query.category;
   const min = router.query.min;
   const max = router.query.max;
   let sizeParam = size ? size.split(",") : null;
   let specialPriceParam = specialPrice ? specialPrice.split(",") : null;
+  let newAndUsedParam = newAndUsed ? newAndUsed.split(",") : null;
   let param = brand ? brand.split(",") : [];
   const [selectedCategory, setSelectedCategory] = useState(
     category ? category : "fashion"
@@ -23,7 +25,8 @@ const FilterProvider = (props) => {
   const [selectedSize, setSelectedSize] = useState(sizeParam ? sizeParam : []);
   const [selectedCategoryPill, setSelectedCategoryPill] = useState(categoryPill ? categoryPill : []);
 
-  const [selectedSpecialPrice, setSelectedSpecialPrice] = useState(sizeParam ? sizeParam : []);
+  const [selectedSpecialPrice, setSelectedSpecialPrice] = useState(specialPriceParam ? specialPriceParam : []);
+  const [selectedNewAndUsed, setSelectedNewAndUsed] = useState(newAndUsedParam ? newAndUsedParam : []);
 
   const [selectedPrice, setSelectedPrice] = useState({
     min: min ? min : 0,
@@ -33,33 +36,21 @@ const FilterProvider = (props) => {
   const [filterChecked, setFilterChecked] = useState([{}]);
 
 const handleBrands = (brand, checked) => {
-  console.log(brand);
-  // Verifica si la marca actual ya está seleccionada
   const isSelected = selectedBrands.includes(brand);
 
-  // Si la marca actual ya está seleccionada y está siendo seleccionada nuevamente,
-  // no hacemos nada ya que no se puede seleccionar una marca que ya está seleccionada.
   if (isSelected && checked) {
     return;
   }
 
-  // Si la marca actual no está seleccionada y está siendo deseleccionada,
-  // establecemos selectedBrands como un array vacío y salimos de la función.
   if (!checked) {
     setSelectedBrands([]);
     return;
   }
 
-  // En este punto, sabemos que la marca actual está siendo seleccionada
-  // y la marca previamente seleccionada (si existe) debe ser deseleccionada.
-
-  // Si hay una marca previamente seleccionada, la deseleccionamos
   const updatedBrands = isSelected ? selectedBrands.filter(e => e !== brand) : selectedBrands;
 
-  // Establecemos la marca actual como la única seleccionada
   setSelectedBrands([brand]);
 
-  // Actualizamos otros estados según sea necesario
   setIsChecked(checked);
   setFilterChecked([{ brand, checked }]);
 };
@@ -78,17 +69,45 @@ const handleBrands = (brand, checked) => {
   };
 
   const handleSpecialPrice = (price, checked) => {
-    var index = selectedSpecialPrice.indexOf(price);
-    if (index > -1) {
-      setIsChecked(!isChecked);
-      setFilterChecked([{ price, checked }]);
-      setSelectedSpecialPrice(selectedSpecialPrice.filter((e) => e !== price));
-    } else {
-      setIsChecked(!isChecked);
-      setFilterChecked([{ price, checked }]);
-      setSelectedSpecialPrice([...selectedSpecialPrice, price]);
+    const isSelected = selectedSpecialPrice.includes(price);
+  
+    if (isSelected && checked) {
+      return;
     }
+
+    if (!checked) {
+      setSelectedSpecialPrice([]);
+      return;
+    }
+  
+    const updatedPrices = isSelected ? selectedSpecialPrice.filter(e => e !== price) : selectedSpecialPrice;
+  
+    setSelectedSpecialPrice([price]);
+  
+    setIsChecked(checked);
+    setFilterChecked([{ price, checked }]);
   };
+
+  const handleNewAndUsed = (nau, checked) => {
+    const isSelected = selectedNewAndUsed.includes(nau);
+  
+    if (isSelected && checked) {
+      return;
+    }
+
+    if (!checked) {
+      setSelectedNewAndUsed([]);
+      return;
+    }
+  
+    const updatedPrices = isSelected ? selectedNewAndUsed.filter(e => e !== nau) : selectedNewAndUsed;
+  
+    setSelectedNewAndUsed([nau]);
+  
+    setIsChecked(checked);
+    setFilterChecked([{ nau, checked }]);
+  };
+  
 
   const handleCategories = (category) => {
     console.log(category);
@@ -136,7 +155,10 @@ const handleBrands = (brand, checked) => {
         setSelectedCategoryPill,
         handleSpecialPrice,
         selectedSpecialPrice,
-        setSelectedSpecialPrice
+        setSelectedSpecialPrice,
+        handleNewAndUsed,
+        selectedNewAndUsed,
+        setSelectedNewAndUsed
       }}
     >
       {props.children}

@@ -84,6 +84,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
   const selectedCategoryPill = filterContext.selectedCategoryPill;
   const selectedSize = filterContext.selectedSize;
   const selectedSpecialPrice = filterContext.selectedSpecialPrice;
+  const selectedIsNew = filterContext.selectedNewAndUsed;
   const [sortBy, setSortBy] = useState("AscOrder");
   const [isLoading, setIsLoading] = useState(false);
   const [layout, setLayout] = useState(layoutList);
@@ -156,6 +157,12 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
     filterContext.setSelectedSpecialPrice(temp);
   };
 
+  const removeIsNew = (val) => {
+    const temp = [...selectedIsNew];
+    temp.splice(selectedIsNew.indexOf(val), 1);
+    filterContext.setSelectedNewAndUsed(temp);
+  };
+
   const removeCatPill = (val) => {
     const temp = [...selectedCategoryPill];
     temp.splice(selectedCategoryPill.indexOf(val), 1);
@@ -216,6 +223,18 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
                         <i
                           className="fa fa-close"
                           onClick={() => removeSpecialPrice(specialP)}
+                        ></i>
+                      </a>
+                    </li>
+                  ))}
+
+                  {selectedIsNew.map((isNewOrUsed, i) => (
+                    <li key={i}>
+                      <a href={null} className="filter_tag">
+                        {isNewOrUsed}
+                        <i
+                          className="fa fa-close"
+                          onClick={() => removeIsNew(isNewOrUsed)}
                         ></i>
                       </a>
                     </li>
