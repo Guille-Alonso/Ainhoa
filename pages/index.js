@@ -73,7 +73,7 @@ const Fashion = () => {
       )} */}
 
       {/* <Parallax /> */}
-      {userContext.products.length > 0 ? (
+      {userContext.products.length > 0 && !userContext.botonState? (
         <SpecialProducts
           type="fashion"
           backImage={true}

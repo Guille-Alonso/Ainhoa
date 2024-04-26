@@ -285,7 +285,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
               <div className={`product-wrapper-grid ${layout}`}>
                 <Row>
                   {/* Product Box */}
-                  {products.length == 0 ? (
+                  {products.length == 0  || userContext.botonState? (
                     <div className="row mx-0 margin-default mt-4">
                       <div className="col-xl-3 col-lg-4 col-6">
                         <PostLoader />

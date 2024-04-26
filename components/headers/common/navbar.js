@@ -34,8 +34,6 @@ const NavBar = () => {
   const closeNav = (cat) => {
     if(cat){
       if(cat != "TODOS"){
-        console.log(cat);
-        console.log(userContext.categories);
         const cleanedCatName = cat.replace(/\.{3}/g, ''); // Eliminar puntos suspensivos de 'cat'
         const idCat = userContext.categories.find(c=> c.name.toUpperCase().includes(cleanedCatName.toUpperCase()))?.id;
         userContext.setCategory(idCat)
@@ -43,9 +41,10 @@ const NavBar = () => {
         if(!contextFilter.selectedCategoryPill.includes(cat)){
           contextFilter.handleCategories(cat.toLowerCase());
         }
-
+        userContext.setFlagCategory(true);
       }else {
         contextFilter.handleCategories("todas");
+        userContext.setFlagCategory(false);
         userContext.getProductsToFilter("/api/bff-store/products");
       }
     }
@@ -193,7 +192,8 @@ const NavBar = () => {
                             {childrenItem.type === "sub" ? (
                               <a
                                 href={null}
-                                onClick={() => toggletNavActive(childrenItem)}>
+                                onClick={() => toggletNavActive(childrenItem)}
+                                >
                                 {childrenItem.title}
                                 {childrenItem.tag === "new" ? (
                                   <span className="new-tag">new</span>
@@ -230,6 +230,7 @@ const NavBar = () => {
                                       {childrenSubItem.type === "link" ? (
                                         <Link
                                           href={childrenSubItem.path}
+                                          onClick={()=>closeNav(childrenSubItem.title,null)}
                                           className="sub-menu-title">
                                           {/* <a > */}
                                           {childrenSubItem.title}

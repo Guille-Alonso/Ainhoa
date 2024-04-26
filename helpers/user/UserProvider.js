@@ -16,6 +16,7 @@ const UserProvider = (props) => {
     const [category_id, setCategory] = useState(null);
     const [products, setProducts] = useState([])
     const [flagSearch, setFlagSearch] = useState(false);
+    const [flagCategory, setFlagCategory] = useState(false);
 
     // const [products,loadingProducts,getProducts,setProducts] = useGet(`/api/bff-store/products?page=1`,axios)
     const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
@@ -23,16 +24,18 @@ const UserProvider = (props) => {
     const router = useRouter();
 
     const getProductsToFilter = async (url)=>{
+      setBotonState(true)
       try {
         const {data} = await axios.get(url)
         if(data.length == 0 && category_id !== null){
-          toast.error("No se encontraron productos para la categoría seleccionada")
+          toast.error("No se encontraron productos para la categoría seleccionada");
         }else{
           setProducts(data);
         }
       } catch (error) {
         console.log(error);
       }
+      setBotonState(false)
     }
 
     useEffect(() => {
@@ -373,7 +376,9 @@ const UserProvider = (props) => {
         contact,
         flagSearch,
         setFlagSearch,
-        category_id
+        category_id,
+        flagCategory,
+        setFlagCategory
       }}
     >
       {props.children}
