@@ -14,14 +14,11 @@ export const generateMenuItems = (categories) => {
 
  // Paso 1: Crear un conjunto de categorías padres
 const parentCategories = new Set(categories.filter(category => category.parent != null).map(category => category.parent));
-console.log(parentCategories);
 // Paso 2: Filtrar las categorías
 const filteredCategories = categories.filter(category => {
   // Si la categoría es un padre o su nombre no está en el conjunto de categorías padres, la incluimos
   return category.parent !== null || !parentCategories.has(category.name);
 });
-
-console.log(filteredCategories);
 
   const productoItem = {
     title: "Productos",

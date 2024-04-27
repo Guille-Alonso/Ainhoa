@@ -74,7 +74,6 @@ const NavBar = () => {
     }
   };
 
- 
   const MENUITEMS = generateMenuItems(userContext.categories)
   const [mainmenu, setMainMenu] = useState(MENUITEMS);
   useEffect(() => {
@@ -112,6 +111,7 @@ const NavBar = () => {
 
   // Click Toggle menu
   const toggletNavActive = (item) => {
+    console.log(item);
     if (!item.active) {
       MENUITEMS.forEach((a) => {
         if (MENUITEMS.includes(item)) a.active = false;
@@ -148,6 +148,24 @@ const NavBar = () => {
       event.target.nextElementSibling.classList.add("opensubmenu");
     }
   };
+
+  const [flag,setFlag] = useState(false);
+
+  function toggleActive(title) {
+  
+    const index = MENUITEMS.filter(mi=>mi.title=="Productos")[0].children.filter(m=>m.type == "sub").findIndex(item => item.title === title.title);
+ 
+    if (index !== -1) {
+     
+      MENUITEMS.filter(mi=>mi.title=="Productos")[0].children.filter(m=>m.type == "sub")[index].active = !MENUITEMS.filter(mi=>mi.title=="Productos")[0].children.filter(m=>m.type == "sub")[index].active;
+      // console.log(updatedElemento.active);
+  
+      setFlag(!flag)
+    }
+   
+    console.log(MENUITEMS);
+  }
+  
 
   return (
     <div>
@@ -188,12 +206,15 @@ const NavBar = () => {
                             key={index}
                             className={`${
                               childrenItem.children ? "sub-menu " : ""
-                            }`}>
+                            }`}
+                          >
+
                             {childrenItem.type === "sub" ? (
                               <a
                                 href={null}
                                 onClick={() => toggletNavActive(childrenItem)}
-                                >
+                                // onClick={(e) => openMblNav(e)}
+                              >
                                 {childrenItem.title}
                                 {childrenItem.tag === "new" ? (
                                   <span className="new-tag">new</span>
@@ -205,8 +226,15 @@ const NavBar = () => {
                             ) : (
                               ""
                             )}
+
                             {childrenItem.type === "link" ? (
-                              <Link onClick={closeNav.bind(this,childrenItem.title)} href={`${childrenItem.path}`}>
+                              <Link
+                                onClick={closeNav.bind(
+                                  this,
+                                  childrenItem.title
+                                )}
+                                href={`${childrenItem.path}`}
+                              >
                                 {/* <a> */}
                                 {childrenItem.title}
                                 {childrenItem.tag === "new" ? (
@@ -217,39 +245,46 @@ const NavBar = () => {
                                 {/* </a> */}
                               </Link>
                             ) : (
-                              ""
+                              console.log(childrenItem)
                             )}
-                            {childrenItem.children ? (
+
+                            {childrenItem.type === "sub" ? (
                               <ul
                                 className={`nav-sub-childmenu ${
-                                  childrenItem.active ? "menu-open " : "active"
-                                }`}>
+                                   childrenItem.active ? "menu-open " : "active"
+                                }`}
+                              >
                                 {childrenItem.children.map(
                                   (childrenSubItem, key) => (
                                     <li key={key}>
+                                
                                       {childrenSubItem.type === "link" ? (
                                         <Link
-                                          href={childrenSubItem.path}
-                                          onClick={()=>closeNav(childrenSubItem.title,null)}
-                                          className="sub-menu-title">
-                                          {/* <a > */}
+                                          onClick={closeNav.bind(
+                                            this,
+                                            childrenSubItem.title
+                                          )}
+                                          href={`${childrenSubItem.path}`}
+                                        >
+                                          {/* <a> */}
+                                          
                                           {childrenSubItem.title}
-                                          {childrenSubItem.tag === "new" ? (
+                                          {/* {childrenSubItem.tag === "new" ? (
                                             <span className="new-tag">new</span>
                                           ) : (
                                             ""
-                                          )}
+                                          )} */}
                                           {/* </a> */}
                                         </Link>
                                       ) : (
-                                        ""
+                                        "ee"
                                       )}
                                     </li>
                                   )
                                 )}
                               </ul>
                             ) : (
-                              ""
+                              console.log(childrenItem)
                             )}
                           </li>
                         );
