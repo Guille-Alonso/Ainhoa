@@ -27,7 +27,7 @@ const LeftSidebar = () => {
     const getProductsToFilter = async (url)=>{
       try {
         const {data} = await axios.get(url)
-    
+
           setProductsToFilter(data);
    
       } catch (error) {

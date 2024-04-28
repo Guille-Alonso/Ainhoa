@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 // import { MENUITEMS } from "../../constant/menu";
-import { generateMenuItems } from "../../constant/menu";
+import MenuItems, { MENUITEMS, generateMenuItems, useMenuItems } from "../../constant/menu";
 import { Container, Row } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
@@ -74,21 +74,26 @@ const NavBar = () => {
     }
   };
 
-  const MENUITEMS = generateMenuItems(userContext.categories)
+  const MENUITEMS = useMenuItems(userContext.categories);
+  
   const [mainmenu, setMainMenu] = useState(MENUITEMS);
+
   useEffect(() => {
-    const currentUrl = location.pathname;
-    MENUITEMS.filter((items) => {
-      if (items.path === currentUrl) setNavActive(items);
-      if (!items.children) return false;
-      items.children.filter((subItems) => {
-        if (subItems.path === currentUrl) setNavActive(subItems);
-        if (!subItems.children) return false;
-        subItems.children.filter((subSubItems) => {
-          if (subSubItems.path === currentUrl) setNavActive(subSubItems);
+    if(MENUITEMS.length > 0 && MENUITEMS != "NO"){
+
+      const currentUrl = location.pathname;
+      MENUITEMS.filter((items) => {
+        if (items.path === currentUrl) setNavActive(items);
+        if (!items.children) return false;
+        items.children.filter((subItems) => {
+          if (subItems.path === currentUrl) setNavActive(subItems);
+          if (!subItems.children) return false;
+          subItems.children.filter((subSubItems) => {
+            if (subSubItems.path === currentUrl) setNavActive(subSubItems);
+          });
         });
       });
-    });
+    }
   }, []);
 
   const setNavActive = (item) => {
@@ -111,10 +116,10 @@ const NavBar = () => {
 
   // Click Toggle menu
   const toggletNavActive = (item) => {
-    console.log(item);
+
     if (!item.active) {
-      MENUITEMS.forEach((a) => {
-        if (MENUITEMS.includes(item)) a.active = false;
+      MENUITEMS[2].children.forEach((a) => {
+        if (MENUITEMS[2].children.includes(item)) a.active = false;
         if (!a.children) return false;
         a.children.forEach((b) => {
           if (a.children.includes(item)) {
@@ -133,6 +138,33 @@ const NavBar = () => {
     setMainMenu({ mainmenu: MENUITEMS });
   };
 
+  // const toggletNavActive = (item) => {
+  //   console.log(item);
+  //   if (!item.active) {
+  //     MENUITEMS.forEach((a) => {
+  //       if (MENUITEMS.includes(item)) a.active = false;
+  //       if (!a.children) return false;
+  //       a.children.forEach((b) => {
+  //         console.log(a);
+  //         if (a.children.includes(item)) {
+  //           b.active = false;
+  //         }
+  //         if (!b.children) return false;
+  //         b.children.forEach((c) => {
+  //           if (b.children.includes(item)) {
+  //             c.active = false;
+  //           }
+  //         });
+  //       });
+  //     });
+  //   }
+  //   item.active = !item.active;
+  //   console.log(item.active);
+  //   console.log(MENUITEMS);
+  //   setMainMenu({ mainmenu: MENUITEMS });
+  // };
+
+
   const openMblNav = (event) => {
     if (event.target.classList.contains("sub-arrow")) return;
 
@@ -149,24 +181,6 @@ const NavBar = () => {
     }
   };
 
-  const [flag,setFlag] = useState(false);
-
-  function toggleActive(title) {
-  
-    const index = MENUITEMS.filter(mi=>mi.title=="Productos")[0].children.filter(m=>m.type == "sub").findIndex(item => item.title === title.title);
- 
-    if (index !== -1) {
-     
-      MENUITEMS.filter(mi=>mi.title=="Productos")[0].children.filter(m=>m.type == "sub")[index].active = !MENUITEMS.filter(mi=>mi.title=="Productos")[0].children.filter(m=>m.type == "sub")[index].active;
-      // console.log(updatedElemento.active);
-  
-      setFlag(!flag)
-    }
-   
-    console.log(MENUITEMS);
-  }
-  
-
   return (
     <div>
       <div className="main-navbar">
@@ -181,7 +195,7 @@ const NavBar = () => {
                 <i className="fa fa-angle-right ps-2" aria-hidden="true"></i>
               </div>
             </li>
-            {MENUITEMS.map((menuItem, i) => {
+            {MENUITEMS.length > 0 && MENUITEMS != "NO" ? MENUITEMS.map((menuItem, i) => {
               return (
                 <li
                   key={i}
@@ -213,7 +227,6 @@ const NavBar = () => {
                               <a
                                 href={null}
                                 onClick={() => toggletNavActive(childrenItem)}
-                                // onClick={(e) => openMblNav(e)}
                               >
                                 {childrenItem.title}
                                 {childrenItem.tag === "new" ? (
@@ -245,10 +258,10 @@ const NavBar = () => {
                                 {/* </a> */}
                               </Link>
                             ) : (
-                              console.log(childrenItem)
+                            ""
                             )}
 
-                            {childrenItem.type === "sub" ? (
+                            {childrenItem.children ? (
                               <ul
                                 className={`nav-sub-childmenu ${
                                    childrenItem.active ? "menu-open " : "active"
@@ -264,6 +277,10 @@ const NavBar = () => {
                                             this,
                                             childrenSubItem.title
                                           )}
+                                          // onClick={()=>closeNav(
+                                            
+                                          //   childrenSubItem.title
+                                          // )}
                                           href={`${childrenSubItem.path}`}
                                         >
                                           {/* <a> */}
@@ -284,7 +301,7 @@ const NavBar = () => {
                                 )}
                               </ul>
                             ) : (
-                              console.log(childrenItem)
+                             ""
                             )}
                           </li>
                         );
@@ -378,11 +395,14 @@ const NavBar = () => {
                   )}
                 </li>
               );
-            })}
+            })
+          :
+          <></>}
           </ul>
         </div>
       </div>
     </div>
+       
   );
 };
 

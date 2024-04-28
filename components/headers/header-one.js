@@ -113,9 +113,19 @@ const HeaderOne = ({
                   </div>
                 </div>
                 <div className="menu-right pull-right">
-                  {/*Top Navigation Bar Component*/}
+                
+                  {/* {
+                    !userContext.loadingCategories  ?
                   <NavBar />
+                  :
+                  <>
+                  <div class="skeleton-text d-none d-md-block"></div>
+                  <div className="container d-block d-md-none spinnerNav"></div>
+                  </>
+                  } */}
 
+                  <NavBar />
+                  
                   <div>
                     <div className="icon-nav">
                       <ul>

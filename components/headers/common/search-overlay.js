@@ -12,6 +12,7 @@ import UserContext from "../../../helpers/user/UserContext";
 import axios from "../../../config/axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import FilterContext from "../../../helpers/filter/FilterContext";
 
 const SearchOverlay = ({setOpenearchOverlay}) => {
 
@@ -21,6 +22,8 @@ const router = useRouter();
 const closeSearch = () => {
   document.getElementById("search-overlay").style.display = "none";
 };
+
+const contextFilter = useContext(FilterContext);
 
 const searchProduct = async (e) => {
   try {
@@ -39,7 +42,7 @@ const searchProduct = async (e) => {
       const cleanedCatName = data[0].category.replace(/\.{3}/g, ''); // Eliminar puntos suspensivos de 'cat'
       const idCat = userContext.categories.find(c=> c.name.toUpperCase().includes(cleanedCatName.toUpperCase()))?.id;
       userContext.setCategory(idCat)
-      
+      contextFilter.handleCategories(data[0].category);
       userContext.setFlagSearch(searchTerm);
       router.push("/shop/left_sidebar");
     }
