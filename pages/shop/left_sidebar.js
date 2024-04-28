@@ -61,8 +61,11 @@ const LeftSidebar = () => {
         }
       
      
-    }, [ size, page, is_new, special_price, attribute, userContext.products]); 
+    }, [ size, page, is_new, special_price, attribute]); //AQUI IBA userContext.products
     
+    useEffect(() => {
+     setProductsToFilter(userContext.products)
+    }, [userContext.products])                  //NUEVO
 
     const openCloseSidebar = () => {
         if(sidebarView){
