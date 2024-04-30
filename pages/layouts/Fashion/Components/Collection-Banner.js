@@ -1,32 +1,45 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import Link from "next/link";
 import { Container, Row, Col, Media } from "reactstrap";
 import banner1 from "../../../../public/assets/images/sub-banner1.jpg";
 import banner2 from "../../../../public/assets/images/sub-banner2.jpg";
+import UserContext from "../../../../helpers/user/UserContext";
+import FilterContext from "../../../../helpers/filter/FilterContext";
 
 const Data = [
   {
     img: banner1,
-    about: "men",
-    offer: "10% off",
-    link: "/left-sidebar/collection",
+    about: "todos",
+    offer: "productos",
+    link: "/shop/left_sidebar",
     class: "p-right text-center",
   },
   {
     img: banner2,
-    about: "women",
-    offer: "10% off",
-    link: "/left-sidebar/collection",
+    about: "fiesta",
+    offer: "productos",
+    link: "/shop/left_sidebar",
     class: "p-right text-center",
   },
 ];
 
-const MasterCollectionBanner = ({ img, about, offer, link, classes }) => {
+const MasterCollectionBanner = ({img, about, offer, link, classes, indice }) => {
+
+const userContext = useContext(UserContext);
+const contextFilter = useContext(FilterContext);
+ 
+const filtrarPorFiesta = ()=>{
+  userContext.setCategory(process.env.NEXT_PUBLIC_ID_FIESTA);
+if(!contextFilter.selectedCategoryPill.includes("Fiesta")){
+  contextFilter.handleCategories("Fiesta");
+}
+}
+
   return (
     <Col md="6">
       <Link href={link}>
         {/* <a> */}
-          <div className={`collection-banner ${classes}`}>
+          <div onClick={indice == 1 ? filtrarPorFiesta : ()=>console.log("")} className={`collection-banner ${classes}`}>
             <Media src={img} className="img-fluid" alt="" />
             <div className="contain-banner">
               <div>
@@ -57,6 +70,7 @@ const CollectionBanner = () => {
                   link={data.link}
                   offer={data.offer}
                   classes={data.class}
+                  indice = {i}
                 />
               );
             })}

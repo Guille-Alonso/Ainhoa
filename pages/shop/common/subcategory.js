@@ -30,7 +30,7 @@ const Subcategory = ({categories,setCategory,setFlagCategory}) => {
   const pillCategories = (id,cat) =>{
     if(!context.selectedCategoryPill.includes(cat)){
       setCategory(id)
-      context.handleCategories(cat);
+      context.handleCategories(cat.toLowerCase());
     }
   }
 

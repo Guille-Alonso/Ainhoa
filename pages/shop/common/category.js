@@ -29,7 +29,7 @@ const Category = ({categories,setCategory,setFlagCategory}) => {
     setFlagCategory(true);
     if(!context.selectedCategoryPill.includes(cat)){
       setCategory(id)
-      context.handleCategories(cat);
+      context.handleCategories(cat.toLowerCase());
     }
   }
 
