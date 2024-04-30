@@ -43,9 +43,13 @@ const NavBar = () => {
         }
         userContext.setFlagCategory(true);
       }else {
+        if(userContext.category_id == null){
+          userContext.getProductsToFilter("/api/bff-store/products");
+        }else{
+          userContext.setCategory(null);
+        }
         contextFilter.handleCategories("todas");
         userContext.setFlagCategory(false);
-        userContext.getProductsToFilter("/api/bff-store/products");
       }
     }
     setNavClose({ right: "-410px" });

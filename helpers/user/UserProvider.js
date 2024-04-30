@@ -39,23 +39,23 @@ const UserProvider = (props) => {
     }
 
     useEffect(() => {
-      let apiUrl = "/api/bff-store/products";
-      let queryParams = [];
-
-      const filters = { category_id };
-
-      for (const filter in filters) {
-       
-        if (filters[filter] !== null && filters[filter] !== undefined && filters[filter] !== -1) {
-            queryParams.push(`${filter}=${filters[filter]}`);
-        }
-    }
-
-      if (queryParams.length > 0) {
-        apiUrl += '?' + queryParams.join('&');
+        let apiUrl = "/api/bff-store/products";
+        let queryParams = [];
+  
+        const filters = { category_id };
+  
+        for (const filter in filters) {
+         
+          if (filters[filter] !== null && filters[filter] !== undefined && filters[filter] !== -1) {
+              queryParams.push(`${filter}=${filters[filter]}`);
+          }
       }
-
-   getProductsToFilter(apiUrl)
+  
+        if (queryParams.length > 0) {
+          apiUrl += '?' + queryParams.join('&');
+        }
+  
+     getProductsToFilter(apiUrl)
       
     }, [category_id])
     

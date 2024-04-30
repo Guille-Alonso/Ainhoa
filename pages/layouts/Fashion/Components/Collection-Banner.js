@@ -28,18 +28,27 @@ const MasterCollectionBanner = ({img, about, offer, link, classes, indice }) => 
 const userContext = useContext(UserContext);
 const contextFilter = useContext(FilterContext);
  
-const filtrarPorFiesta = ()=>{
-  userContext.setCategory(process.env.NEXT_PUBLIC_ID_FIESTA);
-if(!contextFilter.selectedCategoryPill.includes("Fiesta")){
-  contextFilter.handleCategories("Fiesta");
-}
+const filtrarProductos = ()=>{ 
+  if(indice == 1){  
+    userContext.setCategory(process.env.NEXT_PUBLIC_ID_FIESTA);
+  if(!contextFilter.selectedCategoryPill.includes("Fiesta")){
+    contextFilter.handleCategories("Fiesta");
+  }
+
+  }else{
+    if(contextFilter.selectedCategoryPill.length > 0 && userContext.category_id != null){
+      userContext.setFlagCategory(false);
+      userContext.getProductsToFilter("/api/bff-store/products");
+    }
+    contextFilter.handleCategories("todas");
+  }
 }
 
   return (
     <Col md="6">
       <Link href={link}>
         {/* <a> */}
-          <div onClick={indice == 1 ? filtrarPorFiesta : ()=>console.log("")} className={`collection-banner ${classes}`}>
+          <div onClick={filtrarProductos} className={`collection-banner ${classes}`}>
             <Media src={img} className="img-fluid" alt="" />
             <div className="contain-banner">
               <div>
