@@ -29,18 +29,26 @@ const userContext = useContext(UserContext);
 const contextFilter = useContext(FilterContext);
  
 const filtrarProductos = ()=>{ 
+  //INDICE 1 BANNER FIESTA
+  //INDICE 0 TODOS LOS PRODUCTOS
   if(indice == 1){  
-    userContext.setCategory(process.env.NEXT_PUBLIC_ID_FIESTA);
+     if(userContext.category_id == process.env.NEXT_PUBLIC_ID_FIESTA){
+      userContext.getProductsToFilter(`/api/bff-store/products?category_id=${process.env.NEXT_PUBLIC_ID_FIESTA}`);
+    }else{
+      userContext.setCategory(process.env.NEXT_PUBLIC_ID_FIESTA);
+    }
   if(!contextFilter.selectedCategoryPill.includes("Fiesta")){
     contextFilter.handleCategories("Fiesta");
   }
 
-  }else{
+  }else if(indice == 0){
     if(contextFilter.selectedCategoryPill.length > 0 && userContext.category_id != null){
+      userContext.setCategory(null);
       userContext.setFlagCategory(false);
+      contextFilter.handleCategories("todas");
+    }else if(userContext.category_id == null){
       userContext.getProductsToFilter("/api/bff-store/products");
     }
-    contextFilter.handleCategories("todas");
   }
 }
 
