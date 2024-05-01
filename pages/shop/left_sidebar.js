@@ -17,56 +17,11 @@ const LeftSidebar = () => {
     const [attributes,loadingAttributes] = useGet("/api/bff-store/attributes",axios)
     const [products,loadingProducts] = useGet("/api/bff-store/products",axios)
 
-    // const [category_id, setCategory] = useState(null);
-    // const [page, setPage] = useState(1);
-    // const [size, setSize] = useState(10);
-    // const [is_new, setIsnew] = useState(null);
-    // const [special_price, setSpecialPrice] = useState(null);
-    // const [attribute, setAttribute] = useState(null);
     const [productsToFilter, setProductsToFilter] = useState([])
-
-    // const getProductsToFilter = async (url)=>{
-    //   try {
-    //     const {data} = await axios.get(url)
-
-    //       setProductsToFilter(data);
-   
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
-
-    // useEffect(() => {
-     
-    //     let apiUrl = "/api/bff-store/products";
-    //     let queryParams = [];
-  
-    //     const filters = {  size, page, is_new, special_price,attribute };
-  
-    //     for (const filter in filters) {
-         
-    //       if (filters[filter] !== null && filters[filter] !== undefined && filters[filter] !== -1) {
-    //           queryParams.push(`${filter}=${filters[filter]}`);
-    //       }
-    //   }
-  
-    //     if (queryParams.length > 0) {
-    //       apiUrl += '?' + queryParams.join('&');
-    //     }
-
-    //     if(userContext.flagSearch || userContext.category_id){
-    //       setProductsToFilter(userContext.products);
-    //       userContext.setFlagSearch(false);
-    //     }else{
-    //       getProductsToFilter(apiUrl);
-    //     }
-      
-     
-    // }, [ size, page, is_new, special_price, attribute]); //AQUI IBA userContext.products
     
     useEffect(() => {
      setProductsToFilter(userContext.products)
-    }, [userContext.products])                  //NUEVO
+    }, [userContext.products])                
 
     const openCloseSidebar = () => {
         if(sidebarView){
@@ -80,7 +35,7 @@ const LeftSidebar = () => {
         <div className="collection-wrapper">
           <Container>
             <Row>
-              {!loadingProducts ? (
+              {!loadingProducts && !loadingAttributes? (
                 <>
                   <FilterPage
                     sm="3"

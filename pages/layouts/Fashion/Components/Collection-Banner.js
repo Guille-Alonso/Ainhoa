@@ -15,7 +15,7 @@ const router = useRouter();
 const filtrarProductos = ()=>{ 
   //INDICE 1 BANNER FIESTA
   //INDICE 0 TODOS LOS PRODUCTOS
-  userContext.setFlagSearch(true);
+  userContext.setFlagSearch(false);
   if(indice == 1){  
      if(userContext.category_id == process.env.NEXT_PUBLIC_ID_CAT){
       userContext.getProductsToFilter(`/api/bff-store/products?category_id=${process.env.NEXT_PUBLIC_ID_CAT}`);
@@ -61,7 +61,7 @@ const CollectionBanner = () => {
 
   const userContext = useContext(UserContext);
 
-  const categoryNameEnviroment = userContext.categories.find(cat=>cat.id == process.env.NEXT_PUBLIC_ID_CAT).name != undefined ? userContext.categories.find(cat=>cat.id == process.env.NEXT_PUBLIC_ID_CAT).name : "FIESTA";
+  const categoryNameEnviroment = userContext.categories.find(cat=>cat.id == process.env.NEXT_PUBLIC_ID_CAT) != undefined ? userContext.categories.find(cat=>cat.id == process.env.NEXT_PUBLIC_ID_CAT).name : "FIESTA";
 
 const Data = [
   {

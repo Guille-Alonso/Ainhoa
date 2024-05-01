@@ -40,7 +40,7 @@ const SpecialPrice = ({special_price, setSpecialPrice}) => {
       }
     
       useEffect(() => {
-      if(context.selectedSpecialPrice.length == 0 && userContext.special_price != null){
+      if(context.selectedSpecialPrice.length == 0 && userContext.special_price != null && userContext.flagCatFilter){
         showAllPrices()
       }
       }, [context.selectedSpecialPrice])

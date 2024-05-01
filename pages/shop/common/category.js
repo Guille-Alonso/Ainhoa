@@ -29,6 +29,7 @@ const Category = ({categories,setCategory,setFlagCategory}) => {
   }
 
   const pillCategories = (id,cat) =>{
+    userContext.setFlagSearch(false);
     setFlagCategory(true);
     if(!context.selectedCategoryPill.includes(cat)){
       setCategory(id)

@@ -28,11 +28,18 @@ const Subcategory = ({categories,setCategory,setFlagCategory}) => {
   }
 
   const pillCategories = (id,cat) =>{
+    userContext.setFlagSearch(false);
     if(!context.selectedCategoryPill.includes(cat)){
       setCategory(id)
       context.handleCategories(cat.toLowerCase());
     }
   }
+
+  useEffect(() => {
+    if(context.selectedCategoryPill.length == 0 && userContext.category_id != null){
+      showAllCategories()
+    }
+    }, [context.selectedCategoryPill])
 
   const parentCategories = new Set(categories.filter(category => category.parent != null).map(category => category.parent));
   console.log(parentCategories);
@@ -47,12 +54,6 @@ const Subcategory = ({categories,setCategory,setFlagCategory}) => {
         setIsCategoryOpen(true);
     }
   }, [userContext.flagCategory])
-
-  useEffect(() => {
-  if(context.selectedCategoryPill.length == 0 && userContext.category_id != null){
-    showAllCategories()
-  }
-  }, [context.selectedCategoryPill])
   
   return (
     <>

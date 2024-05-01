@@ -114,7 +114,7 @@ const handleBrands = (brand, checked) => {
     if (category === "todas") {
       // Si la categoría seleccionada es "TODAS", vaciamos el array
       setSelectedCategoryPill(categoryPill ? categoryPill : []);
-      setSelectedBrands([])
+
     } else {
       // Verifica si la categoría ya está seleccionada
       const isCategorySelected = selectedCategoryPill.includes(category);
@@ -127,8 +127,10 @@ const handleBrands = (brand, checked) => {
         // Si la categoría no está seleccionada, la agregamos y quitamos las demás
         setSelectedCategoryPill([category]);
       }
-      setSelectedBrands([])
     }
+    setSelectedBrands([]);
+    setSelectedNewAndUsed([]);
+    setSelectedSpecialPrice([]);
   };
   
 

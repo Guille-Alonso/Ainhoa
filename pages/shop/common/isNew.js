@@ -40,7 +40,7 @@ const IsNew = ({is_new, setIsnew}) => {
       }
     
       useEffect(() => {
-      if(context.selectedNewAndUsed.length == 0 && userContext.is_new != null){
+      if(context.selectedNewAndUsed.length == 0 && userContext.is_new != null && userContext.flagCatFilter){
         showAllProducts()
       }
       }, [context.selectedNewAndUsed])

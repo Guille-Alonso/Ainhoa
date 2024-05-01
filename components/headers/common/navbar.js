@@ -33,7 +33,7 @@ const NavBar = () => {
 
   const closeNav = (cat) => {
     if(cat){
-      userContext.setFlagSearch(true);
+      userContext.setFlagSearch(false);
       if(cat != "TODOS"){
         const cleanedCatName = cat.replace(/\.{3}/g, ''); // Eliminar puntos suspensivos de 'cat'
         const idCat = userContext.categories.find(c=> c.name.toUpperCase().includes(cleanedCatName.toUpperCase()))?.id;

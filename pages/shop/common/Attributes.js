@@ -76,7 +76,7 @@ const Attributes = ({ idAttribute, name, values, attribute, setAttribute }) => {
   }
 
   useEffect(() => {
-  if(context.selectedBrands.length == 0 && userContext.attribute != null){
+  if(context.selectedBrands.length == 0 && userContext.attribute != null && userContext.flagCatFilter){
     showAllAttributes();
   }
   }, [context.selectedBrands])

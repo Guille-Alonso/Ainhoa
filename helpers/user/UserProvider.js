@@ -22,15 +22,16 @@ const UserProvider = (props) => {
     const [attribute, setAttribute] = useState(null);
 
     const [products, setProducts] = useState([])
-    const [flagSearch, setFlagSearch] = useState(false);
-    const [flagCategory, setFlagCategory] = useState(false);
+    const [flagSearch, setFlagSearch] = useState(false); // PARA MANEJAR LAS PETICIONES CON EL BUSCADOR
+    const [flagCategory, setFlagCategory] = useState(false); // PARA MANEJAR LA APERTURA O CIERRE DEL FILTRO DE SUBCATEG.
 
-    // const [products,loadingProducts,getProducts,setProducts] = useGet(`/api/bff-store/products?page=1`,axios)
     const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
 
     const router = useRouter();
 
-    const [flagEmptyProducts, setFlagEmptyProducts] = useState(false);
+    const [flagEmptyProducts, setFlagEmptyProducts] = useState(false); // PARA MENSAJE DE "No hay productos para su selección.."
+
+    const [flagCatFilter, setflagCatFilter] = useState(true); // PARA DARLE UN SOLO SENTIDO AL FILTRO (PRIMER CATEG. DESP LOS DEMAS)
 
     const getProductsToFilter = async (url)=>{
       setBotonState(true)
@@ -47,31 +48,11 @@ const UserProvider = (props) => {
       } catch (error) {
         console.log(error);
       }
+      setflagCatFilter(true);
       setBotonState(false)
     }
+
     
-
-    // useEffect(() => {
-    //     let apiUrl = "/api/bff-store/products";
-    //     let queryParams = [];
-  
-    //     const filters = { category_id };
-  
-    //     for (const filter in filters) {
-         
-    //       if (filters[filter] !== null && filters[filter] !== undefined && filters[filter] !== -1) {
-    //           queryParams.push(`${filter}=${filters[filter]}`);
-    //       }
-    //   }
-  
-    //     if (queryParams.length > 0) {
-    //       apiUrl += '?' + queryParams.join('&');
-    //     }
-  
-    //  getProductsToFilter(apiUrl)
-      
-    // }, [category_id])
-
     useEffect(() => {
      
       let apiUrl = "/api/bff-store/products";
@@ -90,16 +71,21 @@ const UserProvider = (props) => {
         apiUrl += '?' + queryParams.join('&');
       }
 
-      // if(userContext.flagSearch || userContext.category_id){
-      //   setProductsToFilter(userContext.products);
-      //   userContext.setFlagSearch(false);
-      // }else{
         getProductsToFilter(apiUrl);
-      // }
-    
    
-  }, [ size, page, is_new, special_price, attribute, category_id]); 
-    
+  }, [ size, page, is_new, special_price, attribute]); 
+
+
+  useEffect(() => {
+    let apiUrl = "/api/bff-store/products";
+    if((special_price != null || is_new != null || attribute != null) || category_id == null){
+      setflagCatFilter(false);
+      getProductsToFilter(apiUrl);
+    }else if(flagSearch == false){
+      getProductsToFilter(`/api/bff-store/products?category_id=${category_id}`);
+    }
+  }, [category_id])
+
 
     const login = async (values) => {
       setBotonState(true);
@@ -430,7 +416,9 @@ const UserProvider = (props) => {
         setSpecialPrice,
         attribute,
         setAttribute,
-        flagEmptyProducts
+        flagEmptyProducts,
+        flagCatFilter,
+        setflagCatFilter
       }}
     >
       {props.children}
