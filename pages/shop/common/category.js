@@ -1,9 +1,12 @@
 import React, { useState, useContext } from "react";
 import { Collapse } from "reactstrap";
 import FilterContext from "../../../helpers/filter/FilterContext";
+import { useEffect } from "react";
+import UserContext from "../../../helpers/user/UserContext";
 
 const Category = ({categories,setCategory,setFlagCategory}) => {
   const context = useContext(FilterContext);
+  const userContext = useContext(UserContext);
   const [isCategoryOpen, setIsCategoryOpen] = useState(true);
   const toggleCategory = () => setIsCategoryOpen(!isCategoryOpen);
   const setSelectedCategory = context.setSelectedCategory;
@@ -32,6 +35,13 @@ const Category = ({categories,setCategory,setFlagCategory}) => {
       context.handleCategories(cat.toLowerCase());
     }
   }
+
+  useEffect(() => {
+  if(context.selectedCategoryPill.length == 0 && userContext.category_id != null){
+    showAllCategories()
+  }
+  }, [context.selectedCategoryPill])
+  
 
   const parentSet = new Set();
 

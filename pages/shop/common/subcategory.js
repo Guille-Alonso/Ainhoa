@@ -47,6 +47,12 @@ const Subcategory = ({categories,setCategory,setFlagCategory}) => {
         setIsCategoryOpen(true);
     }
   }, [userContext.flagCategory])
+
+  useEffect(() => {
+  if(context.selectedCategoryPill.length == 0 && userContext.category_id != null){
+    showAllCategories()
+  }
+  }, [context.selectedCategoryPill])
   
   return (
     <>

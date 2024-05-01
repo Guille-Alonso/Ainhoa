@@ -1,6 +1,7 @@
-import React, { useState ,useContext } from 'react';
+import React, { useState ,useContext, useEffect } from 'react';
 import { Collapse, Input } from 'reactstrap';
 import FilterContext from '../../../helpers/filter/FilterContext';
+import UserContext from '../../../helpers/user/UserContext';
 
 const SpecialPrice = ({special_price, setSpecialPrice}) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +32,19 @@ const SpecialPrice = ({special_price, setSpecialPrice}) => {
         
       };  
 
+      const userContext = useContext(UserContext);
+
+      const showAllPrices = () =>{
+       userContext.setSpecialPrice(null);
+       setSelectedCheckbox(null);
+      }
+    
+      useEffect(() => {
+      if(context.selectedSpecialPrice.length == 0 && userContext.special_price != null){
+        showAllPrices()
+      }
+      }, [context.selectedSpecialPrice])
+
     return (
       <div className="collection-collapse-block border-0 open">
       <h3 className="collapse-block-title" onClick={toggle}>
@@ -53,7 +67,7 @@ const SpecialPrice = ({special_price, setSpecialPrice}) => {
                       id={sp}
                     />
 
-                    <label className="custom-control-label" htmlFor={sp}>
+                    <label className="custom-control-label colorTextLabelInputCheck" htmlFor={sp}>
                       {sp}
                     </label>
                   </div>

@@ -5,51 +5,37 @@ import banner1 from "../../../../public/assets/images/sub-banner1.jpg";
 import banner2 from "../../../../public/assets/images/sub-banner2.jpg";
 import UserContext from "../../../../helpers/user/UserContext";
 import FilterContext from "../../../../helpers/filter/FilterContext";
+import { useRouter } from "next/router";
 
-const Data = [
-  {
-    img: banner1,
-    about: "todos",
-    offer: "productos",
-    link: "/shop/left_sidebar",
-    class: "p-right text-center",
-  },
-  {
-    img: banner2,
-    about: "fiesta",
-    offer: "productos",
-    link: "/shop/left_sidebar",
-    class: "p-right text-center",
-  },
-];
+const MasterCollectionBanner = ({img, about, offer, link, classes, indice, userContext, categoryNameEnviroment }) => {
 
-const MasterCollectionBanner = ({img, about, offer, link, classes, indice }) => {
-
-const userContext = useContext(UserContext);
 const contextFilter = useContext(FilterContext);
+const router = useRouter();
  
 const filtrarProductos = ()=>{ 
   //INDICE 1 BANNER FIESTA
   //INDICE 0 TODOS LOS PRODUCTOS
+  userContext.setFlagSearch(true);
   if(indice == 1){  
-     if(userContext.category_id == process.env.NEXT_PUBLIC_ID_FIESTA){
-      userContext.getProductsToFilter(`/api/bff-store/products?category_id=${process.env.NEXT_PUBLIC_ID_FIESTA}`);
+     if(userContext.category_id == process.env.NEXT_PUBLIC_ID_CAT){
+      userContext.getProductsToFilter(`/api/bff-store/products?category_id=${process.env.NEXT_PUBLIC_ID_CAT}`);
     }else{
-      userContext.setCategory(process.env.NEXT_PUBLIC_ID_FIESTA);
+      userContext.setCategory(process.env.NEXT_PUBLIC_ID_CAT);
     }
-  if(!contextFilter.selectedCategoryPill.includes("Fiesta")){
-    contextFilter.handleCategories("Fiesta");
+  if(!contextFilter.selectedCategoryPill.includes(categoryNameEnviroment)){
+    contextFilter.handleCategories(categoryNameEnviroment.toLowerCase());
   }
 
   }else if(indice == 0){
+    userContext.setFlagCategory(false);
+    contextFilter.handleCategories("todas");
     if(contextFilter.selectedCategoryPill.length > 0 && userContext.category_id != null){
       userContext.setCategory(null);
-      userContext.setFlagCategory(false);
-      contextFilter.handleCategories("todas");
     }else if(userContext.category_id == null){
       userContext.getProductsToFilter("/api/bff-store/products");
     }
   }
+  router.push(link);
 }
 
   return (
@@ -72,6 +58,29 @@ const filtrarProductos = ()=>{
 };
 
 const CollectionBanner = () => {
+
+  const userContext = useContext(UserContext);
+
+  const categoryNameEnviroment = userContext.categories.find(cat=>cat.id == process.env.NEXT_PUBLIC_ID_CAT).name != undefined ? userContext.categories.find(cat=>cat.id == process.env.NEXT_PUBLIC_ID_CAT).name : "FIESTA";
+
+const Data = [
+  {
+    img: banner1,
+    about: "todos",
+    offer: "productos",
+    link: "/shop/left_sidebar",
+    class: "p-right text-center",
+  },
+  {
+    img: banner2,
+    // about: "fiesta",
+    about: categoryNameEnviroment,
+    offer: "productos",
+    link: "/shop/left_sidebar",
+    class: "p-right text-center",
+  },
+];
+
   return (
     <Fragment>
       {/*collection banner*/}
@@ -88,6 +97,8 @@ const CollectionBanner = () => {
                   offer={data.offer}
                   classes={data.class}
                   indice = {i}
+                  userContext={userContext}
+                  categoryNameEnviroment={categoryNameEnviroment}
                 />
               );
             })}

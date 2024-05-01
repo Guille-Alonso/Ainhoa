@@ -15,53 +15,54 @@ const LeftSidebar = () => {
     const [sidebarView,setSidebarView] = useState(false)
     const userContext = useContext(UserContext);
     const [attributes,loadingAttributes] = useGet("/api/bff-store/attributes",axios)
+    const [products,loadingProducts] = useGet("/api/bff-store/products",axios)
 
-    const [category_id, setCategory] = useState(null);
-    const [page, setPage] = useState(1);
-    const [size, setSize] = useState(10);
-    const [is_new, setIsnew] = useState(null);
-    const [special_price, setSpecialPrice] = useState(null);
-    const [attribute, setAttribute] = useState(null);
+    // const [category_id, setCategory] = useState(null);
+    // const [page, setPage] = useState(1);
+    // const [size, setSize] = useState(10);
+    // const [is_new, setIsnew] = useState(null);
+    // const [special_price, setSpecialPrice] = useState(null);
+    // const [attribute, setAttribute] = useState(null);
     const [productsToFilter, setProductsToFilter] = useState([])
 
-    const getProductsToFilter = async (url)=>{
-      try {
-        const {data} = await axios.get(url)
+    // const getProductsToFilter = async (url)=>{
+    //   try {
+    //     const {data} = await axios.get(url)
 
-          setProductsToFilter(data);
+    //       setProductsToFilter(data);
    
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
 
-    useEffect(() => {
+    // useEffect(() => {
      
-        let apiUrl = "/api/bff-store/products";
-        let queryParams = [];
+    //     let apiUrl = "/api/bff-store/products";
+    //     let queryParams = [];
   
-        const filters = {  size, page, is_new, special_price,attribute };
+    //     const filters = {  size, page, is_new, special_price,attribute };
   
-        for (const filter in filters) {
+    //     for (const filter in filters) {
          
-          if (filters[filter] !== null && filters[filter] !== undefined && filters[filter] !== -1) {
-              queryParams.push(`${filter}=${filters[filter]}`);
-          }
-      }
+    //       if (filters[filter] !== null && filters[filter] !== undefined && filters[filter] !== -1) {
+    //           queryParams.push(`${filter}=${filters[filter]}`);
+    //       }
+    //   }
   
-        if (queryParams.length > 0) {
-          apiUrl += '?' + queryParams.join('&');
-        }
+    //     if (queryParams.length > 0) {
+    //       apiUrl += '?' + queryParams.join('&');
+    //     }
 
-        if(userContext.flagSearch || userContext.category_id){
-          setProductsToFilter(userContext.products);
-          userContext.setFlagSearch(false);
-        }else{
-          getProductsToFilter(apiUrl);
-        }
+    //     if(userContext.flagSearch || userContext.category_id){
+    //       setProductsToFilter(userContext.products);
+    //       userContext.setFlagSearch(false);
+    //     }else{
+    //       getProductsToFilter(apiUrl);
+    //     }
       
      
-    }, [ size, page, is_new, special_price, attribute]); //AQUI IBA userContext.products
+    // }, [ size, page, is_new, special_price, attribute]); //AQUI IBA userContext.products
     
     useEffect(() => {
      setProductsToFilter(userContext.products)
@@ -75,12 +76,11 @@ const LeftSidebar = () => {
         }
     }
     return (
-     
       <section className="section-b-space ratio_asos">
         <div className="collection-wrapper">
           <Container>
             <Row>
-    
+              {!loadingProducts ? (
                 <>
                   <FilterPage
                     sm="3"
@@ -88,28 +88,52 @@ const LeftSidebar = () => {
                     closeSidebar={() => openCloseSidebar(sidebarView)}
                     categories={userContext.categories}
                     attributes={attributes}
-                    products={userContext.products}
-                    is_new={is_new}
-                    setIsnew={setIsnew}
+                    products={products}
+                    is_new={userContext.is_new}
+                    setIsnew={userContext.setIsnew}
                     setCategory={userContext.setCategory}
-                    special_price={special_price}
-                    setSpecialPrice={setSpecialPrice}
-                    attribute={attribute}
-                    setAttribute ={setAttribute}
+                    special_price={userContext.special_price}
+                    setSpecialPrice={userContext.setSpecialPrice}
+                    attribute={userContext.attribute}
+                    setAttribute={userContext.setAttribute}
                   />
                   <ProductList
                     colClass="col-xl-3 col-6 col-grid-box"
                     layoutList=""
                     openSidebar={() => openCloseSidebar(sidebarView)}
-                    products={productsToFilter.filter(item => userContext.cart?.products.indexOf(item) === -1).length==0? productsToFilter :  productsToFilter.filter(item => userContext.cart?.products.indexOf(item) === -1)}
+                    products={
+                      productsToFilter.filter(
+                        (item) =>
+                          userContext.cart?.products.indexOf(item) === -1
+                      ).length == 0
+                        ? productsToFilter
+                        : productsToFilter.filter(
+                            (item) =>
+                              userContext.cart?.products.indexOf(item) === -1
+                          )
+                    }
                   />
                 </>
-           
+              ) : (
+                <div className="row mx-0 margin-default mt-4">
+                <div className="col-xl-3 col-lg-4 col-6">
+                  <PostLoader />
+                </div>
+                <div className="col-xl-3 col-lg-4 col-6">
+                  <PostLoader />
+                </div>
+                <div className="col-xl-3 col-lg-4 col-6">
+                  <PostLoader />
+                </div>
+                <div className="col-xl-3 col-lg-4 col-6">
+                  <PostLoader />
+                </div>
+              </div>
+              )}
             </Row>
           </Container>
         </div>
       </section>
-
     );
 }
 

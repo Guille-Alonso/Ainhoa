@@ -13,7 +13,14 @@ const UserProvider = (props) => {
     const [loading, setLoading] = useState(true);
     const [botonState, setBotonState] = useState(false);
     const [flagTimer, setFlagTimer] = useState(false);
+
     const [category_id, setCategory] = useState(null);
+    const [page, setPage] = useState(1);
+    const [size, setSize] = useState(10);
+    const [is_new, setIsnew] = useState(null);
+    const [special_price, setSpecialPrice] = useState(null);
+    const [attribute, setAttribute] = useState(null);
+
     const [products, setProducts] = useState([])
     const [flagSearch, setFlagSearch] = useState(false);
     const [flagCategory, setFlagCategory] = useState(false);
@@ -23,12 +30,17 @@ const UserProvider = (props) => {
 
     const router = useRouter();
 
+    const [flagEmptyProducts, setFlagEmptyProducts] = useState(false);
+
     const getProductsToFilter = async (url)=>{
       setBotonState(true)
+      setFlagEmptyProducts(false);
       try {
         const {data} = await axios.get(url)
-        if(data.length == 0 && category_id !== null){
-          toast.error("No se encontraron productos para la categoría seleccionada");
+        if(data.length == 0){
+          toast.error("No se encontraron productos..");
+          setFlagEmptyProducts(true);
+          setProducts([]);
         }else{
           setProducts(data);
         }
@@ -37,27 +49,56 @@ const UserProvider = (props) => {
       }
       setBotonState(false)
     }
+    
+
+    // useEffect(() => {
+    //     let apiUrl = "/api/bff-store/products";
+    //     let queryParams = [];
+  
+    //     const filters = { category_id };
+  
+    //     for (const filter in filters) {
+         
+    //       if (filters[filter] !== null && filters[filter] !== undefined && filters[filter] !== -1) {
+    //           queryParams.push(`${filter}=${filters[filter]}`);
+    //       }
+    //   }
+  
+    //     if (queryParams.length > 0) {
+    //       apiUrl += '?' + queryParams.join('&');
+    //     }
+  
+    //  getProductsToFilter(apiUrl)
+      
+    // }, [category_id])
 
     useEffect(() => {
-        let apiUrl = "/api/bff-store/products";
-        let queryParams = [];
-  
-        const filters = { category_id };
-  
-        for (const filter in filters) {
-         
-          if (filters[filter] !== null && filters[filter] !== undefined && filters[filter] !== -1) {
-              queryParams.push(`${filter}=${filters[filter]}`);
-          }
-      }
-  
-        if (queryParams.length > 0) {
-          apiUrl += '?' + queryParams.join('&');
+     
+      let apiUrl = "/api/bff-store/products";
+      let queryParams = [];
+
+      const filters = {  size, page, is_new, special_price,attribute,category_id };
+
+      for (const filter in filters) {
+       
+        if (filters[filter] !== null && filters[filter] !== undefined && filters[filter] !== -1) {
+            queryParams.push(`${filter}=${filters[filter]}`);
         }
-  
-     getProductsToFilter(apiUrl)
-      
-    }, [category_id])
+    }
+
+      if (queryParams.length > 0) {
+        apiUrl += '?' + queryParams.join('&');
+      }
+
+      // if(userContext.flagSearch || userContext.category_id){
+      //   setProductsToFilter(userContext.products);
+      //   userContext.setFlagSearch(false);
+      // }else{
+        getProductsToFilter(apiUrl);
+      // }
+    
+   
+  }, [ size, page, is_new, special_price, attribute, category_id]); 
     
 
     const login = async (values) => {
@@ -378,7 +419,18 @@ const UserProvider = (props) => {
         setFlagSearch,
         category_id,
         flagCategory,
-        setFlagCategory
+        setFlagCategory,
+        page,
+        setPage,
+        size,
+        setSize,
+        is_new,
+        setIsnew,
+        special_price,
+        setSpecialPrice,
+        attribute,
+        setAttribute,
+        flagEmptyProducts
       }}
     >
       {props.children}

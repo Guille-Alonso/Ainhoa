@@ -285,7 +285,11 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
               <div className={`product-wrapper-grid ${layout}`}>
                 <Row>
                   {/* Product Box */}
-                  {products.length == 0  || userContext.botonState? (
+                  {userContext.flagEmptyProducts ? (
+                    <h3>
+                      <strong>No hay productos para su selección..</strong>
+                    </h3>
+                  ) : products.length == 0 || userContext.botonState ? (
                     <div className="row mx-0 margin-default mt-4">
                       <div className="col-xl-3 col-lg-4 col-6">
                         <PostLoader />

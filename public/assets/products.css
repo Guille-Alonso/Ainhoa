@@ -73,3 +73,7 @@
   0% { background-position: 100% 50%; }
   100% { background-position: -100% 50%; }
 }
+
+.colorTextLabelInputCheck{
+  color: #777777;
+}

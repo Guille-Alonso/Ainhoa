@@ -33,6 +33,7 @@ const NavBar = () => {
 
   const closeNav = (cat) => {
     if(cat){
+      userContext.setFlagSearch(true);
       if(cat != "TODOS"){
         const cleanedCatName = cat.replace(/\.{3}/g, ''); // Eliminar puntos suspensivos de 'cat'
         const idCat = userContext.categories.find(c=> c.name.toUpperCase().includes(cleanedCatName.toUpperCase()))?.id;
@@ -43,7 +44,9 @@ const NavBar = () => {
         }
         userContext.setFlagCategory(true);
       }else {
+       
         if(userContext.category_id == null){
+          userContext.setFlagCategory(true);
           userContext.getProductsToFilter("/api/bff-store/products");
         }else{
           userContext.setCategory(null);

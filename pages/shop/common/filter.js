@@ -17,6 +17,7 @@ const FilterPage = ({sm,sidebarView,closeSidebar,categories,attributes,products,
    
     const attributesArray = productAttributes(products)
     const userContext = useContext(UserContext);
+    
     return (
       <>
         <Col

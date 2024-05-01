@@ -37,13 +37,13 @@ const searchProduct = async (e) => {
     if(data.length == 0){
       toast.error("producto no encontrado..");
     }else{
+      userContext.setFlagSearch(true);
       userContext.setProducts(data);
-     
       const cleanedCatName = data[0].category.replace(/\.{3}/g, ''); // Eliminar puntos suspensivos de 'cat'
       const idCat = userContext.categories.find(c=> c.name.toUpperCase().includes(cleanedCatName.toUpperCase()))?.id;
-      userContext.setCategory(idCat)
+      // userContext.setCategory(idCat)
       contextFilter.handleCategories(data[0].category);
-      userContext.setFlagSearch(searchTerm);
+    
       router.push("/shop/left_sidebar");
     }
   } catch (error) {

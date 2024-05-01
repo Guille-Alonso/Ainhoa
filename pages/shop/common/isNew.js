@@ -1,6 +1,7 @@
-import React, { useState ,useContext } from 'react';
+import React, { useState ,useContext, useEffect } from 'react';
 import { Collapse, Input } from 'reactstrap';
 import FilterContext from '../../../helpers/filter/FilterContext';
+import UserContext from '../../../helpers/user/UserContext';
 
 const IsNew = ({is_new, setIsnew}) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +32,19 @@ const IsNew = ({is_new, setIsnew}) => {
       
     }; 
 
+    const userContext = useContext(UserContext);
+
+      const showAllProducts = () =>{
+       userContext.setIsnew(null);
+       setSelectedCheckbox(null);
+      }
+    
+      useEffect(() => {
+      if(context.selectedNewAndUsed.length == 0 && userContext.is_new != null){
+        showAllProducts()
+      }
+      }, [context.selectedNewAndUsed])
+
     return (
       <div className="collection-collapse-block border-0 open">
       <h3 className="collapse-block-title" onClick={toggle}>
@@ -53,7 +67,7 @@ const IsNew = ({is_new, setIsnew}) => {
                       id={isNew}
                     />
 
-                    <label className="custom-control-label" htmlFor={isNew}>
+                    <label className="custom-control-label colorTextLabelInputCheck" htmlFor={isNew}>
                       {isNew}
                     </label>
                   </div>
