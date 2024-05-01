@@ -54,9 +54,9 @@ const Register = () => {
                                 "El nombre no puede tener mas de 35 caracteres",
                             },
                             minLength: {
-                              value: 3,
+                              value: 2,
                               message:
-                                "El nombre no puede tener menos de 3 caracteres",
+                                "El nombre no puede tener menos de 2 caracteres",
                             },
                           })}
                           maxLength={35}
@@ -89,9 +89,9 @@ const Register = () => {
                                 "El apellido no puede tener mas de 35 caracteres",
                             },
                             minLength: {
-                              value: 3,
+                              value: 2,
                               message:
-                                "El apellido no puede tener menos de 3 caracteres",
+                                "El apellido no puede tener menos de 2 caracteres",
                             },
                           })}
                           maxLength={35}

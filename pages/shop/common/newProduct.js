@@ -4,6 +4,8 @@ import { gql } from "@apollo/client";
 import { Media } from "reactstrap";
 import Slider from "react-slick";
 import { CurrencyContext } from "../../../helpers/Currency/CurrencyContext";
+import UserContext from "../../../helpers/user/UserContext";
+import Link from "next/link";
 
 const GET_PRODUCTS = gql`
   query newProducts($type: String!) {
@@ -27,43 +29,44 @@ const NewProduct = () => {
     },
   });
 
+  const userContext = useContext(UserContext);
+
   return (
     // <!-- side-bar single product slider start -->
     <div className="theme-card">
-      <h5 className="title-border">new product</h5>
+      <h5 className="title-border">Nuevos !</h5>
       <Slider className="offer-slider slide-1">
         <div>
-          {!data ||
-          !data.newProducts ||
-          data.newProducts.length === 0 ||
-          loading ? (
+          {!userContext.products ||
+          userContext.products.length === 0 ? (
             "loading"
           ) : (
             <>
-              {data &&
-                data.newProducts.slice(0, 3).map((product, index) => (
+              {userContext.products.length > 0 &&
+                userContext.products.slice(3, 5).map((product, index) => (
                   <div className="media" key={index}>
-                    <a href="">
+                    <Link href={`/product-details/` + product.code}>
                       <Media
                         className="img-fluid blur-up lazyload"
-                        src={product.images[0].src}
-                        alt={product.images[0].alt}
+                        src={product.images[0]?.main}
+                        // alt={product.images[0].alt}
                       />
-                    </a>
+                    </Link>
                     <div className="media-body align-self-center">
-                      <div className="rating">
+                      {/* <div className="rating">
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>
-                      </div>
+                      </div> */}
+                      <h4>{product.name}</h4>
                       <a href={null}>
-                        <h6>{product.title}</h6>
+                        <h6>{product.category.length > 10 ? product.category.slice(0, 10)+"...": product.category}</h6>
                       </a>
                       <h4>
                         {symbol}
-                        {product.price}
+                        {product.special_price != 0 ?product.special_price : product.price }
                       </h4>
                     </div>
                   </div>
@@ -72,37 +75,36 @@ const NewProduct = () => {
           )}
         </div>
         <div>
-          {!data ||
-          !data.newProducts ||
-          data.newProducts.length === 0 ||
-          loading ? (
+          {!userContext.products ||
+          userContext.products.length === 0 ? (
             "loading"
           ) : (
             <>
-              {data &&
-                data.newProducts.slice(4, 7).map((product, index) => (
+              {userContext.products.length > 0 &&
+                userContext.products.slice(0, 2).map((product, index) => (
                   <div className="media" key={index}>
-                    <a href="">
+                    <Link href={`/product-details/` + product.code}>
                       <Media
                         className="img-fluid blur-up lazyload"
-                        src={product.images[0].src}
-                        alt={product.images[0].alt}
+                        src={product.images[0]?.main}
+                        // alt={product.images[0].alt}
                       />
-                    </a>
+                    </Link>
                     <div className="media-body align-self-center">
-                      <div className="rating">
+                      {/* <div className="rating">
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>{" "}
                         <i className="fa fa-star"></i>
-                      </div>
+                      </div> */}
+                       <h4>{product.name}</h4>
                       <a href={null}>
-                        <h6>{product.title}</h6>
+                        <h6>{product.category.length > 10 ? product.category.slice(0, 10)+"...": product.category}</h6>
                       </a>
                       <h4>
                         {symbol}
-                        {product.price}
+                        {product.special_price != 0 ?product.special_price : product.price }
                       </h4>
                     </div>
                   </div>

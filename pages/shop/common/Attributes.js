@@ -12,12 +12,36 @@ const GET_BRAND = gql`
   }
 `;
 
-const Attributes = ({name,values}) => {
+const Attributes = ({ idAttribute, name, values, attribute, setAttribute }) => {
   const context = useContext(FilterContext);
-  const isChecked = context.isChecked;
-  const filterChecked = context.filterChecked;
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedCheckbox, setSelectedCheckbox] = useState(null);
+
   const toggleBrand = () => setIsOpen(!isOpen);
+
+  const handleCheckboxChange = (index, brand) => {
+    
+    // Deseleccionar el checkbox actual si ya estaba seleccionado, de lo contrario, seleccionarlo
+    setSelectedCheckbox(prevIndex => prevIndex === index ? null : index);
+  
+    // Crear el atributo con el formato adecuado o null si se está deseleccionando
+    const cadena = selectedCheckbox === index ? null : `${idAttribute.id},${brand}`;
+    setAttribute(cadena);
+  
+    // Manejar la selección/deselección del checkbox actual en el contexto
+    console.log(selectedCheckbox !== index);
+    context.handleBrands(brand, selectedCheckbox !== index);
+  
+    // Deseleccionar los checkboxes de los otros atributos
+    values.forEach((otherBrand, i) => {
+      if (i !== index && i !== selectedCheckbox && selectedCheckbox !== null) {
+        const otherCadena = `${idAttribute.id},${otherBrand}`;
+        context.handleBrands(otherBrand, false);
+      }
+    });
+    
+  };  
+  
 
   var { loading, data } = useQuery(GET_BRAND, {
     variables: {
@@ -34,7 +58,7 @@ const Attributes = ({name,values}) => {
         <div className="collection-collapse-block-content">
           <div className="collection-brand-filter">
             {!data || !data.getBrands || data.getBrands.length === 0 || loading
-              ? "loading"
+              ? "Loading"
               : values &&
               values.map((brand, index) => (
                   <div
@@ -42,10 +66,8 @@ const Attributes = ({name,values}) => {
                     key={index}
                   >
                     <Input
-                      checked={context.selectedBrands.includes(brand)}
-                      onChange={() => {
-                        context.handleBrands(brand, isChecked);
-                      }}
+                      checked={index === selectedCheckbox}
+                      onChange={() => handleCheckboxChange(index, brand)}
                       type="checkbox"
                       className="custom-control-input"
                       id={brand}
@@ -63,3 +85,4 @@ const Attributes = ({name,values}) => {
 };
 
 export default Attributes;
+

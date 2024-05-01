@@ -8,13 +8,57 @@ import useGet from "../../utils/useGet";
 const UserProvider = (props) => {
     const [user, setUser] = useState(null);
     const [cart, setCart] = useState(null);
+    const [order, setOrder] = useState(null)
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const [botonState, setBotonState] = useState(false);
+    const [flagTimer, setFlagTimer] = useState(false);
+    const [category_id, setCategory] = useState(null);
+    const [products, setProducts] = useState([])
+    const [flagSearch, setFlagSearch] = useState(false);
+    const [flagCategory, setFlagCategory] = useState(false);
 
-    const [products,loadingProducts,getProducts,setProducts] = useGet("/api/bff-store/products?page=1",axios)
+    // const [products,loadingProducts,getProducts,setProducts] = useGet(`/api/bff-store/products?page=1`,axios)
+    const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
 
     const router = useRouter();
+
+    const getProductsToFilter = async (url)=>{
+      setBotonState(true)
+      try {
+        const {data} = await axios.get(url)
+        if(data.length == 0 && category_id !== null){
+          toast.error("No se encontraron productos para la categoría seleccionada");
+        }else{
+          setProducts(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      setBotonState(false)
+    }
+
+    useEffect(() => {
+        let apiUrl = "/api/bff-store/products";
+        let queryParams = [];
+  
+        const filters = { category_id };
+  
+        for (const filter in filters) {
+         
+          if (filters[filter] !== null && filters[filter] !== undefined && filters[filter] !== -1) {
+              queryParams.push(`${filter}=${filters[filter]}`);
+          }
+      }
+  
+        if (queryParams.length > 0) {
+          apiUrl += '?' + queryParams.join('&');
+        }
+  
+     getProductsToFilter(apiUrl)
+      
+    }, [category_id])
+    
 
     const login = async (values) => {
       setBotonState(true);
@@ -22,13 +66,12 @@ const UserProvider = (props) => {
         console.log(values);
         const { data } = await axios.post("/api/bff-store/auth/login", values);
         console.log(data);
+        router.push("/")
         setAuthenticated(!!data.user);
         setUser(data.user);
         setCart(data.cart)
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token;
         localStorage.setItem("token", data.access_token);
-        // localStorage.setItem("user", JSON.stringify(data.user));
-        router.push("/")
 
       } catch (error) {
         toast.error(error.response?.data.message || error.message);
@@ -43,7 +86,7 @@ const UserProvider = (props) => {
         const token = localStorage.getItem("token");
         if (!token) {
           setLoading(false);
-          router.push("/")
+          // router.push("/")
           return setAuthenticated(false);
         }
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
@@ -51,32 +94,45 @@ const UserProvider = (props) => {
        
         setUser(data.user);
         setAuthenticated(true);
-        // setCart(data.cart)
+        setCart(data.cart);
+   
       } catch (error) {
-        logout();
-        setAuthenticated(false);
-        router.push("/page/account/login")
-        toast.error("Error de autenticación. Ingrese nuevamente");
-        console.log(error);
+        if(error.response.status == 401){
+          localStorage.clear();
+          setAuthenticated(false);
+          toast.error("Error de autenticación. Ingrese nuevamente");
+          router.push("/page/account/login")
+        }else{
+          toast.error(error.response?.data.message || error.message);
+        }
       }
       setLoading(false);
     };
 
     const logout = async () =>{
+      try {
+
       if(cart?.products.length > 0){
         
        await removeProductsFromCart()
       }
 
+      router.push("/page/account/login");
       setAuthenticated(false);
       localStorage.clear();
-      router.push("/page/account/login");
-      try {
+      setOrder(null);
+      
         const {data} = await axios.post("/api/bff-store/private/auth/logout")
        
       } catch (error) {
-        localStorage.clear();
-        console.log(error);
+        if(error.response.status == 401){
+          localStorage.clear();
+          setAuthenticated(false);
+          toast.error("Error de autenticación. Ingrese nuevamente");
+          router.push("/page/account/login")
+        }else{
+          toast.error(error.response?.data.message || error.message);
+        }
       }
     }
 
@@ -95,7 +151,22 @@ const UserProvider = (props) => {
       setBotonState(false);
     }
 
+    const contact = async (values)=>{
+      setBotonState(true);
+      try {
+        const {data} = await axios.post("/api/bff-store/contact",values)
+        toast.success("Gracias")
+        router.push("/")
+       } catch (error) {
+        toast.error(error.response?.data.message || error.message);
+        console.log(error.response.status);
+       }
+       setBotonState(false);
+    }
+
     const addProductToCart = async (product,qty) => {
+      setBotonState(true);
+      setOrder(null);
       try {
         if(cart?.products.find(p=>p.code ==product.code)){
           toast.error("El producto ya fue agregado al carrito");
@@ -105,25 +176,75 @@ const UserProvider = (props) => {
           console.log(data);
           toast.success("Producto agregado al carrito");
           if(cart){
+            const cartObj = {...data}
+            delete cartObj.products;
             setCart((prevCart) => ({
+              ...cartObj,
               ...prevCart,
               products: [...prevCart?.products, product]
             }));
           }else{
             setCart(data)
           }
+          setFlagTimer(!flagTimer)
         }
-        getProducts();
+ 
+        getProductsToFilter("/api/bff-store/products");
       } catch (error) {
-        if(error.response.status == 401){
+        console.log(error);
+        if(error?.response?.status == 401){
+          localStorage.clear();
           toast.error("Antes debe ingresar..");
           router.push("/page/account/login")
+        }else{
+          toast.error(error.response?.data.message || error.message);
         }
-        console.log(error);
       }
+      setBotonState(false);
     };
 
+    const comprarAgregarProducto = async (product,qty)=>{
+      setBotonState(true);
+      setOrder(null);
+      try {
+        if(cart?.products.find(p=>p.code ==product.code)){
+          router.push(`/page/account/checkout`);
+        }else{
+          const productToAdd = {"product": product.code,"qty":qty}
+          const {data} = await axios.post("/api/bff-store/private/carts/products",productToAdd)
+          console.log(data);
+          toast.info("Ya casi terminas !");
+          if(cart){
+            const cartObj = {...data}
+            delete cartObj.products;
+            setCart((prevCart) => ({
+              ...cartObj,
+              ...prevCart,
+              products: [...prevCart?.products, product]
+            }));
+          }else{
+            setCart(data)
+          }
+          setFlagTimer(!flagTimer)
+          router.push(`/page/account/checkout`);
+        }
+    
+        getProductsToFilter("/api/bff-store/products");
+      } catch (error) {
+        if(error?.response?.status == 401){
+          localStorage.clear();
+          toast.error("Antes debe ingresar..");
+          router.push("/page/account/login")
+        }else{
+          toast.error(error.response?.data.message || error.message);
+        }
+      }
+      setBotonState(false);
+    }
+
     const removeProductFromCart = async (code) => {
+      setBotonState(true);
+      setOrder(null);
       try {
        const {data} = await axios.delete(`/api/bff-store/private/carts/products/${code}`)
         console.log(data);
@@ -132,29 +253,46 @@ const UserProvider = (props) => {
           ...prevCart,
           products: prevCart.products.filter(product => product.code !== code)
         }));
-        getProducts();
+    
+        getProductsToFilter("/api/bff-store/products");
       } catch (error) {
-        toast.error("Algo salió mal..");
+        if(error?.response?.status == 401){
+          console.log(error);
+          localStorage.clear();
+          setAuthenticated(false);
+          toast.error("Antes debe ingresar..");
+          router.push("/page/account/login")
+        }else{
+          toast.error(error.response?.data.message || error.message);
+        }
       }
+      setBotonState(false);
     };
 
     const removeProductsFromCart = async () => {
       try {
+
+        for(const product of cart.products){
+           await axios.delete(`/api/bff-store/private/carts/products/${product.code}`)
+        }
 
         setCart((prevCart) => ({
           ...prevCart,
           products: []
         }));
 
-        for(const product of cart.products){
-           await axios.delete(`/api/bff-store/private/carts/products/${product.code}`)
-        }
-
         toast.error("Su tiempo de compra ha terminado..");
         
-        getProducts();
+        getProductsToFilter("/api/bff-store/products");
       } catch (error) {
-        toast.error("Algo salió mal..");
+        if(error?.response?.status == 401){
+          localStorage.clear();
+          setAuthenticated(false);
+          toast.error("Antes debe ingresar..");
+          router.push("/page/account/login")
+        }else{
+          toast.error(error.response?.data.message || error.message);
+        }
       }
     };
 
@@ -174,16 +312,34 @@ const UserProvider = (props) => {
           address_zipcode: null
         }
         const { data } = await axios.post("/api/bff-store/private/carts/checkout", checkoutObj);
-        console.log(data);
-        toast.success("Gracias por su compra")
-        router.push("/")
+        setOrder(data);
+        toast.success("Gracias por su compra!")
+
       } catch (error) {
-        logout();
-        toast.error(error.response?.data.message || error.message);
-        console.log(error.response.status);
+        if(error?.response?.status == 401){
+          localStorage.clear();
+          setAuthenticated(false);
+          toast.error("Error de autenticación. Ingrese nuevamente");
+          router.push("/page/account/login")
+        }else{
+          toast.error(error.response?.data.message || error.message);
+        }
+       
       }
       setBotonState(false);
     }
+
+    const recoveryPassword = async (values) =>{
+      setBotonState(true);
+      try {
+          const { data } = await axios.post("/api/bff-store/auth/password/reset",values);
+          toast.success("Contraseña modificada con éxito")
+          router.push("/page/account/login")
+      } catch (error) {
+          toast.error(error.message);
+      }
+      setBotonState(false);
+  }
 
   return (
     <UserContext.Provider
@@ -203,11 +359,26 @@ const UserProvider = (props) => {
         register,
         products,
         setProducts,
+        categories,
+        loadingCategories,
         cart,
+        setCart,
+        order,
         addProductToCart,
         removeProductFromCart,
         removeProductsFromCart,
-        checkout
+        checkout,
+        comprarAgregarProducto,
+        flagTimer,
+        recoveryPassword,
+        setCategory,
+        getProductsToFilter,
+        contact,
+        flagSearch,
+        setFlagSearch,
+        category_id,
+        flagCategory,
+        setFlagCategory
       }}
     >
       {props.children}

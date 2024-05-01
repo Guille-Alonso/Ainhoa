@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Col, Media } from 'reactstrap';
 import sideBanner from '../../../public/assets/images/side-banner.png';
 import NewProduct from './newProduct';
@@ -10,10 +10,13 @@ import { productAttributes } from '../../../utils/productAttributes';
 import IsNew from './isNew';
 import Attributes from './Attributes';
 import SpecialPrice from './specialPrice';
+import Subcategory from './subcategory';
+import UserContext from '../../../helpers/user/UserContext';
 
-const FilterPage = ({sm,sidebarView,closeSidebar,categories,attributes,products,is_new,setIsnew,setCategory,special_price,setSpecialPrice}) => {
+const FilterPage = ({sm,sidebarView,closeSidebar,categories,attributes,products,is_new,setIsnew,setCategory,special_price,setSpecialPrice, attribute, setAttribute}) => {
    
     const attributesArray = productAttributes(products)
+    const userContext = useContext(UserContext);
     return (
       <>
         <Col
@@ -33,15 +36,19 @@ const FilterPage = ({sm,sidebarView,closeSidebar,categories,attributes,products,
               </span>
             </div>
 
-            <Category categories={categories} setCategory={setCategory}/>
+            <Category categories={categories} setCategory={setCategory} setFlagCategory = {userContext.setFlagCategory}/>
+            {/* {
+             userContext.flagCategory &&  */}
+            <Subcategory categories={categories} setCategory={setCategory} setFlagCategory = {userContext.setFlagCategory}/>
+            {/* // } */}
 
             {attributesArray?.map((a) => (
-              <Attributes name={a.name} values={a.values} />
+              <Attributes idAttribute={attributes.find(at=>at.name == a.name)} name={a.name} values={a.values} attribute={attribute} setAttribute={setAttribute} />
             ))}
 
             <SpecialPrice special_price={special_price} setSpecialPrice={setSpecialPrice}/>
             <IsNew is_new={is_new} setIsnew={setIsnew}/>
-            <Price />
+            {/* <Price /> */}
           </div>
          
           {/* <NewProduct /> */}

@@ -1,6 +1,5 @@
 export const productAttributes = (products)=>{
   const attributesMap = {};
-
   // Iterar sobre cada producto y sus atributos
   products.forEach(producto => {
     producto.attributes.forEach(({ name, value }) => {
@@ -19,6 +18,5 @@ export const productAttributes = (products)=>{
     name,
     values
   }));
-
   return attributesArray;
 }

@@ -22,7 +22,7 @@ const Checkout = () => {
       // </>
      
         // <CommonLayout parent="home" title="checkout">
-        <PrivateRoute>
+        <PrivateRoute key="checkout">
 
           <CheckoutPage />
         </PrivateRoute>

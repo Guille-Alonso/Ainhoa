@@ -7,6 +7,7 @@ import { CurrencyContext } from "../../../helpers/Currency/CurrencyContext";
 import MasterProductDetail from "./MasterProductDetail";
 import UserContext from "../../../helpers/user/UserContext";
 import { useImageSize } from "../../../utils/useImageSize";
+import PostLoader from "../PostLoader";
 
 const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass, productDetail, addCompare, title }) => {
   // eslint-disable-next-line
@@ -51,6 +52,11 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
   const userContext = useContext(UserContext);
   const imageSize = useImageSize();  
 
+  const agregarProducto = (product)=>{
+    setModal(false);
+    userContext.addProductToCart(product, 1);
+  }
+
   return (
     <div className="product-box product-wrap">
       <div className="img-wrapper">
@@ -58,46 +64,51 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
           {product.new === true ? <span className="lable3">new</span> : ""}
           {product.sale === true ? <span className="lable4">on sale</span> : ""}
         </div>
-        <div className="front" onClick={clickProductDetail}>
-          <Media src={`${product.images[0].main}`} className="img-fluid" alt="" style={imageSize}/>
+        {
+          product.images[0]?.main ?
+        <div className="front" onClick={toggle}>
+          <Media src={`${image ? image : product.images[0]?.main}`} className="img-fluid imageProductCursorPointer" alt=""/>
         </div>
-        {/* {backImage ? (
+        :
+        <PostLoader/>
+        }
+        {backImage ? (
           product.images[1] === "undefined" ? (
             "false"
           ) : (
-            <div className="back" onClick={clickProductDetail}>
-              <Media src={`${image ? image : product.images[1].src}`} className="img-fluid m-auto" alt="" />
+            <div className="back" onClick={toggle}>
+              <Media src={`${image ? image : product.images[1]?.main}`} className="img-fluid m-auto imageProductCursorPointer" alt="" />
             </div>
           )
         ) : (
           ""
-        )} */}
+        )}
 
         <div className={cartClass}>
           {
-            userContext.authenticated &&
+            (userContext.authenticated && !userContext.botonState) && 
           <button title="Add to cart" onClick={addCart}>
             <i className="fa fa-shopping-cart" aria-hidden="true"></i>
           </button>
           }
           {/* DESEOS */}
-          <a href={null} title="Add to Wishlist" >
+          {/* <a href={null} title="Add to Wishlist" >
             <i className="fa fa-heart" aria-hidden="true"></i>
-          </a>
+          </a> */}
           {/* SEARCH */}
-          <a href={null} title="Quick View">
+          <a href={null} title="Quick View" onClick={toggle}>
             <i className="fa fa-search" aria-hidden="true"></i>
           </a>
           {/* RELOAD */}
-          <a href={null} title="Compare" >
+          {/* <a href={null} title="Compare" >
             <i className="fa fa-refresh" aria-hidden="true"></i>
-          </a>
+          </a> */}
           <Modal isOpen={modalCompare} toggle={toggleCompare} size="lg" centered>
             <ModalBody>
               <Row className="compare-modal">
                 <Col lg="12">
                   <div className="media">
-                    <Media src={`${product.variants && image ? image : product.images[0].src}`} alt="" className="img-fluid" />
+                    <Media src={`${product.variants && image ? image : product.images[0]?.main}`} alt="" className="img-fluid" />
                     <div className="media-body align-self-center text-center">
                       <h5>
                         <i className="fa fa-check"></i>Item <span>{product.title} </span>
@@ -120,9 +131,9 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
         {product.images ? (
           <ul className="product-thumb-list">
             {product.images.map((img, i) => (
-              <li className={`grid_thumb_img ${img.src === image ? "active" : ""}`} key={i}>
+              <li className={`grid_thumb_img ${img.main === image ? "active" : ""}`} key={i}>
                 <a href={null} title="Add to Wishlist">
-                  {/* <Media src={`${img.src}`} alt="wishlist" onClick={() => onClickHandle(img.src)} /> */}
+                  <Media src={`${img.main}`} alt="wishlist" onClick={() => onClickHandle(img.main)} />
                 </a>
               </li>
             ))}
@@ -137,16 +148,16 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
           <Row>
             <Col lg="6" xs="12">
               <div className="quick-view-img">
-                <Media src={`${product.variants && image ? image : product.images[0].src}`} alt="" className="img-fluid" />
+                <Media src={ image ? image : product.images[0]?.main} alt="" className="img-fluid" />
               </div>
             </Col>
             <Col lg="6" className="rtl-text">
               <div className="product-right">
                 <button type="button" data-dismiss="modal" className="btn-close btn btn-secondary" aria-label="Close" onClick={toggle}></button>
-                <h2> {product.title} </h2>
+                <h2 className="me-3"> {product.name} </h2>
                 <h3>
                   {currency.symbol}
-                  {(product.price * currency.value).toFixed(2)}
+                  {product.special_price != 0 ? product.special_price : product.price}
                 </h3>
                 {product.variants ? (
                   <ul className="color-variant">
@@ -170,8 +181,8 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
                   ""
                 )}
                 <div className="border-product">
-                  <h6 className="product-title">product details</h6>
-                  <p>{product.description}</p>
+                  <h6 className="product-title">Categoría</h6>
+                  <p>{product.category}</p>
                 </div>
                 <div className="product-description border-product">
                   {product.size ? (
@@ -189,17 +200,17 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
                   ) : (
                     ""
                   )}
-                  <h6 className="product-title">quantity</h6>
+                  <h6 className="product-title">Cantidad</h6>
                   <div className="qty-box">
                     <div className="input-group">
                       <span className="input-group-prepend">
-                        <button type="button" className="btn quantity-left-minus" onClick={minusQty} data-type="minus" data-field="">
+                        <button disabled type="button" className="btn quantity-left-minus" onClick={minusQty} data-type="minus" data-field="">
                           <i className="fa fa-angle-left"></i>
                         </button>
                       </span>
-                      <input type="text" name="quantity" value={quantity} onChange={changeQty} className="form-control input-number" />
+                      <input disabled type="text" name="quantity" value={quantity} onChange={changeQty} className="form-control input-number" />
                       <span className="input-group-prepend">
-                        <button type="button" className="btn quantity-right-plus" onClick={() => plusQty(product)} data-type="plus" data-field="">
+                        <button disabled type="button" className="btn quantity-right-plus" onClick={() => plusQty(product)} data-type="plus" data-field="">
                           <i className="fa fa-angle-right"></i>
                         </button>
                       </span>
@@ -207,11 +218,11 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
                   </div>
                 </div>
                 <div className="product-buttons">
-                  <button className="btn btn-solid" onClick={() => addCart(product)}>
-                    add to cart
+                  <button  disabled={userContext.botonState} className="btn btn-solid" onClick={()=>agregarProducto(product)}>
+                    Agregar
                   </button>
                   <button className="btn btn-solid" onClick={clickProductDetail}>
-                    View detail
+                    Ver
                   </button>
                 </div>
               </div>

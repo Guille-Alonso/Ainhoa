@@ -3,6 +3,7 @@ import {
   svgFreeShipping,
   svgservice,
   svgoffer,
+  svgpayment
 } from "../../../services/script";
 import { Container, Row, Col } from "reactstrap";
 import MasterServiceContent from "./MasterServiceConternt";
@@ -10,19 +11,19 @@ import MasterServiceContent from "./MasterServiceConternt";
 const Data = [
   {
     link: svgFreeShipping,
-    title: "free shipping",
-    service: "free shipping world wide",
+    title: "Envíos a Todo el País",
+    service: "",
   },
   {
-    link: svgservice,
-    title: "24 X 7 service",
-    service: "online service for 24 x 7",
+    link: svgpayment,
+    title: "Distintos medios de pago",
+    service: "",
   },
-  {
-    link: svgoffer,
-    title: "festival offer",
-    service: "new online special festival offer",
-  },
+  // {
+  //   link: svgoffer,
+  //   title: "Descuentos",
+  //   service: "",
+  // },
 ];
 
 const ServiceLayout = ({ sectionClass }) => {
@@ -32,7 +33,7 @@ const ServiceLayout = ({ sectionClass }) => {
         <Row>
           {Data.map((data, index) => {
             return (
-              <Col md="4" className="service-block" key={index}>
+              <Col md="6" className="service-block" key={index}>
                 <MasterServiceContent
                   link={data.link}
                   title={data.title}

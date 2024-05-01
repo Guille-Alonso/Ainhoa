@@ -3,8 +3,7 @@ import { Container, Row, Col } from "reactstrap";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import UserContext from "../../../helpers/user/UserContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { BsInstagram } from "react-icons/bs";
 
 const TopBarDark = ({ topClass, fluid }) => {
   // const router = useRouter();
@@ -27,9 +26,9 @@ const TopBarDark = ({ topClass, fluid }) => {
             <div className="header-contact">
               <ul>
                 {/* <li>Teléfono: </li> */}
-                <li>
+                <li className="text-black">
                   {/* <i className="fa fa-phone text-white" aria-hidden="true"></i> */}
-                  <FontAwesomeIcon className="me-2" icon={faInstagram} />
+                  <BsInstagram className="me-2"/>
                   ainhoa_vintage
                 </li>
               </ul>
@@ -46,7 +45,7 @@ const TopBarDark = ({ topClass, fluid }) => {
                   </Link>
                 </li>
               )}
-              <li className="onhover-dropdown mobile-account">
+              <li className="onhover-dropdown mobile-account text-black">
                 <i className="fa fa-user" aria-hidden="true"></i>
                 {userContext.authenticated
                   ? userContext.user.name
@@ -67,9 +66,14 @@ const TopBarDark = ({ topClass, fluid }) => {
                     </li>
                   )}
                   {userContext.authenticated && (
+                    <>
+                    <li>
+                      <Link href={`/page/account/profile`}>Perfil</Link>
+                    </li>
                     <li onClick={() => userContext.logout()}>
                       <a>Cerrar Sesión</a>
                     </li>
+                    </>
                   )}
                 </ul>
               </li>

@@ -8,12 +8,12 @@ import UserContext from '../../helpers/user/UserContext';
 import useGet from '../../utils/useGet';
 import axios from '../../config/axios';
 import PostLoader from '../../components/common/PostLoader';
+import { toast } from 'react-toastify';
 
 const LeftSidebar = () => {
 
     const [sidebarView,setSidebarView] = useState(false)
     const userContext = useContext(UserContext);
-    const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
     const [attributes,loadingAttributes] = useGet("/api/bff-store/attributes",axios)
 
     const [category_id, setCategory] = useState(null);
@@ -21,13 +21,15 @@ const LeftSidebar = () => {
     const [size, setSize] = useState(10);
     const [is_new, setIsnew] = useState(null);
     const [special_price, setSpecialPrice] = useState(null);
+    const [attribute, setAttribute] = useState(null);
     const [productsToFilter, setProductsToFilter] = useState([])
 
     const getProductsToFilter = async (url)=>{
       try {
         const {data} = await axios.get(url)
-        setProductsToFilter(data);
-        console.log(data);
+
+          setProductsToFilter(data);
+   
       } catch (error) {
         console.log(error);
       }
@@ -38,7 +40,7 @@ const LeftSidebar = () => {
         let apiUrl = "/api/bff-store/products";
         let queryParams = [];
   
-        const filters = { category_id, size, page, is_new, special_price };
+        const filters = {  size, page, is_new, special_price,attribute };
   
         for (const filter in filters) {
          
@@ -50,11 +52,20 @@ const LeftSidebar = () => {
         if (queryParams.length > 0) {
           apiUrl += '?' + queryParams.join('&');
         }
-  
-      console.log(apiUrl); 
-     getProductsToFilter(apiUrl)
-    }, [ category_id, size, page, is_new, special_price]); 
+
+        if(userContext.flagSearch || userContext.category_id){
+          setProductsToFilter(userContext.products);
+          userContext.setFlagSearch(false);
+        }else{
+          getProductsToFilter(apiUrl);
+        }
+      
+     
+    }, [ size, page, is_new, special_price, attribute]); //AQUI IBA userContext.products
     
+    useEffect(() => {
+     setProductsToFilter(userContext.products)
+    }, [userContext.products])                  //NUEVO
 
     const openCloseSidebar = () => {
         if(sidebarView){
@@ -69,22 +80,22 @@ const LeftSidebar = () => {
         <div className="collection-wrapper">
           <Container>
             <Row>
-              {!loadingCategories &&
-              !loadingAttributes &&
-              productsToFilter.length > 0 ? (
+    
                 <>
                   <FilterPage
                     sm="3"
                     sidebarView={sidebarView}
                     closeSidebar={() => openCloseSidebar(sidebarView)}
-                    categories={categories}
+                    categories={userContext.categories}
                     attributes={attributes}
                     products={userContext.products}
                     is_new={is_new}
                     setIsnew={setIsnew}
-                    setCategory={setCategory}
+                    setCategory={userContext.setCategory}
                     special_price={special_price}
                     setSpecialPrice={setSpecialPrice}
+                    attribute={attribute}
+                    setAttribute ={setAttribute}
                   />
                   <ProductList
                     colClass="col-xl-3 col-6 col-grid-box"
@@ -93,9 +104,7 @@ const LeftSidebar = () => {
                     products={productsToFilter.filter(item => userContext.cart?.products.indexOf(item) === -1).length==0? productsToFilter :  productsToFilter.filter(item => userContext.cart?.products.indexOf(item) === -1)}
                   />
                 </>
-              ) : (
-                <PostLoader />
-              )}
+           
             </Row>
           </Container>
         </div>

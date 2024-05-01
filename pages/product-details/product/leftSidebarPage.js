@@ -104,48 +104,32 @@ const LeftSidebarPage = ({ pathId,noSidebar }) => {
     }
 }
 
-  const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
-  const [attributes,loadingAttributes] = useGet("/api/bff-store/attributes",axios)
-
   return (
     <section className="">
       <div className="collection-wrapper">
         <Container>
           <Row>
             <Col sm="3" className="collection-filter" id="filter">
-              <div className="container">
-                {/* <Filter /> */}
-                { loadingCategories && loadingAttributes ? (
-                  <FilterPage
-                    sidebarView={sidebarView}
-                    closeSidebar={() => openCloseSidebar(sidebarView)}
-                    categories={categories}
-                    attributes={attributes}
-                    products={userContext.products}
-                  />
-                ) : (
-                  <PostLoader />
-                )}
-              </div>
-              {/* <Service /> */}
+              <Service />
 
-              {/* <NewProduct /> */}
+              <NewProduct />
             </Col>
             <Col lg="9" sm="12" xs="12">
               <Container fluid={true}>
-                <Row>
+                {/* <Row>
                   <Col xl="12" className="filter-col">
                     <div className="filter-main-btn mb-2">
-                    
-                      <span onClick={() => openCloseSidebar(sidebarView)} className="filter-btn btn btn-theme">
-                          <i className="fa fa-filter" aria-hidden="true"></i>{" "}
-                          Filter
+                      <span
+                        onClick={() => openCloseSidebar(sidebarView)}
+                        className="filter-btn btn btn-theme"
+                      >
+                        <i className="fa fa-filter" aria-hidden="true"></i>{" "}
+                        Filter
                       </span>
-                      
                     </div>
                   </Col>
-                </Row>
-                {userContext.products.length == 0 ? (
+                </Row> */}
+                {newProductsArray.length == 0 ? (
                   "loading"
                 ) : (
                   <Row>
@@ -157,11 +141,15 @@ const LeftSidebarPage = ({ pathId,noSidebar }) => {
                           ref={(slider) => setSlider1(slider)}
                           className="product-slick"
                         >
-                          {data.images.map((vari, index) => (
-                            <div key={index}>
-                              <ImageZoom image={vari} />
-                            </div>
-                          ))}
+                          {data.images && data.images.length > 0 ? (
+                            data.images.map((vari, index) => (
+                              <div key={index}>
+                                <ImageZoom image={vari} />
+                              </div>
+                            ))
+                          ) : (
+                            <PostLoader/>
+                          )}
                         </Slider>
                       )}
                       {/* {data.product.variants.length > 1 && (

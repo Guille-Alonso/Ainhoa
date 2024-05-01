@@ -75,8 +75,8 @@ const CartPage = () => {
                               <Media
                                 src={
                                   item.images
-                                    ? item.images[0].main
-                                    : item.images[0].main
+                                    ? item.images[0]?.main
+                                    : item.images[0]?.main
                                 }
                                 alt=""
                               />
@@ -156,9 +156,12 @@ const CartPage = () => {
                             1
                           </td>
                           <td>
+                            {
+                              !userContext.botonState &&
                             <i
                               className="fa fa-times"
                               onClick={() => userContext.removeProductFromCart(item.code)}></i>
+                            }
                           </td>
                           <td>
                             <h2 className="td-color">

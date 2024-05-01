@@ -61,8 +61,11 @@ const HeaderOne = ({
       openmyslide.classList.add("open-side");
     }
   };
+  
+  const [openSearchOverlay, setOpenearchOverlay] = useState(false);
   const openSearch = () => {
-    document.getElementById("search-overlay").style.display = "block";
+    setOpenearchOverlay(true);
+    // document.getElementById("search-overlay").style.display = "block";
   };
 
   // eslint-disable-next-line
@@ -110,14 +113,24 @@ const HeaderOne = ({
                   </div>
                 </div>
                 <div className="menu-right pull-right">
-                  {/*Top Navigation Bar Component*/}
+                
+                  {/* {
+                    !userContext.loadingCategories  ?
                   <NavBar />
+                  :
+                  <>
+                  <div class="skeleton-text d-none d-md-block"></div>
+                  <div className="container d-block d-md-none spinnerNav"></div>
+                  </>
+                  } */}
 
+                  <NavBar />
+                  
                   <div>
                     <div className="icon-nav">
                       <ul>
-                        {/* <li className="onhover-div mobile-search">
-                          <div>
+                        <li className="onhover-div mobile-search">
+                          <div className="mx-sm-3 mx-xl-0 me-xl-3">
                             <Media
                               src={search.src}
                               onClick={openSearch}
@@ -129,7 +142,7 @@ const HeaderOne = ({
                               onClick={openSearch}
                             ></i>
                           </div>
-                        </li> */}
+                        </li>
                         {/* <Currency icon={settings.src} /> */}
 
                         {userContext.authenticated &&
@@ -151,8 +164,10 @@ const HeaderOne = ({
           </Row>
         </Container>
       </header>
-
-      <SearchOverlay />
+      {
+        openSearchOverlay &&
+        <SearchOverlay setOpenearchOverlay={setOpenearchOverlay}/>
+      }
     </div>
   );
 };

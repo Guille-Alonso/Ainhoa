@@ -4,12 +4,27 @@ import UserContext from "../user/UserContext";
 
 
 const TimerProvider = ({ children }) => {
-    const [seconds, setSeconds] = useState(300);
-    const [flag, setFlag] = useState(true)
-    const userContext = useContext(UserContext);
-  
+
+  const [flag, setFlag] = useState(true)
+  const [seconds, setSeconds] = useState(0);
+  const userContext = useContext(UserContext);
+
+    function getClockTime (){
+      const startDate = new Date(userContext.cart?.created_at).getTime();
+      const endDate = new Date(userContext.cart?.due_date).getTime();
+
+      const differenceInSeconds = Math.floor((endDate - startDate) / 1000);
+      return differenceInSeconds;
+    }
+    
     useEffect(() => {
-        if (userContext.cart?.products.length > 0 && flag) {
+        setSeconds(getClockTime());
+     
+    }, [userContext.flagTimer,userContext.user])
+
+    useEffect(() => {
+        if (userContext.cart?.products.length > 0 && flag && seconds != 0) {
+
           const intervalId = setInterval(() => {
             setSeconds((prevSeconds) => prevSeconds - 1);
           }, 1000);
@@ -17,8 +32,8 @@ const TimerProvider = ({ children }) => {
           return () => {
             clearInterval(intervalId);
           };
-        } else {
-          setSeconds(300); // Reiniciar el temporizador a 300 segundos
+        } else  {
+          setSeconds(getClockTime()); // Reiniciar el temporizador
         }
       }, [userContext.cart]);
       
