@@ -56,7 +56,7 @@ const CheckoutPage = () => {
   const userContext = useContext(UserContext);
 
   useEffect(() => {
-  if(userContext.order && userContext.cart.products.length>0){
+  if(userContext.order && userContext.cart.products.length>0){ //revisar segunda condicion if, deberia ser con ORDER
     userContext.setCart((prevCart) => ({
       ...prevCart,
       products: []
@@ -478,7 +478,7 @@ const CheckoutPage = () => {
                         {calculateTotal(userContext.cart.products) !== 0 ? (
                           <div className="text-end">
                             {payment === "cod" ? (
-                              <button type="submit" className="btn-solid btn">
+                              <button disabled={userContext.botonState} type="submit" className="btn-solid btn">
                                 Finalizar
                               </button>
                             ) : (

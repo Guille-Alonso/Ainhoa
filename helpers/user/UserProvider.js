@@ -330,13 +330,13 @@ const UserProvider = (props) => {
         const checkoutObj = {
           cart: cart.code,
           email: values.email,
-          shipping_method: values. shipping_method,
-          address_street: null,
+          shipping_method: values.shipping_method,
+          address_street: values.address,
           address_number: null,
           address_extra: null,
-          address_city: null,
-          address_state: null,
-          address_zipcode: null
+          address_city: values.city,
+          address_state: values.state,
+          address_zipcode: values.pincode
         }
         const { data } = await axios.post("/api/bff-store/private/carts/checkout", checkoutObj);
         setOrder(data);

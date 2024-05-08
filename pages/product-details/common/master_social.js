@@ -19,7 +19,7 @@ const MasterSocial = () => {
         </a>
       </li>
       <li>
-        <a href="https://www.instagram.com" target="_blank">
+        <a href="https://www.instagram.com/ainhoa_vintage" target="_blank">
           <i className="fa fa-instagram"></i>
         </a>
       </li>
