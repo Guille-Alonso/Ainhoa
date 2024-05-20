@@ -9,19 +9,19 @@ const Data = [
   {
     img: "fa-phone",
     // title: "Teléfono",
-    desc1: "+54 9 3816 80-8411",
+    desc1: "+54 9 3813582327",
     // desc2: "+86 163 - 451 - 7894",
   },
   {
     img: "fa-map-marker",
     // title: "Dirección",
-    desc1: "Tucumán, San Miguel de Tucumán",
-    // desc2: "USA 123456",
+    desc1: "Chubut 2.525 Yerba Buena, Tucumán",
+    desc2: "Oficina 1er Piso - 'Ainhoa Vintage'",
   },
   {
     img: "fa-envelope-o",
     // title: "Email",
-    desc1: "Support@Shopcart.com",
+    desc1: "ainhoavintage@gmail.com",
     // desc2: "info@shopcart.com",
   },
   {
@@ -67,7 +67,7 @@ const Contact = () => {
         <Row className="section-b-space">
           <Col lg="7" className="map">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d113927.31383849852!2d-65.30499498608198!3d-26.83268184783857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94223792d6c56903%3A0xf88d5b92b5c56527!2sSan%20Miguel%20de%20Tucum%C3%A1n%2C%20Tucum%C3%A1n!5e0!3m2!1ses-419!2sar!4v1712869631697!5m2!1ses-419!2sar"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.6056647840282!2d-65.3100825!3d-26.820681999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9422431f8da4f2f1%3A0x4023b0d8e6ac1408!2sChubut%202525%2C%20T4107%20Yerba%20Buena%2C%20Tucum%C3%A1n!5e0!3m2!1ses-419!2sar!4v1713466079790!5m2!1ses-419!2sar"
               allowFullScreen
             ></iframe>
           </Col>
@@ -109,9 +109,9 @@ const Contact = () => {
                           "El nombre no puede tener mas de 35 caracteres",
                       },
                       minLength: {
-                        value: 3,
+                        value: 2,
                         message:
-                          "El nombre no puede tener menos de 3 caracteres",
+                          "El nombre no puede tener menos de 2 caracteres",
                       },
                     })}
                     type="text"
@@ -214,7 +214,7 @@ const Contact = () => {
                   )}
                 </Col>
                 <Col md="12">
-                  <Label className="form-label" for="review">
+                  <Label className="form-label descapitalize" for="review">
                     Escriba su mensaje
                   </Label>
                   <textarea

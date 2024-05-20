@@ -61,8 +61,11 @@ const HeaderOne = ({
       openmyslide.classList.add("open-side");
     }
   };
+  
+  const [openSearchOverlay, setOpenearchOverlay] = useState(false);
   const openSearch = () => {
-    document.getElementById("search-overlay").style.display = "block";
+    setOpenearchOverlay(true);
+    // document.getElementById("search-overlay").style.display = "block";
   };
 
   // eslint-disable-next-line
@@ -110,9 +113,19 @@ const HeaderOne = ({
                   </div>
                 </div>
                 <div className="menu-right pull-right">
-                  {/*Top Navigation Bar Component*/}
+                
+                  {/* {
+                    !userContext.loadingCategories  ?
                   <NavBar />
+                  :
+                  <>
+                  <div class="skeleton-text d-none d-md-block"></div>
+                  <div className="container d-block d-md-none spinnerNav"></div>
+                  </>
+                  } */}
 
+                  <NavBar />
+                  
                   <div>
                     <div className="icon-nav">
                       <ul>
@@ -151,8 +164,10 @@ const HeaderOne = ({
           </Row>
         </Container>
       </header>
-
-      <SearchOverlay />
+      {
+        openSearchOverlay &&
+        <SearchOverlay setOpenearchOverlay={setOpenearchOverlay}/>
+      }
     </div>
   );
 };

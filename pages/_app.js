@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ThemeSettings from "../components/customizer/theme-settings";
 import "../public/assets/scss/app.scss";
 import { ToastContainer } from "react-toastify";
@@ -35,6 +35,7 @@ export default function MyApp({ Component, pageProps }) {
       clearTimeout(timer);
     };
   }, []);
+
   return (
     <>
       <ApolloProvider client={apolloClient}>
@@ -65,7 +66,7 @@ export default function MyApp({ Component, pageProps }) {
                     <CartContextProvider>
                       <WishlistContextProvider>
                         <FilterProvider>
-                         <CommonLayout><Component {...pageProps} /></CommonLayout> 
+                            <CommonLayout><Component {...pageProps} /></CommonLayout> 
                         </FilterProvider>
                       </WishlistContextProvider>
                     </CartContextProvider>

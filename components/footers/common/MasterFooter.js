@@ -51,8 +51,8 @@ const MasterFooter = ({
     <div>
       <footer className={footerClass}>
         {newLatter ? (
-          <div className={footerLayOut}>
-            <Container fluid={containerFluid ? containerFluid : ""}>
+          <div className={`hiddenDivFoot ${footerLayOut}`}>
+            {/* <Container fluid={containerFluid ? containerFluid : ""}>
               <section className={footerSection}>
                 <Row>
                   <Col lg="6">
@@ -84,7 +84,7 @@ const MasterFooter = ({
                   </Col>
                 </Row>
               </section>
-            </Container>
+            </Container> */}
           </div>
         ) : (
           ""
@@ -202,10 +202,13 @@ const MasterFooter = ({
                           </>
                         )}
                         <li>
-                          <Link className="text-black" href="/">Quienes somos</Link>
+                          <Link className="text-black" href="/page/about-us">Quienes somos</Link>
                         </li>
                         <li>
-                          <Link className="text-black" href="/">Vendé con nosotros</Link>
+                          <Link className="text-black" href="/page/vendor/become-vendor">Vendé con Ainhoa</Link>
+                        </li>
+                        <li>
+                          <Link className="text-black" href="/page/account/contact">Contacto</Link>
                         </li>
                       </ul>
                     </div>
@@ -276,8 +279,7 @@ const MasterFooter = ({
                     <div className="footer-contant">
                       <ul className="contact-list">
                         <li className="text-black">
-                          <i className="fa fa-map-marker"></i>San Miguel de
-                          Tucumán
+                          <i className="fa fa-map-marker"></i>Chubut 2.525 - Yerba Buena, Tucumán - Oficina 1er Piso - 'Ainhoa Vintage'
                         </li>
                         {/* <li>
                           <i className="fa fa-phone"></i>Call Us: 123-456-7898

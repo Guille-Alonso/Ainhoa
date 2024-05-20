@@ -81,7 +81,10 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
   const selectedColor = filterContext.selectedColor;
   const selectedPrice = filterContext.selectedPrice;
   const selectedCategory = filterContext.state;
+  const selectedCategoryPill = filterContext.selectedCategoryPill;
   const selectedSize = filterContext.selectedSize;
+  const selectedSpecialPrice = filterContext.selectedSpecialPrice;
+  const selectedIsNew = filterContext.selectedNewAndUsed;
   const [sortBy, setSortBy] = useState("AscOrder");
   const [isLoading, setIsLoading] = useState(false);
   const [layout, setLayout] = useState(layoutList);
@@ -148,6 +151,24 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
     filterContext.setSelectedSize(temp);
   };
 
+  const removeSpecialPrice = (val) => {
+    const temp = [...selectedSpecialPrice];
+    temp.splice(selectedSpecialPrice.indexOf(val), 1);
+    filterContext.setSelectedSpecialPrice(temp);
+  };
+
+  const removeIsNew = (val) => {
+    const temp = [...selectedIsNew];
+    temp.splice(selectedIsNew.indexOf(val), 1);
+    filterContext.setSelectedNewAndUsed(temp);
+  };
+
+  const removeCatPill = (val) => {
+    const temp = [...selectedCategoryPill];
+    temp.splice(selectedCategoryPill.indexOf(val), 1);
+    filterContext.setSelectedCategoryPill(temp);
+  };
+
   const removeColor = () => {
     filterContext.setSelectedColor("");
   };
@@ -194,6 +215,43 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
                       </a>
                     </li>
                   ))}
+
+                  {selectedSpecialPrice.map((specialP, i) => (
+                    <li key={i}>
+                      <a href={null} className="filter_tag">
+                        {specialP}
+                        <i
+                          className="fa fa-close"
+                          onClick={() => removeSpecialPrice(specialP)}
+                        ></i>
+                      </a>
+                    </li>
+                  ))}
+
+                  {selectedIsNew.map((isNewOrUsed, i) => (
+                    <li key={i}>
+                      <a href={null} className="filter_tag">
+                        {isNewOrUsed}
+                        <i
+                          className="fa fa-close"
+                          onClick={() => removeIsNew(isNewOrUsed)}
+                        ></i>
+                      </a>
+                    </li>
+                  ))}
+
+                  {selectedCategoryPill.map((cat, i) => (
+                    <li key={i}>
+                      <a href={null} className="filter_tag">
+                        {cat}
+                        <i
+                          className="fa fa-close"
+                          onClick={() => removeCatPill(cat)}
+                        ></i>
+                      </a>
+                    </li>
+                  ))}
+
                   {/* {
                     <li>
                       <a href={null} className="filter_tag">
@@ -215,7 +273,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
                       >
                         <span className="filter-btn btn btn-theme">
                           <i className="fa fa-filter" aria-hidden="true"></i>{" "}
-                          Filter
+                          Filtros
                         </span>
                       </div>
                     </Col>
@@ -223,29 +281,32 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
                 ) : (
                   ""
                 )}
-
               </div>
               <div className={`product-wrapper-grid ${layout}`}>
                 <Row>
                   {/* Product Box */}
-                  {products.length == 0 ?  (
-                      <div className="row mx-0 margin-default mt-4">
-                        <div className="col-xl-3 col-lg-4 col-6">
-                          <PostLoader />
-                        </div>
-                        <div className="col-xl-3 col-lg-4 col-6">
-                          <PostLoader />
-                        </div>
-                        <div className="col-xl-3 col-lg-4 col-6">
-                          <PostLoader />
-                        </div>
-                        <div className="col-xl-3 col-lg-4 col-6">
-                          <PostLoader />
-                        </div>
+                  {userContext.flagEmptyProducts ? (
+                    <h3>
+                      <strong>No hay productos para su selección..</strong>
+                    </h3>
+                  ) : products.length == 0 || userContext.botonState ? (
+                    <div className="row mx-0 margin-default mt-4">
+                      <div className="col-xl-3 col-lg-4 col-6">
+                        <PostLoader />
                       </div>
-                    ) : (
+                      <div className="col-xl-3 col-lg-4 col-6">
+                        <PostLoader />
+                      </div>
+                      <div className="col-xl-3 col-lg-4 col-6">
+                        <PostLoader />
+                      </div>
+                      <div className="col-xl-3 col-lg-4 col-6">
+                        <PostLoader />
+                      </div>
+                    </div>
+                  ) : (
                     products &&
-                      products.map((product, i) => (
+                    products.map((product, i) => (
                       <div className={grid} key={i}>
                         <div className="product">
                           <div>

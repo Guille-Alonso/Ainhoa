@@ -1,9 +1,12 @@
 import React, { useState, useContext } from "react";
 import { Collapse } from "reactstrap";
 import FilterContext from "../../../helpers/filter/FilterContext";
+import { useEffect } from "react";
+import UserContext from "../../../helpers/user/UserContext";
 
-const Category = ({categories,setCategory}) => {
+const Category = ({categories,setCategory,setFlagCategory}) => {
   const context = useContext(FilterContext);
+  const userContext = useContext(UserContext);
   const [isCategoryOpen, setIsCategoryOpen] = useState(true);
   const toggleCategory = () => setIsCategoryOpen(!isCategoryOpen);
   const setSelectedCategory = context.setSelectedCategory;
@@ -15,131 +18,70 @@ const Category = ({categories,setCategory}) => {
 
   const resetCategories = ()=>{
     setIsCategoryOpen(!isCategoryOpen);
-    setCategory(null)
+    // setCategory(null)
+    // context.handleCategories("todas");
   }
+
+  const showAllCategories = () =>{
+    setCategory(null)
+    context.handleCategories("todas");
+    setFlagCategory(false);
+  }
+
+  const pillCategories = (id,cat) =>{
+    userContext.setFlagSearch(false);
+    setFlagCategory(true);
+    if(!context.selectedCategoryPill.includes(cat)){
+      setCategory(id)
+      context.handleCategories(cat.toLowerCase());
+    }
+  }
+
+  useEffect(() => {
+  if(context.selectedCategoryPill.length == 0 && userContext.category_id != null){
+    showAllCategories()
+  }
+  }, [context.selectedCategoryPill])
+  
+
+  const parentSet = new Set();
+
   return (
     <>
       <div className="collection-collapse-block open">
         <h3 className="collapse-block-title" onClick={resetCategories}>
-          Category
+          Categoría
         </h3>
         <Collapse isOpen={isCategoryOpen}>
           <div className="collection-collapse-block-content">
             <div className="collection-brand-filter">
               <ul className="category-list">
-                {categories.map((cat, index) => (
-                  <li key={index}>
-                    <a onClick={()=>setCategory(cat.id)}>
-                     {cat.name}
-                    </a>
-                  </li>
-                ))}
-
-                {/* <li>
-                  <a href={null} onClick={() => updateCategory("fashion")}>
-                    fashion
-                  </a>
-                </li>
+                {/* Agregar la opción "Todas" */}
                 <li>
-                  <a href={null} onClick={() => updateCategory("electronics")}>
-                    electronics
-                  </a>
+                  <a onClick={showAllCategories}>TODAS</a>
                 </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("vegetables")}>
-                    vegetables
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("furniture")}>
-                    furniture
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("jewellery")}>
-                    jewellery
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("beauty")}>
-                    beauty
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("flower")}>
-                    flower
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("tools")}>
-                    tools
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("watch")}>
-                    watch
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("metro")}>
-                    metro
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("shoes")}>
-                    shoes
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("bags")}>
-                    bags
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("kids")}>
-                    kids
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("pets")}>
-                    PETS
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("goggles")}>
-                    goggles
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("game")}>
-                    game
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("gym")}>
-                    gym
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("nursery")}>
-                    nursery
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("videoslider")}>
-                    videoslider
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("marketplace")}>
-                    marketplace
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("marijuana")}>
-                    marijuana
-                  </a>
-                </li> */}
+                {/* Mapear las categorías */}
+                {categories
+                  .filter((cat) => cat.parent !== null)
+                  .map((cat, index) => {
+                    // Verificamos si la categoría ya ha sido mostrada
+                    if (!parentSet.has(cat.parent)) {
+                      // Si no ha sido mostrada, la mostramos y la agregamos al conjunto
+                      parentSet.add(cat.parent);
+                      return (
+                        <li key={index}>
+                          <a onClick={() => pillCategories(cat.id, cat.parent)}>
+                            {cat.parent.length > 18
+                              ? cat.parent.toUpperCase().slice(0, 20) + "..."
+                              : cat.parent.toUpperCase()}
+                          </a>
+                        </li>
+                      );
+                    } else {
+                      // Si ya ha sido mostrada, no la mostramos nuevamente
+                      return null;
+                    }
+                  })}
               </ul>
             </div>
           </div>

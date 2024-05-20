@@ -13,29 +13,52 @@ const UserProvider = (props) => {
     const [loading, setLoading] = useState(true);
     const [botonState, setBotonState] = useState(false);
     const [flagTimer, setFlagTimer] = useState(false);
-    const [category_id, setCategory] = useState(null);
-    const [products, setProducts] = useState([])
 
-    // const [products,loadingProducts,getProducts,setProducts] = useGet(`/api/bff-store/products?page=1`,axios)
+    const [category_id, setCategory] = useState(null);
+    const [page, setPage] = useState(1);
+    const [size, setSize] = useState(10);
+    const [is_new, setIsnew] = useState(null);
+    const [special_price, setSpecialPrice] = useState(null);
+    const [attribute, setAttribute] = useState(null);
+
+    const [products, setProducts] = useState([])
+    const [flagSearch, setFlagSearch] = useState(false); // PARA MANEJAR LAS PETICIONES CON EL BUSCADOR
+    const [flagCategory, setFlagCategory] = useState(false); // PARA MANEJAR LA APERTURA O CIERRE DEL FILTRO DE SUBCATEG.
+
     const [categories,loadingCategories] = useGet("/api/bff-store/categories",axios)
 
     const router = useRouter();
 
+    const [flagEmptyProducts, setFlagEmptyProducts] = useState(false); // PARA MENSAJE DE "No hay productos para su selección.."
+
+    const [flagCatFilter, setflagCatFilter] = useState(true); // PARA DARLE UN SOLO SENTIDO AL FILTRO (PRIMER CATEG. DESP LOS DEMAS)
+
     const getProductsToFilter = async (url)=>{
+      setBotonState(true)
+      setFlagEmptyProducts(false);
       try {
         const {data} = await axios.get(url)
-        setProducts(data);
-        console.log(data);
+        if(data.length == 0){
+          toast.error("No se encontraron productos..");
+          setFlagEmptyProducts(true);
+          setProducts([]);
+        }else{
+          setProducts(data);
+        }
       } catch (error) {
         console.log(error);
       }
+      setflagCatFilter(true);
+      setBotonState(false)
     }
 
+    
     useEffect(() => {
+     
       let apiUrl = "/api/bff-store/products";
       let queryParams = [];
 
-      const filters = { category_id };
+      const filters = {  size, page, is_new, special_price,attribute,category_id };
 
       for (const filter in filters) {
        
@@ -48,11 +71,21 @@ const UserProvider = (props) => {
         apiUrl += '?' + queryParams.join('&');
       }
 
-    console.log(apiUrl); 
-   getProductsToFilter(apiUrl)
-      
-    }, [category_id])
-    
+        getProductsToFilter(apiUrl);
+   
+  }, [ size, page, is_new, special_price, attribute]); 
+
+
+  useEffect(() => {
+    let apiUrl = "/api/bff-store/products";
+    if((special_price != null || is_new != null || attribute != null) || category_id == null){
+      setflagCatFilter(false);
+      getProductsToFilter(apiUrl);
+    }else if(flagSearch == false){
+      getProductsToFilter(`/api/bff-store/products?category_id=${category_id}`);
+    }
+  }, [category_id])
+
 
     const login = async (values) => {
       setBotonState(true);
@@ -297,13 +330,13 @@ const UserProvider = (props) => {
         const checkoutObj = {
           cart: cart.code,
           email: values.email,
-          shipping_method: values. shipping_method,
-          address_street: null,
+          shipping_method: values.shipping_method,
+          address_street: values.address,
           address_number: null,
           address_extra: null,
-          address_city: null,
-          address_state: null,
-          address_zipcode: null
+          address_city: values.city,
+          address_state: values.state,
+          address_zipcode: values.pincode
         }
         const { data } = await axios.post("/api/bff-store/private/carts/checkout", checkoutObj);
         setOrder(data);
@@ -367,7 +400,25 @@ const UserProvider = (props) => {
         recoveryPassword,
         setCategory,
         getProductsToFilter,
-        contact
+        contact,
+        flagSearch,
+        setFlagSearch,
+        category_id,
+        flagCategory,
+        setFlagCategory,
+        page,
+        setPage,
+        size,
+        setSize,
+        is_new,
+        setIsnew,
+        special_price,
+        setSpecialPrice,
+        attribute,
+        setAttribute,
+        flagEmptyProducts,
+        flagCatFilter,
+        setflagCatFilter
       }}
     >
       {props.children}

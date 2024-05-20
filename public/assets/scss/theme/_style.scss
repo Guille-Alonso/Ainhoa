@@ -50,15 +50,15 @@ body {
   font-size: 14px;
   overflow-x: hidden;
   letter-spacing: 0.8px;
-  &.christmas {
-    font-family: $font_2, $font_1;
-    .dark-light {
-      display: none;
-    }
-    section {
-      overflow: hidden;
-    }
-  }
+  // &.christmas {
+  //   font-family: $font_2, $font_1;
+  //   .dark-light {
+  //     display: none;
+  //   }
+  //   section {
+  //     overflow: hidden;
+  //   }
+  // }
 }
 h1 {
   font-size: 60px;
@@ -567,12 +567,16 @@ button {
 }
 .btn-solid {
   padding: 13px 29px;
-  color: $white !important;
+  // color: $white !important;
   letter-spacing: 0.05em;
-  border: 2px solid var(--theme-deafult);
-  border-color: var(--theme-deafult) !important;
-  background-image: -webkit-linear-gradient(30deg, var(--theme-deafult) 50%, transparent 50%);
-  background-image: linear-gradient(30deg, var(--theme-deafult) 50%, transparent 50%);
+  // border: 2px solid var(--theme-deafult);
+  border: 2px solid  #C0BAA4;
+  // border-color: var(--theme-deafult) !important;
+  border-color: #C0BAA4 !important;
+  // background-image: -webkit-linear-gradient(30deg, var(--theme-deafult) 50%, transparent 50%);
+  // background-image: linear-gradient(30deg, var(--theme-deafult) 50%, transparent 50%);
+  background-image: -webkit-linear-gradient(30deg, #C0BAA4 50%, transparent 50%);
+  background-image: linear-gradient(30deg, #C0BAA4 50%, transparent 50%);
   background-size: 540px;
   background-repeat: no-repeat;
   background-position: 0;
@@ -1153,7 +1157,7 @@ header {
 .search-overlay {
   height: 100%;
   width: 100%;
-  display: none;
+  // display: none;
   position: fixed;
   z-index: 999;
   top: 0;
@@ -1767,7 +1771,8 @@ header {
     }
     h4 {
       font-weight: 700;
-      letter-spacing: 0.4em;
+      // letter-spacing: 0.4em;
+      letter-spacing: 0.2em;
       color: $grey;
       margin-bottom: 0;
     }
@@ -7396,7 +7401,8 @@ footer {
           content: "";
           height: 2px;
           width: 0;
-          background-color: var(--theme-deafult);
+          // background-color: var(--theme-deafult);
+          background-color: white;
           transition: 0.5s ease;
         }
       }

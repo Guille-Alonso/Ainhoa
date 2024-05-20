@@ -96,7 +96,7 @@ const TabContent = ({
             </div>
           </Col>
         ) : (
-          <div className="row mx-0 margin-default">
+          <div className="row margin-default mx-md-5 mb-md-3">
             <div className="col-xl-3 col-lg-4 col-6">
               <PostLoader />
             </div>
@@ -128,8 +128,8 @@ const TabContent = ({
             />
           ))
       )}
-      {products.length > 0 && (
-        <div className="d-flex justify-content-center mt-4">
+      {products.length >= 8 && (
+        <div className="d-flex justify-content-center mt-5">
           <Button className="load-more" onClick={() => goToMoreProducts()}>
             ver mas
           </Button>

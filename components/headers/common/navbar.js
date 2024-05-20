@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 // import { MENUITEMS } from "../../constant/menu";
-import { generateMenuItems } from "../../constant/menu";
+import MenuItems, { MENUITEMS, generateMenuItems, useMenuItems } from "../../constant/menu";
 import { Container, Row } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import UserContext from "../../../helpers/user/UserContext";
+import FilterContext from "../../../helpers/filter/FilterContext";
 
 const NavBar = () => {
   const { t } = useTranslation();
@@ -28,17 +29,36 @@ const NavBar = () => {
       document.querySelector("#topHeader").classList.add("zindex-class");
   };
 
+  const contextFilter = useContext(FilterContext);
+
   const closeNav = (cat) => {
     if(cat){
+      userContext.setFlagSearch(false);
       if(cat != "TODOS"){
-        userContext.setCategory(userContext.categories.find(c=> c.name == cat).id)
-      }else userContext.getProductsToFilter("/api/bff-store/products");
+        const cleanedCatName = cat.replace(/\.{3}/g, ''); // Eliminar puntos suspensivos de 'cat'
+        const idCat = userContext.categories.find(c=> c.name.toUpperCase().includes(cleanedCatName.toUpperCase()))?.id;
+        userContext.setCategory(idCat)
+
+        if(!contextFilter.selectedCategoryPill.includes(cat)){
+          contextFilter.handleCategories(cat.toLowerCase());
+        }
+        userContext.setFlagCategory(true);
+      }else {
+       
+        if(userContext.category_id == null){
+          userContext.setFlagCategory(true);
+          userContext.getProductsToFilter("/api/bff-store/products");
+        }else{
+          userContext.setCategory(null);
+        }
+        contextFilter.handleCategories("todas");
+        userContext.setFlagCategory(false);
+      }
     }
     setNavClose({ right: "-410px" });
     if (router.asPath == "/layouts/Gym")
       document.querySelector("#topHeader").classList.remove("zindex-class");
   };
-  // eslint-disable-next-line
 
   const handleMegaSubmenu = (event) => {
     if (event.target.classList.contains("sub-arrow")) return;
@@ -61,22 +81,26 @@ const NavBar = () => {
     }
   };
 
- 
-  const MENUITEMS = generateMenuItems(userContext.categories)
+  const MENUITEMS = useMenuItems(userContext.categories);
+  
   const [mainmenu, setMainMenu] = useState(MENUITEMS);
+
   useEffect(() => {
-    const currentUrl = location.pathname;
-    MENUITEMS.filter((items) => {
-      if (items.path === currentUrl) setNavActive(items);
-      if (!items.children) return false;
-      items.children.filter((subItems) => {
-        if (subItems.path === currentUrl) setNavActive(subItems);
-        if (!subItems.children) return false;
-        subItems.children.filter((subSubItems) => {
-          if (subSubItems.path === currentUrl) setNavActive(subSubItems);
+    if(MENUITEMS.length > 0 && MENUITEMS != "NO"){
+
+      const currentUrl = location.pathname;
+      MENUITEMS.filter((items) => {
+        if (items.path === currentUrl) setNavActive(items);
+        if (!items.children) return false;
+        items.children.filter((subItems) => {
+          if (subItems.path === currentUrl) setNavActive(subItems);
+          if (!subItems.children) return false;
+          subItems.children.filter((subSubItems) => {
+            if (subSubItems.path === currentUrl) setNavActive(subSubItems);
+          });
         });
       });
-    });
+    }
   }, []);
 
   const setNavActive = (item) => {
@@ -99,9 +123,10 @@ const NavBar = () => {
 
   // Click Toggle menu
   const toggletNavActive = (item) => {
+
     if (!item.active) {
-      MENUITEMS.forEach((a) => {
-        if (MENUITEMS.includes(item)) a.active = false;
+      MENUITEMS[2].children.forEach((a) => {
+        if (MENUITEMS[2].children.includes(item)) a.active = false;
         if (!a.children) return false;
         a.children.forEach((b) => {
           if (a.children.includes(item)) {
@@ -119,6 +144,33 @@ const NavBar = () => {
     item.active = !item.active;
     setMainMenu({ mainmenu: MENUITEMS });
   };
+
+  // const toggletNavActive = (item) => {
+  //   console.log(item);
+  //   if (!item.active) {
+  //     MENUITEMS.forEach((a) => {
+  //       if (MENUITEMS.includes(item)) a.active = false;
+  //       if (!a.children) return false;
+  //       a.children.forEach((b) => {
+  //         console.log(a);
+  //         if (a.children.includes(item)) {
+  //           b.active = false;
+  //         }
+  //         if (!b.children) return false;
+  //         b.children.forEach((c) => {
+  //           if (b.children.includes(item)) {
+  //             c.active = false;
+  //           }
+  //         });
+  //       });
+  //     });
+  //   }
+  //   item.active = !item.active;
+  //   console.log(item.active);
+  //   console.log(MENUITEMS);
+  //   setMainMenu({ mainmenu: MENUITEMS });
+  // };
+
 
   const openMblNav = (event) => {
     if (event.target.classList.contains("sub-arrow")) return;
@@ -150,19 +202,19 @@ const NavBar = () => {
                 <i className="fa fa-angle-right ps-2" aria-hidden="true"></i>
               </div>
             </li>
-            {MENUITEMS.map((menuItem, i) => {
+            {MENUITEMS.length > 0 && MENUITEMS != "NO" ? MENUITEMS.map((menuItem, i) => {
               return (
                 <li
                   key={i}
                   className={` ${menuItem.megaMenu ? "mega-menu" : ""}`}>
                   {menuItem.type == "link" ? (
-                    <Link  onClick={closeNav.bind(this,null)} href={menuItem.path} className="nav-link">
+                    <Link  onClick={closeNav.bind(this,null)} href={menuItem.path} className={menuItem.title != "Inicio"? "nav-link": "nav-link navLinkInicio"}>
                       {/* <a > */}
                       {t(menuItem.title)}
                       {/* </a> */}
                     </Link>
                   ) : (
-                    <a className="nav-link" onClick={(e) => openMblNav(e)}>
+                    <a className="nav-link productsMenuItem" onClick={(e) => openMblNav(e)}>
                       {t(menuItem.title)}
                       <span className="sub-arrow"></span>
                     </a>
@@ -175,11 +227,14 @@ const NavBar = () => {
                             key={index}
                             className={`${
                               childrenItem.children ? "sub-menu " : ""
-                            }`}>
+                            }`}
+                          >
+
                             {childrenItem.type === "sub" ? (
                               <a
                                 href={null}
-                                onClick={() => toggletNavActive(childrenItem)}>
+                                onClick={() => toggletNavActive(childrenItem)}
+                              >
                                 {childrenItem.title}
                                 {childrenItem.tag === "new" ? (
                                   <span className="new-tag">new</span>
@@ -191,8 +246,15 @@ const NavBar = () => {
                             ) : (
                               ""
                             )}
+
                             {childrenItem.type === "link" ? (
-                              <Link onClick={closeNav.bind(this,childrenItem.title)} href={`${childrenItem.path}`}>
+                              <Link
+                                onClick={closeNav.bind(
+                                  this,
+                                  childrenItem.title
+                                )}
+                                href={`${childrenItem.path}`}
+                              >
                                 {/* <a> */}
                                 {childrenItem.title}
                                 {childrenItem.tag === "new" ? (
@@ -203,38 +265,50 @@ const NavBar = () => {
                                 {/* </a> */}
                               </Link>
                             ) : (
-                              ""
+                            ""
                             )}
+
                             {childrenItem.children ? (
                               <ul
                                 className={`nav-sub-childmenu ${
-                                  childrenItem.active ? "menu-open " : "active"
-                                }`}>
+                                   childrenItem.active ? "menu-open " : "active"
+                                }`}
+                              >
                                 {childrenItem.children.map(
                                   (childrenSubItem, key) => (
                                     <li key={key}>
+                                
                                       {childrenSubItem.type === "link" ? (
                                         <Link
-                                          href={childrenSubItem.path}
-                                          className="sub-menu-title">
-                                          {/* <a > */}
+                                          onClick={closeNav.bind(
+                                            this,
+                                            childrenSubItem.title
+                                          )}
+                                          // onClick={()=>closeNav(
+                                            
+                                          //   childrenSubItem.title
+                                          // )}
+                                          href={`${childrenSubItem.path}`}
+                                        >
+                                          {/* <a> */}
+                                          
                                           {childrenSubItem.title}
-                                          {childrenSubItem.tag === "new" ? (
+                                          {/* {childrenSubItem.tag === "new" ? (
                                             <span className="new-tag">new</span>
                                           ) : (
                                             ""
-                                          )}
+                                          )} */}
                                           {/* </a> */}
                                         </Link>
                                       ) : (
-                                        ""
+                                        "ee"
                                       )}
                                     </li>
                                   )
                                 )}
                               </ul>
                             ) : (
-                              ""
+                             ""
                             )}
                           </li>
                         );
@@ -328,11 +402,14 @@ const NavBar = () => {
                   )}
                 </li>
               );
-            })}
+            })
+          :
+          <></>}
           </ul>
         </div>
       </div>
     </div>
+       
   );
 };
 

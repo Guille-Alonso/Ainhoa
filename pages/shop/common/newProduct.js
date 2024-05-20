@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client";
 import { Media } from "reactstrap";
@@ -31,11 +31,22 @@ const NewProduct = () => {
 
   const userContext = useContext(UserContext);
 
+  const [title, setTitle] = useState("Nuevos !");
+
+  const handleSlideChange = (index) => {
+    
+    if (index === 0) {
+      setTitle("Nuevos !");
+    } else {
+      setTitle("Usados");
+    }
+  };
+
   return (
     // <!-- side-bar single product slider start -->
     <div className="theme-card">
-      <h5 className="title-border">Nuevos !</h5>
-      <Slider className="offer-slider slide-1">
+      <h5 className="title-border">{title}</h5>
+      <Slider className="offer-slider slide-1" afterChange={handleSlideChange}>
         <div>
           {!userContext.products ||
           userContext.products.length === 0 ? (
@@ -43,8 +54,8 @@ const NewProduct = () => {
           ) : (
             <>
               {userContext.products.length > 0 &&
-                userContext.products.slice(3, 5).map((product, index) => (
-                  <div className="media" key={index}>
+                userContext.products.filter(p=>p.is_new == 1).slice(0, 3).map((product, index) => (
+                  <div className="media mb-1" key={index}>
                     <Link href={`/product-details/` + product.code}>
                       <Media
                         className="img-fluid blur-up lazyload"
@@ -81,8 +92,8 @@ const NewProduct = () => {
           ) : (
             <>
               {userContext.products.length > 0 &&
-                userContext.products.slice(0, 2).map((product, index) => (
-                  <div className="media" key={index}>
+                userContext.products.filter(p=>p.is_new == 0).slice(0, 3).map((product, index) => (
+                  <div className="media mb-1" key={index}>
                     <Link href={`/product-details/` + product.code}>
                       <Media
                         className="img-fluid blur-up lazyload"

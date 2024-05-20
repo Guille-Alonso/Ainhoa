@@ -10,13 +10,13 @@ const MasterBanner = ({ img, title, desc, link, classes, btn, btnClass }) => {
             <Col>
               <div className="slider-contain">
                 <div>
-                  <h4>{title}</h4>
-                  <h1>{desc}</h1>
+                  <h4 className="descapitalize">Bienvenido a la revolución del consumo</h4>
+                  <h1>Compras Inteligentes</h1>
                   <Link
-                    href={link}
+                    href="/shop/left_sidebar"
                     className={`btn ${btnClass ? btnClass : "btn-solid"}`}>
                     {/* <a > */}
-                    {btn ? btn : "Shop Now"} {/* </a> */}
+                    {btn ? btn : "Compra aquí"} {/* </a> */}
                   </Link>
                 </div>
               </div>

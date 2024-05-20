@@ -56,7 +56,7 @@ const CheckoutPage = () => {
   const userContext = useContext(UserContext);
 
   useEffect(() => {
-  if(userContext.order && userContext.cart.products.length>0){
+  if(userContext.order && userContext.cart.products.length>0){ //revisar segunda condicion if, deberia ser con ORDER
     userContext.setCart((prevCart) => ({
       ...prevCart,
       products: []
@@ -94,15 +94,15 @@ const CheckoutPage = () => {
                               "El nombre no puede tener mas de 35 caracteres",
                           },
                           minLength: {
-                            value: 3,
+                            value: 2,
                             message:
-                              "El nombre no puede tener menos de 3 caracteres",
+                              "El nombre no puede tener menos de 2 caracteres",
                           },
                         })}
                         maxLength={35}
                         required
                       />
-                      {errors.name && (
+                      {errors.first_name && (
                         <span className="text-danger">
                           {errors.first_name.message}
                         </span>
@@ -125,9 +125,9 @@ const CheckoutPage = () => {
                               "El apellido no puede tener mas de 35 caracteres",
                           },
                           minLength: {
-                            value: 3,
+                            value: 2,
                             message:
-                              "El apellido no puede tener menos de 3 caracteres",
+                              "El apellido no puede tener menos de 2 caracteres",
                           },
                         })}
                         maxLength={35}
@@ -436,10 +436,11 @@ const CheckoutPage = () => {
                               $ {calculateTotal(userContext.cart.products)}
                             </span>
                           </li>
+                          <small>*Pago al retirar el producto*</small>
                         </ul>
                       </div>
                       <div className="payment-box">
-                        <div className="upper-box">
+                        {/* <div className="upper-box">
                           <div className="payment-options">
                             <ul>
                               <li>
@@ -472,12 +473,12 @@ const CheckoutPage = () => {
                               </li>
                             </ul>
                           </div>
-                        </div>
+                        </div> */}
                         {/* REEMPLAZAR POR EL TOTAL DE MI CARRITO */}
                         {calculateTotal(userContext.cart.products) !== 0 ? (
                           <div className="text-end">
                             {payment === "cod" ? (
-                              <button type="submit" className="btn-solid btn">
+                              <button disabled={userContext.botonState} type="submit" className="btn-solid btn">
                                 Finalizar
                               </button>
                             ) : (
