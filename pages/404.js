@@ -11,7 +11,7 @@ const Page404 = () => {
                         <Col sm="12">
                             <div className="error-section">
                                 <h1>404</h1>
-                                <h2>page not found</h2>
+                                <h2>Recurso no encontrado</h2>
                                 <a href="/" className="btn btn-solid">volver</a>
                             </div>
                         </Col>

@@ -1,5 +1,5 @@
 import React from "react";
-import vendor from "../../../../public/assets/images/about/vendor.jpg";
+import vendor from "../../../../public/assets/img/sell/sell_banner.jpg";
 import { Container, Row, Col, Input, Form } from "reactstrap";
 import {
   svgLowCost,
@@ -7,6 +7,7 @@ import {
   svgPickUp,
   svgApproach,
 } from "../../../../services/script";
+import ServiceLayout from "../../../../components/common/Service/service1";
 
 const FeatureData = [
   {
@@ -127,91 +128,9 @@ const Become = () => {
         </Container>
       </section>
 
-      {/* // <!-- service section start --> */}
-      <Container>
-        <section className="service section-b-space pt-0 ">
-          <Row className="partition4 ">
-            {FeatureData.map((feature, i) => {
-              return (
-                <FeatureComponent
-                  key={i}
-                  img={feature.img}
-                  title={feature.title}
-                  desc={feature.desc}
-                />
-              );
-            })}
-          </Row>
-        </section>
-      </Container>
-      {/* // <!-- service section end --> */}
-
-      {/* <!-- how to start section start --> */}
-      <section className="section-b-space become-vendor">
-        <Container>
-          <h4>doing business on multikart is really easy</h4>
-          <div className="step-bg">
-            <Row>
-              {BannerData.map((banner, i) => {
-                return (
-                  <BannerComponent
-                    key={i}
-                    no={banner.no}
-                    title={banner.title}
-                    desc={banner.desc}
-                  />
-                );
-              })}
-            </Row>
-          </div>
-        </Container>
-      </section>
-      {/* <!-- how to start section end --> */}
-
-      {/* <!-- start selling section start --> */}
-      <section className="start-selling section-b-space">
-        <Container>
-          <Col>
-            <div>
-              <h4>start selling</h4>
-              <p>
-                Multikart marketplace is India’s leading platform for selling
-                online. Be it a manufacturer, vendor or supplier, simply sell
-                your products online on Multikart and become a top ecommerce
-                player with minimum investment. Through a team of experts
-                offering exclusive seller workshops, training, seller support
-                and convenient seller portal, Multikart focuses on educating and
-                empowering sellers across India. Selling on Multikart.com is
-                easy and absolutely free. All you need is to register, list your
-                catalogue and start selling your products.
-              </p>
-              <Form>
-                <Row>
-                  <Col sm="6">
-                    <Input
-                      type="email"
-                      className="form-control"
-                      placeholder="Email ID"
-                    />
-                  </Col>
-                  <Col sm="6">
-                    <Input
-                      type="tel"
-                      pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                      className="form-control"
-                      placeholder="Phone Number"
-                    />
-                  </Col>
-                </Row>
-              </Form>
-              <a href="#" className="btn btn-solid btn-sm">
-                start selling
-              </a>
-            </div>
-          </Col>
-        </Container>
-      </section>
-      {/* <!-- start selling section end --> */}
+      <div className="section-b-space">
+        <ServiceLayout sectionClass={"service border-section small-section"} />
+      </div>
     </>
   );
 };

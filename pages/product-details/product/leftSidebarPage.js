@@ -1,63 +1,18 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import ProductTab from "../common/product-tab";
 import Service from "../common/service";
 import NewProduct from "../../shop/common/newProduct";
 import Slider from "react-slick";
-import { useQuery } from "@apollo/client";
-import { gql } from "@apollo/client";
 import ImageZoom from "../common/image-zoom";
 import DetailsWithPrice from "../common/detail-price";
-import Filter from "../common/filter";
 import { Container, Row, Col, Media } from "reactstrap";
 import UserContext from "../../../helpers/user/UserContext";
 import PostLoader from "../../../components/common/PostLoader";
-import axios from "../../../config/axios";
-import useGet from "../../../utils/useGet";
-import FilterPage from "../../shop/common/filter";
-
-const GET_SINGLE_PRODUCTS = gql`
-  query product($id: Int!) {
-    product(id: $id) {
-      id
-      title
-      description
-      type
-      brand
-      category
-      price
-      new
-      sale
-      discount
-      stock
-      variants {
-        id
-        sku
-        size
-        color
-        image_id
-      }
-      images {
-        alt
-        src
-      }
-    }
-  }
-`;
+import ServiceLayout from "../../../components/common/Service/service1";
 
 const LeftSidebarPage = ({ pathId,noSidebar }) => {
-  // var { loading, data } = useQuery(GET_SINGLE_PRODUCTS, {
-  //   variables: {
-  //     id: parseInt(pathId),
-  //   },
-  // });
   const userContext = useContext(UserContext);
   const newProductsArray = userContext.products.concat(userContext.cart?.products);
   const data = newProductsArray.find(p=>p?.code == pathId)
-  // console.log(userContext.cart.products);
-  // console.log(userContext.products);
-  // const [state, setState] = useState({ nav1: null, nav2: null });
-  // const slider1 = useRef();
-  // const slider2 = useRef();
 
   var products = {
     slidesToShow: 1,
@@ -105,6 +60,7 @@ const LeftSidebarPage = ({ pathId,noSidebar }) => {
 }
 
   return (
+    <>
     <section className="">
       <div className="collection-wrapper">
         <Container>
@@ -116,19 +72,6 @@ const LeftSidebarPage = ({ pathId,noSidebar }) => {
             </Col>
             <Col lg="9" sm="12" xs="12">
               <Container fluid={true}>
-                {/* <Row>
-                  <Col xl="12" className="filter-col">
-                    <div className="filter-main-btn mb-2">
-                      <span
-                        onClick={() => openCloseSidebar(sidebarView)}
-                        className="filter-btn btn btn-theme"
-                      >
-                        <i className="fa fa-filter" aria-hidden="true"></i>{" "}
-                        Filter
-                      </span>
-                    </div>
-                  </Col>
-                </Row> */}
                 {newProductsArray.length == 0 ? (
                   "loading"
                 ) : (
@@ -152,15 +95,7 @@ const LeftSidebarPage = ({ pathId,noSidebar }) => {
                           )}
                         </Slider>
                       )}
-                      {/* {data.product.variants.length > 1 && (
-                        <Slider className="slider-nav" {...sliderNav} asNavFor={nav1} ref={(slider) => setSlider2(slider)}>
-                          {data.product.images.map((item, i) => (
-                            <div key={i}>
-                              <Media src={item.src} key={i} alt={item.alt} className="img-fluid" />
-                            </div>
-                          ))}
-                        </Slider>
-                      )} */}
+                      
                     </Col>
                     <Col lg="6" className="rtl-text product-ps">
                       {data ? (
@@ -181,6 +116,11 @@ const LeftSidebarPage = ({ pathId,noSidebar }) => {
         </Container>
       </div>
     </section>
+
+    <div className="section-b-space mt-4 pt-4">
+      <ServiceLayout sectionClass={"service border-section small-section"} />
+    </div>
+    </>
   );
 };
 

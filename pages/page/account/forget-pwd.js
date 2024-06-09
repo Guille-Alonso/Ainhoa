@@ -15,7 +15,7 @@ const ForgetPwd = () => {
         setFlag(true);
         e.preventDefault();
         try {
-            const { data } = await axios.post("/api/bff-store/auth/password/reset-request", email);
+            await axios.post("/api/bff-store/auth/password/reset-request", email);
             toast.info("Revise su casilla de correo..")
             router.push("/page/account/login")
             setEmail({email:""})

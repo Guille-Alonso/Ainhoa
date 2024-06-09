@@ -5,9 +5,8 @@ import { Media } from "reactstrap";
 import UserContext from "../../../helpers/user/UserContext";
 
 const CartHeader = ({ item, symbol }) => {
-  // const context = useContext(CartContext);
   const userContext = useContext(UserContext);
-  console.log(item);
+  
   return (
     <Fragment>
       <li>

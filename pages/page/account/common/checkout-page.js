@@ -1,15 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Media, Container, Form, Row, Col } from "reactstrap";
+import { Container, Form, Row, Col } from "reactstrap";
 import CartContext from "../../../../helpers/cart";
-import paypal from "../../../../public/assets/images/paypal.png";
-// import { PayPalButton } from "react-paypal-button-v2";
-import { PayPalScriptProvider, BraintreePayPalButtons, PayPalButtons } from "@paypal/react-paypal-js";
 
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { CurrencyContext } from "../../../../helpers/Currency/CurrencyContext";
 import UserContext from "../../../../helpers/user/UserContext";
 import { calculateTotal } from "../../../../utils/calculateTotal";
+import LoaderComponent from "../../../../components/common/Loader";
 
 const CheckoutPage = () => {
   const cartContext = useContext(CartContext);
@@ -26,31 +24,8 @@ const CheckoutPage = () => {
   } = useForm(); // initialise the hook
   const router = useRouter();
 
-  const checkhandle = (value) => {
-    setPayment(value);
-  };
-
-  const onSubmit = (data) => {
-    if (data !== "") {
-      alert("You submitted the form and stuff!");
-      router.push({
-        pathname: "/page/order-success",
-        state: { items: cartItems, orderTotal: cartTotal, symbol: symbol },
-      });
-    } else {
-      errors.showMessages();
-    }
-  };
-
   const handleCheckout = (data) => {
-    
     userContext.checkout(data);
-
-    };
-
-  const setStateFromInput = (event) => {
-    obj[event.target.name] = event.target.value;
-    setObj(obj);
   };
 
   const userContext = useContext(UserContext);
@@ -67,6 +42,7 @@ const CheckoutPage = () => {
 
   return (
     <section className="section-b-space">
+      { userContext.botonState && <LoaderComponent text="Procesando compra, por favor aguarde..." />}
       <Container>
         <div className="checkout-page">
           <div className="checkout-form">
@@ -223,10 +199,6 @@ const CheckoutPage = () => {
                         {...register("country", { required: true })}
                       >
                         <option>Argentina</option>
-                        <option>India</option>
-                        <option>South Africa</option>
-                        <option>United State</option>
-                        <option>Australia</option>
                       </select>
                     </div>
                     <div className="form-group col-md-12 col-sm-6 col-xs-12">
@@ -353,15 +325,6 @@ const CheckoutPage = () => {
                         {errors.pincode && errors.pincode.message}
                       </span>
                     </div>
-                    {/* <div className="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <input
-                        type="checkbox"
-                        name="create_account"
-                        id="account-option"
-                      />
-                      &ensp;{" "}
-                      <label htmlFor="account-option">Create An Account?</label>
-                    </div> */}
                   </div>
                 </Col>
                 <Col lg="6" sm="12" xs="12">
@@ -440,77 +403,12 @@ const CheckoutPage = () => {
                         </ul>
                       </div>
                       <div className="payment-box">
-                        {/* <div className="upper-box">
-                          <div className="payment-options">
-                            <ul>
-                              <li>
-                                <div className="radio-option stripe">
-                                  <input
-                                    type="radio"
-                                    name="payment-group"
-                                    id="payment-2"
-                                    defaultChecked={true}
-                                    onClick={() => checkhandle("cod")}
-                                  />
-                                  <label htmlFor="payment-2">COD</label>
-                                </div>
-                              </li>
-                              <li>
-                                <div className="radio-option paypal">
-                                  <input
-                                    type="radio"
-                                    name="payment-group"
-                                    id="payment-1"
-                                    onClick={() => checkhandle("paypal")}
-                                  />
-                                  <label htmlFor="payment-1">
-                                    PayPal
-                                    <span className="image">
-                                      <Media src={paypal.src} alt="" />
-                                    </span>
-                                  </label>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div> */}
                         {/* REEMPLAZAR POR EL TOTAL DE MI CARRITO */}
                         {calculateTotal(userContext.cart.products) !== 0 ? (
                           <div className="text-end">
-                            {payment === "cod" ? (
-                              <button disabled={userContext.botonState} type="submit" className="btn-solid btn">
-                                Finalizar
-                              </button>
-                            ) : (
-                              <PayPalScriptProvider
-                                options={{ clientId: "test" }}
-                              >
-                                <PayPalButtons
-                                  createOrder={(data, actions) => {
-                                    return actions.order.create({
-                                      purchase_units: [
-                                        {
-                                          amount: {
-                                            value: "1.99",
-                                          },
-                                        },
-                                      ],
-                                    });
-                                  }}
-                                  onApprove={(data, actions) => {
-                                    return actions.order
-                                      .capture()
-                                      .then((details) => {
-                                        const name =
-                                          details.payer.name.given_name;
-                                        alert(
-                                          `Transaction completed by ${name}`
-                                        );
-                                      });
-                                  }}
-                                />
-                              </PayPalScriptProvider>
-                            )}
+                            <button disabled={userContext.botonState} type="submit" className="btn-solid btn">
+                              Finalizar
+                            </button>
                           </div>
                         ) : (
                           ""

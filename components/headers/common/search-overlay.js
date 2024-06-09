@@ -47,11 +47,9 @@ const searchProduct = async (e) => {
       router.push("/shop/left_sidebar");
     }
   } catch (error) {
-    console.log(error);
     toast.error(error.response?.data.message || error.message);
   }
   setOpenearchOverlay(false);
-  // closeSearch();
 };
 
   return (
@@ -70,7 +68,7 @@ const searchProduct = async (e) => {
                       type="text"
                       className="form-control"
                       id="exampleInputPassword1"
-                      placeholder="Busque un producto"
+                      placeholder="Escribí lo que querés buscar, y luego presiona la tecla ENTER"
                       required
                       maxLength={50}
                       name="searchInput"

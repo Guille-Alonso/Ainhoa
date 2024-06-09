@@ -5,7 +5,6 @@ export function obtenerPrecioExtremo(productos) {
 
   // Iterar sobre los productos para encontrar los precios extremos
   productos?.forEach(producto => {
-    console.log(producto);
     // Obtener el precio a considerar (special_price si está presente, de lo contrario, price)
     const precio = producto.special_price !== null ? parseFloat(producto.special_price) : parseFloat(producto.price);
     

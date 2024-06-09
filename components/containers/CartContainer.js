@@ -51,7 +51,7 @@ const CartContainer = ({ icon }) => {
                   </Link>
                   <Link href={`/page/account/checkout`} className="checkout">
                     {/* <a > */}
-                    checkout
+                    Finalizar
                     {/* </a> */}
                   </Link>
                 </div>

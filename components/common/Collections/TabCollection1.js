@@ -66,7 +66,7 @@ const TabContent = ({
   const router = useRouter();
 
   const goToMoreProducts = ()=>{
-    router.push("/shop/left_sidebar")
+    router.push("/shop/products")
   }
 
   return (
@@ -154,12 +154,6 @@ const SpecialProducts = ({
   products
 }) => {
   const [activeTab, setActiveTab] = useState(type);
-  const context = useContext(CartContext);
-  const wishListContext = useContext(WishlistContext);
-  const compareContext = useContext(CompareContext);
-  const curContext = useContext(CurrencyContext);
-  const currency = curContext.state;
-  const quantity = context.quantity;
 
   var { loading, data } = useQuery(GET_PRODUCTS, {
     variables: {
@@ -173,44 +167,8 @@ const SpecialProducts = ({
     <div>
       <section className={designClass}>
         <Container fluid={fluid}>
-          {/* {noTitle ? (
-            ""
-          ) : (
-            <div className={title}>
-              <h4>Productos exclusivos</h4>
-              <h2 className={inner}>Productos Exclusivos</h2>
-              {line ? (
-                <div className="line"></div>
-              ) : hrClass ? (
-                <hr role="tournament6"></hr>
-              ) : (
-                ""
-              )}
-            </div>
-          )} */}
 
           <Tabs className="theme-tab">
-            {/* <TabList className="tabs tab-title">
-              <Tab
-                className={activeTab == type ? "active" : ""}
-                onClick={() => setActiveTab(type)}
-              >
-                NEW ARRIVAL
-              </Tab>
-              <Tab
-                className={activeTab == "furniture" ? "active" : ""}
-                onClick={() => setActiveTab("furniture")}
-              >
-                FEATURED{" "}
-              </Tab>
-              <Tab
-                className={activeTab == "furniture" ? "active" : ""}
-                onClick={() => setActiveTab("furniture")}
-              >
-                SPECIAL
-              </Tab>
-            </TabList> */}
-
             <TabPanel>
               <TabContent
                 data={data}
@@ -222,26 +180,6 @@ const SpecialProducts = ({
                 products={products}
               />
             </TabPanel>
-            {/* <TabPanel>
-              <TabContent
-                data={data}
-                loading={loading}
-                startIndex={0}
-                endIndex={8}
-                cartClass={cartClass}
-                backImage={backImage}
-              />
-            </TabPanel>
-            <TabPanel>
-              <TabContent
-                data={data}
-                loading={loading}
-                startIndex={0}
-                endIndex={8}
-                cartClass={cartClass}
-                backImage={backImage}
-              />
-            </TabPanel> */}
           </Tabs>
         </Container>
       </section>

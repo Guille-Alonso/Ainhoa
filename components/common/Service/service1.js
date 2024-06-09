@@ -19,11 +19,6 @@ const Data = [
     title: "Distintos medios de pago",
     service: "",
   },
-  // {
-  //   link: svgoffer,
-  //   title: "Descuentos",
-  //   service: "",
-  // },
 ];
 
 const ServiceLayout = ({ sectionClass }) => {

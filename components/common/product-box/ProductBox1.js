@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
-import Link from "next/link";
+import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
-import { Row, Col, Media, Modal, ModalBody, ModalHeader } from "reactstrap";
+import { Row, Col, Media, Modal, ModalBody } from "reactstrap";
 import CartContext from "../../../helpers/cart";
 import { CurrencyContext } from "../../../helpers/Currency/CurrencyContext";
 import MasterProductDetail from "./MasterProductDetail";
 import UserContext from "../../../helpers/user/UserContext";
 import { useImageSize } from "../../../utils/useImageSize";
 import PostLoader from "../PostLoader";
+import defaultProductImage from '../../../public/assets/img/product/IMG0_default.jpg';
 
 const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass, productDetail, addCompare, title }) => {
   // eslint-disable-next-line
@@ -65,19 +65,16 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
           {product.sale === true ? <span className="lable4">on sale</span> : ""}
         </div>
         {
-          product.images[0]?.main ?
-        <div className="front" onClick={toggle}>
-          <Media src={`${image ? image : product.images[0]?.main}`} className="img-fluid imageProductCursorPointer" alt=""/>
-        </div>
-        :
-        <PostLoader/>
+          <div className="front" onClick={toggle}>
+            <Media src={`${product.images.length > 0 ? product.images[0]?.main : defaultProductImage.src }`} className="img-fluid imageProductCursorPointer" alt=""/>
+          </div>
         }
         {backImage ? (
           product.images[1] === "undefined" ? (
             "false"
           ) : (
             <div className="back" onClick={toggle}>
-              <Media src={`${image ? image : product.images[1]?.main}`} className="img-fluid m-auto imageProductCursorPointer" alt="" />
+              <Media src={`${product.images.length > 0 ? product.images[0]?.main : defaultProductImage.src }`} className="img-fluid m-auto imageProductCursorPointer" alt="" />
             </div>
           )
         ) : (
@@ -87,41 +84,19 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
         <div className={cartClass}>
           {
             (userContext.authenticated && !userContext.botonState) && 
-          <button title="Add to cart" onClick={addCart}>
-            <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-          </button>
+            <button title="Agregar al carrito" onClick={addCart}>
+              <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+            </button>
           }
-          {/* DESEOS */}
-          {/* <a href={null} title="Add to Wishlist" >
-            <i className="fa fa-heart" aria-hidden="true"></i>
-          </a> */}
-          {/* SEARCH */}
-          <a href={null} title="Quick View" onClick={toggle}>
+          <a href={null} title="Vista rápida" onClick={toggle} className="imageProductCursorPointer">
             <i className="fa fa-search" aria-hidden="true"></i>
           </a>
-          {/* RELOAD */}
-          {/* <a href={null} title="Compare" >
-            <i className="fa fa-refresh" aria-hidden="true"></i>
-          </a> */}
           <Modal isOpen={modalCompare} toggle={toggleCompare} size="lg" centered>
             <ModalBody>
               <Row className="compare-modal">
                 <Col lg="12">
                   <div className="media">
                     <Media src={`${product.variants && image ? image : product.images[0]?.main}`} alt="" className="img-fluid" />
-                    <div className="media-body align-self-center text-center">
-                      <h5>
-                        <i className="fa fa-check"></i>Item <span>{product.title} </span>
-                        <span> successfully added to your Compare list</span>
-                      </h5>
-                      <div className="buttons d-flex justify-content-center">
-                        <Link href="/page/compare">
-                          <button className="btn-sm btn-solid" onClick={addCompare}>
-                            View Compare list
-                          </button>
-                        </Link>
-                      </div>
-                    </div>
                   </div>
                 </Col>
               </Row>
@@ -148,7 +123,7 @@ const ProductItem = ({ product, addCart, backImage, des, addWishlist, cartClass,
           <Row>
             <Col lg="6" xs="12">
               <div className="quick-view-img">
-                <Media src={ image ? image : product.images[0]?.main} alt="" className="img-fluid" />
+                <Media src={`${product.images.length > 0 ? product.images[0]?.main : defaultProductImage.src }`} alt="" className="img-fluid" />
               </div>
             </Col>
             <Col lg="6" className="rtl-text">

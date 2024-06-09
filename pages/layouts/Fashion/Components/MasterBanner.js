@@ -13,7 +13,7 @@ const MasterBanner = ({ img, title, desc, link, classes, btn, btnClass }) => {
                   <h4 className="descapitalize">Bienvenido a la revolución del consumo</h4>
                   <h1>Compras Inteligentes</h1>
                   <Link
-                    href="/shop/left_sidebar"
+                    href="/shop/products"
                     className={`btn ${btnClass ? btnClass : "btn-solid"}`}>
                     {/* <a > */}
                     {btn ? btn : "Compra aquí"} {/* </a> */}

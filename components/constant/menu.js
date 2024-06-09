@@ -19,7 +19,7 @@ import {  useEffect ,useContext, useState} from 'react';
       // megaMenu: true,
       // megaMenuType: "small",
       children: [
-        { path: "/shop/left_sidebar", title: "TODOS", type: "link" },
+        { path: "/shop/products", title: "TODOS", type: "link" },
         ...filteredCategories
           .filter((category, index, self) => {
             // Filtrar las categorías que tienen el mismo parent y solo mantener una de ellas
@@ -32,7 +32,7 @@ import {  useEffect ,useContext, useState} from 'react';
             children: filteredCategories
               .filter(child => child.parent === category.parent)
               .map(child => ({
-                path: "/shop/left_sidebar", // Ajusta el camino según sea necesario
+                path: "/shop/products", // Ajusta el camino según sea necesario
                 title: child.name.length > 18 ? child.name.toUpperCase().slice(0, 14)+"...":child.name.toUpperCase(),
                 type: "link"
               }))
@@ -41,7 +41,7 @@ import {  useEffect ,useContext, useState} from 'react';
           .filter(category => category.parent === null)
           .map(category => ({
             // Si el atributo "parent" es null, asignar el tipo "link"
-            path: "/shop/left_sidebar",
+            path: "/shop/products",
             title: category.name.length > 18 ? category.name.toUpperCase().slice(0, 16) + "..." : category.name.toUpperCase(),
             type: "link"
           }))

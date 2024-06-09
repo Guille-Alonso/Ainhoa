@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
-import CommonLayout from "../../../components/shop/common-layout";
-import { Container, Row, Col, Media, Form, Label, Input } from "reactstrap";
+import React, { useContext, useState } from "react";
+import { Container, Row, Col, Label } from "reactstrap";
 import { useForm } from "react-hook-form";
-import axios from "../../../config/axios";
 import UserContext from "../../../helpers/user/UserContext";
+import LoaderComponent from "../../../components/common/Loader";
 
 const Data = [
   {
@@ -46,7 +45,6 @@ const ContactDetail = ({ img, title, desc1, desc2 }) => {
   );
 };
 const Contact = () => {
-
   const userContext = useContext(UserContext);
 
   const {
@@ -63,6 +61,7 @@ const Contact = () => {
   return (
     // <CommonLayout parent="home" title="Contact">
     <section className="contact-page section-b-space">
+      { userContext.botonState && <LoaderComponent text="Enviando consulta, por favor aguarde..." />}
       <Container>
         <Row className="section-b-space">
           <Col lg="7" className="map">
@@ -126,16 +125,6 @@ const Contact = () => {
                     </div>
                   )}
                 </Col>
-                {/* <Col md="6">
-                    <Label className="form-label" for="email">Apellido</Label>
-                    <Input
-                      type="text"
-                      className="form-control"
-                      id="last-name"
-                     
-                      required=""
-                    />
-                  </Col> */}
                 <Col md="6">
                   <Label className="form-label" for="email">
                     Email

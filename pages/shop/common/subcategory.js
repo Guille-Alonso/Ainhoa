@@ -42,7 +42,7 @@ const Subcategory = ({categories,setCategory,setFlagCategory}) => {
     }, [context.selectedCategoryPill])
 
   const parentCategories = new Set(categories.filter(category => category.parent != null).map(category => category.parent));
-  console.log(parentCategories);
+  
   // Paso 2: Filtrar las categorías
   const filteredCategories = categories.filter(category => {
     // Si la categoría es un padre o su nombre no está en el conjunto de categorías padres, la incluimos

@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import CommonLayout from '../../components/shop/common-layout';
-// import { withApollo } from '../../helpers/apollo/apollo';
 import ProductList from './common/productList';
 import { Container, Row} from 'reactstrap';
 import FilterPage from './common/filter';
@@ -8,7 +6,7 @@ import UserContext from '../../helpers/user/UserContext';
 import useGet from '../../utils/useGet';
 import axios from '../../config/axios';
 import PostLoader from '../../components/common/PostLoader';
-import { toast } from 'react-toastify';
+import ServiceLayout from '../../components/common/Service/service1';
 
 const LeftSidebar = () => {
 
@@ -31,7 +29,8 @@ const LeftSidebar = () => {
         }
     }
     return (
-      <section className="section-b-space ratio_asos">
+      <>
+        <section className="section-b-space ratio_asos">
         <div className="collection-wrapper">
           <Container>
             <Row>
@@ -89,6 +88,11 @@ const LeftSidebar = () => {
           </Container>
         </div>
       </section>
+
+      <div className="section-b-space mt-4 pt-4">
+        <ServiceLayout sectionClass={"service border-section small-section"} />
+      </div>
+      </>
     );
 }
 

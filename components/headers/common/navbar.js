@@ -145,33 +145,6 @@ const NavBar = () => {
     setMainMenu({ mainmenu: MENUITEMS });
   };
 
-  // const toggletNavActive = (item) => {
-  //   console.log(item);
-  //   if (!item.active) {
-  //     MENUITEMS.forEach((a) => {
-  //       if (MENUITEMS.includes(item)) a.active = false;
-  //       if (!a.children) return false;
-  //       a.children.forEach((b) => {
-  //         console.log(a);
-  //         if (a.children.includes(item)) {
-  //           b.active = false;
-  //         }
-  //         if (!b.children) return false;
-  //         b.children.forEach((c) => {
-  //           if (b.children.includes(item)) {
-  //             c.active = false;
-  //           }
-  //         });
-  //       });
-  //     });
-  //   }
-  //   item.active = !item.active;
-  //   console.log(item.active);
-  //   console.log(MENUITEMS);
-  //   setMainMenu({ mainmenu: MENUITEMS });
-  // };
-
-
   const openMblNav = (event) => {
     if (event.target.classList.contains("sub-arrow")) return;
 

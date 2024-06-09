@@ -1,11 +1,8 @@
 import React, { useState, useContext } from "react";
-import Link from "next/link";
 import sizeChart from "../../../public/assets/images/size-chart.jpg";
 import { Modal, ModalBody, ModalHeader, Media, Input } from "reactstrap";
 import { CurrencyContext } from "../../../helpers/Currency/CurrencyContext";
 import CartContext from "../../../helpers/cart";
-import CountdownComponent from "../../../components/common/widgets/countdownComponent";
-import MasterSocial from "./master_social";
 import UserContext from "../../../helpers/user/UserContext";
 
 const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
@@ -15,16 +12,11 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
   const toggle = () => setModal(!modal);
   const product = item;
   const context = useContext(CartContext);
-  const stock = context.stock;
   const plusQty = context.plusQty;
   const minusQty = context.minusQty;
   const quantity = context.quantity;
   const uniqueColor = [];
   const uniqueSize = [];
-
-  const changeQty = (e) => {
-    setQuantity(parseInt(e.target.value));
-  };
 
   const userContext = useContext(UserContext);
 
@@ -38,20 +30,13 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
               {symbol}
               {product.special_price != 0 ? product.price : ""}
             </del>
-            <span>% off</span>
+            <span>% OFF</span>
           </h4>
         )}
         <h3>
           {symbol}
-          {/* {product.price - (product.price * product.discount) / 100} */}
           {product.special_price != 0 && product.special_price ? product.special_price : product.price}
         </h3>
-        {/* {product.variants.map((vari) => {
-          var findItem = uniqueColor.find((x) => x.color === vari.color);
-          if (!findItem) uniqueColor.push(vari);
-          var findItemSize = uniqueSize.find((x) => x === vari.size);
-          if (!findItemSize) uniqueSize.push(vari.size);
-        })} */}
         {changeColorVar === undefined ? (
           <>
             {uniqueColor.some((vari) => vari.color) ? (
@@ -156,7 +141,6 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
                 type="text"
                 name="quantity"
                 value={quantity}
-                onChange={changeQty}
                 className="form-control input-number"
               />
               <span className="input-group-prepend">
@@ -199,19 +183,15 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
           <p>{product.description}</p>
         </div>
         <div className="border-product">
-          <h6 className="product-title">Descripción: ...</h6>
-          <p>{product.description}</p>
+          {
+            product.description ? (
+              <>
+              <h6 className="product-title">Descripción:</h6>
+              <p>{product.description}</p>
+              </>
+            ) : null
+          }
         </div>
-        <div className="border-product">
-          <h6 className="product-title">Compartir con</h6>
-          <div className="product-icon">
-            <MasterSocial />
-          </div>
-        </div>
-        {/* <div className="border-product">
-          <h6 className="product-title">Time Reminder</h6>
-          <CountdownComponent />
-        </div> */}
       </div>
     </>
   );

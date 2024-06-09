@@ -16,8 +16,6 @@ const SettingProvider = (props) => {
     }
   };
 
-  console.log("layoutState",layoutState)
-
   const layoutColorFun = (item) => {
     document.documentElement.style.setProperty("--theme-deafult", item.target.value);
     config.color = item.target.value;

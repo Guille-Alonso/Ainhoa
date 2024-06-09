@@ -46,7 +46,7 @@ const UserProvider = (props) => {
           setProducts(data);
         }
       } catch (error) {
-        console.log(error);
+        //TODO capture error
       }
       setflagCatFilter(true);
       setBotonState(false)
@@ -90,9 +90,7 @@ const UserProvider = (props) => {
     const login = async (values) => {
       setBotonState(true);
       try {
-        console.log(values);
         const { data } = await axios.post("/api/bff-store/auth/login", values);
-        console.log(data);
         router.push("/")
         setAuthenticated(!!data.user);
         setUser(data.user);
@@ -102,7 +100,6 @@ const UserProvider = (props) => {
 
       } catch (error) {
         toast.error(error.response?.data.message || error.message);
-        console.log(error.response.status);
       }
       setBotonState(false);
     };
@@ -164,16 +161,13 @@ const UserProvider = (props) => {
     }
 
     const register = async (values) =>{
-      console.log(values);
       setBotonState(true);
       try {
         const { data } = await axios.post("/api/bff-store/customers/register", values);
-        console.log(data);
         toast.success("Usuario registrado !")
         router.push("/page/account/login")
       } catch (error) {
         toast.error(error.response?.data.message || error.message);
-        console.log(error.response.status);
       }
       setBotonState(false);
     }
@@ -181,12 +175,11 @@ const UserProvider = (props) => {
     const contact = async (values)=>{
       setBotonState(true);
       try {
-        const {data} = await axios.post("/api/bff-store/contact",values)
-        toast.success("Gracias")
+        await axios.post("/api/bff-store/contact",values)
+        toast.success("Gracias por contactarnos!!!")
         router.push("/")
        } catch (error) {
         toast.error(error.response?.data.message || error.message);
-        console.log(error.response.status);
        }
        setBotonState(false);
     }
@@ -200,7 +193,6 @@ const UserProvider = (props) => {
         }else{
           const productToAdd = {"product": product.code,"qty":qty}
           const {data} = await axios.post("/api/bff-store/private/carts/products",productToAdd)
-          console.log(data);
           toast.success("Producto agregado al carrito");
           if(cart){
             const cartObj = {...data}
@@ -218,7 +210,6 @@ const UserProvider = (props) => {
  
         getProductsToFilter("/api/bff-store/products");
       } catch (error) {
-        console.log(error);
         if(error?.response?.status == 401){
           localStorage.clear();
           toast.error("Antes debe ingresar..");
@@ -239,7 +230,6 @@ const UserProvider = (props) => {
         }else{
           const productToAdd = {"product": product.code,"qty":qty}
           const {data} = await axios.post("/api/bff-store/private/carts/products",productToAdd)
-          console.log(data);
           toast.info("Ya casi terminas !");
           if(cart){
             const cartObj = {...data}
@@ -273,8 +263,7 @@ const UserProvider = (props) => {
       setBotonState(true);
       setOrder(null);
       try {
-       const {data} = await axios.delete(`/api/bff-store/private/carts/products/${code}`)
-        console.log(data);
+        const {data} = await axios.delete(`/api/bff-store/private/carts/products/${code}`)
         toast.error("Producto quitado del carrito");
         setCart((prevCart) => ({
           ...prevCart,
@@ -284,7 +273,6 @@ const UserProvider = (props) => {
         getProductsToFilter("/api/bff-store/products");
       } catch (error) {
         if(error?.response?.status == 401){
-          console.log(error);
           localStorage.clear();
           setAuthenticated(false);
           toast.error("Antes debe ingresar..");
@@ -326,7 +314,6 @@ const UserProvider = (props) => {
     const checkout = async (values)=>{
       setBotonState(true);
       try {
-        console.log(values);
         const checkoutObj = {
           cart: cart.code,
           email: values.email,

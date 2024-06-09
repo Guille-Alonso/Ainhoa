@@ -287,7 +287,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
                   {/* Product Box */}
                   {userContext.flagEmptyProducts ? (
                     <h3>
-                      <strong>No hay productos para su selección..</strong>
+                      <strong>No se encontraron productos</strong>
                     </h3>
                   ) : products.length == 0 || userContext.botonState ? (
                     <div className="row mx-0 margin-default mt-4">
@@ -332,22 +332,6 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar ,products}) 
                   )}
                 </Row>
               </div>
-              {/* <div className="section-t-space">
-                <div className="text-center">
-                  <Row>
-                    <Col xl="12" md="12" sm="12">
-                      {data && data.products && data.products.hasMore && (
-                        <Button className="load-more" onClick={() => handlePagination()}>
-                          {isLoading && (
-                            <Spinner animation="border" variant="light" />
-                          )}
-                          ver mas
-                        </Button>
-                      )}
-                    </Col>
-                  </Row>
-                </div>
-              </div> */}
             </div>
           </Col>
         </Row>

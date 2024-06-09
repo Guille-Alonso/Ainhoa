@@ -22,8 +22,6 @@ const Currency = ({ icon }) => {
   const Context = useContext(CurrencyContext);
   const selectedCurrency = Context.currencyContext.selectedCurrency;
 
-  // console.log("data", data);
-
   const changeLanguage = (lng) => {
     i18next.changeLanguage(lng);
   };

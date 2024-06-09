@@ -1,22 +1,15 @@
 import React, { useState, useContext } from "react";
 import Link from "next/link";
-import CartContext from "../../../../helpers/cart";
 import { Container, Row, Col, Media, Input } from "reactstrap";
-import { CurrencyContext } from "../../../../helpers/Currency/CurrencyContext";
 import cart from "../../../../public/assets/images/icon-empty-cart.png";
 import UserContext from "../../../../helpers/user/UserContext";
 import { calculateTotal } from "../../../../utils/calculateTotal";
+import defaultThumbImage from '../../../../public/assets/img/product/IMG0_default.jpg';
+import LoaderComponent from "../../../../components/common/Loader";
 
 const CartPage = () => {
-  // const context = useContext(CartContext);
-  // const cartItems = context.state;
-  // const curContext = useContext(CurrencyContext);
-  // const symbol = curContext.state.symbol;
-  // const total = context.cartTotal;
-  // const removeFromCart = context.removeFromCart;
   const [quantity, setQty] = useState(1);
   const [quantityError, setQuantityError] = useState(false);
-  // const updateQty = context.updateQty;
 
   const userContext = useContext(UserContext);
 
@@ -29,29 +22,11 @@ const CartPage = () => {
     }
   };
 
-  const changeQty = (e) => {
-    setQuantity(parseInt(e.target.value));
-  };
-
-  const minusQty = () => {
-    if (quantity > 1) {
-      setStock("InStock");
-      setQty(quantity - 1);
-    }
-  };
-
-  const plusQty = (product) => {
-    if (product.stock >= quantity) {
-      setQty(quantity + 1);
-    } else {
-      setStock("Out of Stock !");
-    }
-  };
-
   return (
     <div>
       {userContext.cart && userContext.cart?.products.length > 0 ? (
         <section className="cart-section section-b-space">
+          { userContext.botonState && <LoaderComponent text="Quitando producto, por favor aguarde.." /> }
           <Container>
             <Row>
               <Col sm="12">
@@ -74,9 +49,9 @@ const CartPage = () => {
                             <Link href={`/product-details/` + item.code}>
                               <Media
                                 src={
-                                  item.images
+                                  item.images.length > 0
                                     ? item.images[0]?.main
-                                    : item.images[0]?.main
+                                    : defaultThumbImage.src
                                 }
                                 alt=""
                               />
@@ -128,38 +103,18 @@ const CartPage = () => {
                           </td>
                           <td>
                             <h2>
-                              {/* {symbol} */}
                               ${item.price}
-                              {/* {item.price - (item.price * item.discount) / 100} */}
-                              
                             </h2>
                           </td>
                           <td>
-                            <div className="qty-box">
-                               {/* <div className="input-group">
-                                <input
-                                  type="number"
-                                  name="quantity"
-                                  onChange={(e) =>
-                                    handleQtyUpdate(item, e.target.value)
-                                  }
-                                  className="form-control input-number"
-                                  defaultValue={item.qty}
-                                  style={{
-                                    borderColor: quantityError && "red",
-                                  }}
-                                />
-                              </div>  */}
-                              
-                            </div>
-                            {/* {item.qty >= item.stock ? "out of Stock" : ""} */}
+                            <div className="qty-box"></div>
                             1
                           </td>
                           <td>
                             {
                               !userContext.botonState &&
                             <i
-                              className="fa fa-times"
+                              className="fa fa-times imageProductCursorPointer"
                               onClick={() => userContext.removeProductFromCart(item.code)}></i>
                             }
                           </td>
@@ -192,13 +147,13 @@ const CartPage = () => {
             </Row>
             <Row className="cart-buttons">
               <Col xs="6">
-                <Link href={`/shop/left_sidebar`} className="btn btn-solid">
+                <Link href={`/shop/products`} className="btn btn-solid">
                   Seguir comprando
                 </Link>
               </Col>
               <Col xs="6">
                 <Link href={`/page/account/checkout`} className="btn btn-solid">
-                  check out
+                  Finalizar compra
                 </Link>
               </Col>
             </Row>

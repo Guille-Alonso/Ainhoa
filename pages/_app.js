@@ -43,11 +43,6 @@ export default function MyApp({ Component, pageProps }) {
           <div className="loader-wrapper">{url === "Christmas" ? <div id="preloader"></div> : <div className="loader"></div>}</div>
         ) : (
           <>
-            {/* <MessengerCustomerChat
-            pageId="2123438804574660"
-            appId="406252930752412"
-            htmlRef="https://connect.facebook.net/en_US/sdk.js"
-          /> */}
             <Helmet>
               <meta name="viewport" content="width=device-width, initial-scale=1" />
               <link

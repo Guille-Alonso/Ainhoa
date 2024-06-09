@@ -110,7 +110,6 @@ const handleBrands = (brand, checked) => {
   
 
   const handleCategories = (category) => {
-    console.log(category);
     if (category === "todas") {
       // Si la categoría seleccionada es "TODAS", vaciamos el array
       setSelectedCategoryPill(categoryPill ? categoryPill : []);

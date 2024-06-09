@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from "react";
 import Link from "next/link";
 import { Container, Row, Col, Media } from "reactstrap";
-import banner1 from "../../../../public/assets/images/sub-banner1.jpg";
+import banner1 from "../../../../public/assets/img/home/banner-left.jpg";
 import banner2 from "../../../../public/assets/images/sub-banner2.jpg";
 import UserContext from "../../../../helpers/user/UserContext";
 import FilterContext from "../../../../helpers/filter/FilterContext";
@@ -68,7 +68,7 @@ const Data = [
     img: banner1,
     about: "todos",
     offer: "productos",
-    link: "/shop/left_sidebar",
+    link: "/shop/products",
     class: "p-right text-center",
   },
   {
@@ -76,7 +76,7 @@ const Data = [
     // about: "fiesta",
     about: categoryNameEnviroment,
     offer: "productos",
-    link: "/shop/left_sidebar",
+    link: "/shop/products",
     class: "p-right text-center",
   },
 ];
