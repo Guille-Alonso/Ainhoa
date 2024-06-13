@@ -2,7 +2,7 @@ import React, { Fragment, useContext } from "react";
 import Link from "next/link";
 import { Container, Row, Col, Media } from "reactstrap";
 import banner1 from "../../../../public/assets/img/home/banner-left.jpg";
-import banner2 from "../../../../public/assets/images/sub-banner2.jpg";
+import banner2 from "../../../../public/assets/img/home/banner-right.jpg";
 import UserContext from "../../../../helpers/user/UserContext";
 import FilterContext from "../../../../helpers/filter/FilterContext";
 import { useRouter } from "next/router";
